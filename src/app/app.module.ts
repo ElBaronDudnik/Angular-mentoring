@@ -12,6 +12,9 @@ import { LogoComponent } from './logo/logo.component';
 import { CourseItemComponent } from './course-item/course-item.component';
 import { CourseSearchComponent } from './course-search/course-search.component';
 import { CourseAdditionComponent } from './course-addition/course-addition.component';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { DurationPipePipe } from './duration-pipe.pipe';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,11 +27,14 @@ import { CourseAdditionComponent } from './course-addition/course-addition.compo
     LogoComponent,
     CourseItemComponent,
     CourseSearchComponent,
-    CourseAdditionComponent
+    CourseAdditionComponent,
+    DurationPipePipe
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    AngularFontAwesomeModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

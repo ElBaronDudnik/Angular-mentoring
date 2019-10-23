@@ -1,4 +1,16 @@
-<h1>{{ course.title }}</h1>
-<p>{{ course.description }}</p>
-<span>{{ course.creationDate }}</span>
-<span>{{ course.duration }}</span>
+<div class="full-container">
+  <div class="main-container">
+    <div class="first-row">
+      <h1>{{ course.title }}</h1>
+      <div class="instruments">
+        <span><fa name="clock-o"></fa>{{ course.duration | durationPipe}}</span>
+        <span><fa name="calendar"></fa>{{ course.creationDate | date: 'd MMM, yyyy' }}</span>
+      </div>
+    </div>
+    <p>{{ course.description }}</p>
+  </div>
+  <div class="buttons-container">
+    <button><fa name="pencil"></fa>Edit</button>
+    <button (click) = "onDelete()"><fa name="trash"></fa>Delete</button>
+  </div>
+</div>

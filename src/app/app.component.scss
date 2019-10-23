@@ -1,0 +1,14 @@
+@import '../../src/styles.scss';
+
+main {
+  background-color: $pale-grey;
+}
+
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}

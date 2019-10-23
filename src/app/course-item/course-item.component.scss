@@ -1,0 +1,58 @@
+@import '../../../src/styles.scss';
+
+.full-container {
+  background-color: $white;
+  border-radius: 8px;
+  box-shadow: 0 1px 24px 0 rgba(18, 21, 35, 0.08);
+  margin: 0 85px 30px;
+  padding: 24px;
+  display: flex;
+}
+
+h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+p {
+  line-height: 1.71;
+  color: $slate-grey;
+}
+
+button {
+  @include button($dark-sky-blue);
+  padding: 5px 15px;
+  margin: 10px;
+}
+
+.buttons-container {
+  width: 250px;
+}
+
+.main-container {
+  width: 800px;
+}
+.first-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttons-container {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  margin-bottom: 30px;
+}
+
+.instruments {
+  color: $cloudy-blue;
+}
+
+fa {
+  padding-right: 5px;
+}
+
+.instruments span {
+  padding-right: 20px;
+}

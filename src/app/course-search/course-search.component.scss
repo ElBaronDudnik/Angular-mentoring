@@ -1,0 +1,26 @@
+@import '../../../src/styles.scss';
+
+button {
+  @include button($sick-green, 14px);
+  padding: 12px 25px;
+  margin-left: 6px;
+}
+
+input {
+  width: 360px;
+  padding: 12px 0;
+  text-indent: 42px;
+  border-radius: 3px;
+  border: 1px solid #d9dbe3;
+}
+
+.icon-search {
+  position: relative;
+}
+
+.icon-search img{
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+}

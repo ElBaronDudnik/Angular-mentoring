@@ -1,1 +1,41 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700&display=swap');
+
+$soft-blue: #577ce6;
+$dark-sky-blue: #30b6dd;
+$pale-grey: #f2f3f7;
+$steel: #868996;
+$charcoal-grey: #414452;
+$silver: #c0c3ce;
+$white: #ffffff;
+$sick-green: #9bc837;
+$cloudy-blue: #b9bdce;
+$slate-grey: #525462;
+$dark: #2c2f3c;
+$black: #000000;
+$seafoam-blue: #76cdd8;
+$pear: #e2f86a;
+
+@mixin button($color: transparent, $size: 12px) {
+  background-color: $color;
+  font-size: $size;
+  border: 0;
+  color: $white;
+  font-family: 'Source Sans Pro', sans-serif;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+body {
+  max-width: 1280px;
+  height: 100vh;
+  margin: 0 auto;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 14px;
+}
+
+ul {
+  padding-left: 0;
+  list-style: none;
+}
+

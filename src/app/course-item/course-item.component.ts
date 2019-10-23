@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
-class Course implements CourseInterface {
+class Course {
   public id;
   public title;
   public creationDate;
   public duration;
   public description;
 
-  constructor(id, title, duration, description) {
+  constructor(id, title, creationDate, duration, description) {
     this.id = id;
     this.title = title;
-    this.creationDate = new Date();
+    this.creationDate = new Date(creationDate);
     this.duration = duration;
     this.description = description;
   }
@@ -22,10 +22,13 @@ class Course implements CourseInterface {
   styleUrls: ['./course-item.component.scss']
 })
 export class CourseItemComponent implements OnInit {
-  public course: CourseInterface = new Course(1, 'Video Course 1. Name tag', 22, 'Learn where you can find course description...')
+  @Input() course;
+  @Output() delete = new EventEmitter();
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
+  onDelete() {
+    this.delete.emit(this.course.id);
+  }
 }

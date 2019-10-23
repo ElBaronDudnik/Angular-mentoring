@@ -1,2 +1,7 @@
-<input type="text">
-<button>Search</button>
+<label class="icon-search">
+  <img src="../../assets/img/ic-search.png" alt="Search Icon">
+  <input type="search" placeholder="Text to search" [(ngModel)] = "searchingValue">
+</label>
+<button (click) = "search()">Search</button>
+
+
