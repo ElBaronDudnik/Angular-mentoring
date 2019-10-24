@@ -1,20 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-
-class Course {
-  public id;
-  public title;
-  public creationDate;
-  public duration;
-  public description;
-
-  constructor(id, title, creationDate, duration, description) {
-    this.id = id;
-    this.title = title;
-    this.creationDate = new Date(creationDate);
-    this.duration = duration;
-    this.description = description;
-  }
-}
+import { CourseInterface } from '../../../course.interface';
+import { Course } from '../../../course.model';
 
 @Component({
   selector: 'app-course-item',
@@ -22,13 +8,19 @@ class Course {
   styleUrls: ['./course-item.component.scss']
 })
 export class CourseItemComponent implements OnInit {
-  @Input() course;
+  @Input() course: CourseInterface = new Course({
+    id: 1,
+    title: '',
+    creationDate: new Date(),
+    duration: 23,
+    description: ''
+  });
   @Output() delete = new EventEmitter();
   constructor() { }
 
   ngOnInit() {}
 
-  onDelete() {
+  onDelete(): void {
     this.delete.emit(this.course.id);
   }
 }

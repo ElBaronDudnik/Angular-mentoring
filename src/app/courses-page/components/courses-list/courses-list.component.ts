@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CourseInterface } from '../../course.interface';
 
 @Component({
   selector: 'app-courses-list',
@@ -51,7 +52,7 @@ export class CoursesListComponent implements OnInit {
     console.log('Courses: ');
   }
 
-  onDeleteEvent(id) {
+  onDelete(id: number): void {
     console.log(id);
   }
 }
