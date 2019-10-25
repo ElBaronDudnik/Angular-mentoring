@@ -1,13 +1,14 @@
 @import '../../../../../styles';
 
-.container{
+.container {
   display: flex;
   justify-content: flex-end;
 }
 
 button {
-  display: block;
   @include button($dark-sky-blue, 14px);
+
+  display: block;
   padding: 7px 15px;
   right: 0;
   position: relative;
@@ -19,7 +20,9 @@ button {
   height: 16px;
   display: inline-block;
   margin-right: 7px;
-  &:before, &:after {
+
+  &:before, 
+  &:after {
     content: '';
     position: absolute;
     top: 50%;
@@ -30,6 +33,7 @@ button {
     border-radius: 1px;
     transform: translateY(-50%);
   }
+  
   &:after {
     transform: translateY(-50%) rotate(90deg);
     transform-origin: 50% 50%;

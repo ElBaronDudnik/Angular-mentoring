@@ -22,17 +22,15 @@ p {
 
 button {
   @include button($dark-sky-blue);
+
   padding: 5px 15px;
   margin: 10px;
-}
-
-.buttons-container {
-  width: 250px;
 }
 
 .main-container {
   width: 800px;
 }
+
 .first-row {
   display: flex;
   justify-content: space-between;
@@ -40,6 +38,7 @@ button {
 
 .buttons-container {
   display: flex;
+  width: 250px;
   align-items: flex-end;
   justify-content: flex-end;
   margin-bottom: 30px;

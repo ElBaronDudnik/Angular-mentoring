@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-course-search',
   templateUrl: './course-search.component.html',
-  styleUrls: ['./course-search.component.scss']
+  styleUrls: ['./course-search.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CourseSearchComponent implements OnInit {
   public searchingValue = '';
@@ -13,6 +14,6 @@ export class CourseSearchComponent implements OnInit {
   }
 
   search(): void {
-    console.log(this.searchingValue);
+    console.log(`Search: ${this.searchingValue}`);
   }
 }

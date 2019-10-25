@@ -1,5 +1,9 @@
 {
-  "extends": "tslint:recommended",
+  "extends": [
+    "tslint:recommended",
+    "tslint-clean-code",
+    "tslint-eslint-rules"
+  ],
   "rules": {
     "array-type": false,
     "arrow-parens": false,
