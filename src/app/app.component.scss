@@ -2,13 +2,10 @@
 
 main {
   background-color: $pale-grey;
+  flex: 1;
 }
 
 :host {
   display: flex;
   flex-direction: column;
-}
-
-main {
-  flex: 1;
 }

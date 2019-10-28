@@ -9,9 +9,11 @@ import { coursesMock } from '../../courses.mock';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CoursesListComponent implements OnInit {
+  public courses: CourseInterface[] = [];
   constructor() { }
-  public courses: CourseInterface[] = coursesMock;
+
   ngOnInit() {
+    this.courses = coursesMock;
   }
 
   getCourses(): void {
@@ -20,5 +22,9 @@ export class CoursesListComponent implements OnInit {
 
   onDelete(id: number): void {
     console.log(`Id of the item to delete: ${id}`);
+  }
+
+  loadMore(): void {
+    console.log('Load More');
   }
 }
