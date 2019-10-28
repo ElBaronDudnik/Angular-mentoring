@@ -13,14 +13,14 @@ $charcoal-grey: #414452;
   padding-right: 39px;
 }
 
-app-logo{
+app-logo {
   flex: 1;
 }
 
-button{
+button {
   @include button(transparent, 14px);
 }
 
-.icon{
+.icon {
   padding-right: 10px;
 }

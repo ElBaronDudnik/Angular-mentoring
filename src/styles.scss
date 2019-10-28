@@ -25,6 +25,10 @@ $pear: #e2f86a;
   cursor: pointer;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   max-width: 1280px;
   height: 100vh;
@@ -36,8 +40,4 @@ body {
 ul {
   padding-left: 0;
   list-style: none;
-}
-
-* {
-  box-sizing: border-box;
 }
