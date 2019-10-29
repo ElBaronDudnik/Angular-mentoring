@@ -9,20 +9,15 @@ import { Course } from '../../../course.model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CourseItemComponent implements OnInit {
-  @Input() course: CourseInterface = new Course({
-    id: 1,
-    title: '',
-    creationDate: new Date(),
-    duration: 23,
-    description: ''
-  });
+  @Input() course!: CourseInterface;
   @Output() delete = new EventEmitter();
+  @Output() edit = new EventEmitter();
   constructor() { }
 
   ngOnInit() {}
 
   onEdit(): void {
-    console.log('Edit');
+    this.edit.emit();
   }
 
   onDelete(): void {

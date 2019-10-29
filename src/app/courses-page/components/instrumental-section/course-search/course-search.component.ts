@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-course-search',
@@ -7,13 +7,14 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CourseSearchComponent implements OnInit {
-  public searchingValue = '';
+  public searchQuery = '';
+  @Output() search = new EventEmitter();
   constructor() { }
 
   ngOnInit() {
   }
 
-  search(): void {
-    console.log(`Search: ${this.searchingValue}`);
+  onSearch(): void {
+    this.search.emit(this.searchQuery);
   }
 }

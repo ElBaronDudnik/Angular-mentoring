@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
 import { CourseInterface } from '../../course.interface';
 import { coursesMock } from '../../courses.mock';
 
@@ -10,6 +10,9 @@ import { coursesMock } from '../../courses.mock';
 })
 export class CoursesListComponent implements OnInit {
   public courses: CourseInterface[] = [];
+  @Output() search = new EventEmitter<string>();
+  @Output() addCourse = new EventEmitter<void>();
+
   constructor() { }
 
   ngOnInit() {
@@ -26,5 +29,17 @@ export class CoursesListComponent implements OnInit {
 
   loadMore(): void {
     console.log('Load More');
+  }
+
+  onSearch(searchQuery: string): void {
+    console.log(`Search: ${searchQuery}`);
+  }
+
+  onAddCourse(): void {
+    console.log('Add course');
+  }
+
+  onEdit(): void {
+    console.log('Edit');
   }
 }
