@@ -6,17 +6,17 @@ import { InstrumentalSectionComponent } from './components/instrumental-section/
 import { CourseItemComponent } from './components/courses-list/course-item/course-item.component';
 import { CourseSearchComponent } from './components/instrumental-section/course-search/course-search.component';
 import { CourseAdditionComponent } from './components/instrumental-section/course-addition/course-addition.component';
-import { DurationPipePipe } from '../shared/pipes/duration-pipe/duration-pipe.pipe';
-import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule } from '@angular/forms';
 import { CoursesPageRoutingModule } from './courses-page-routing.module';
+import {DurationPipe} from '../shared/pipes/duration-pipe/duration-pipe.pipe';
 
 
 
 @NgModule({
   imports: [
     CommonModule,
-    AngularFontAwesomeModule,
+    FontAwesomeModule,
     FormsModule,
     CoursesPageRoutingModule
   ],
@@ -26,7 +26,7 @@ import { CoursesPageRoutingModule } from './courses-page-routing.module';
     CourseItemComponent,
     CourseSearchComponent,
     CourseAdditionComponent,
-    DurationPipePipe
+    DurationPipe
   ],
 })
 export class CoursesPageModule { }

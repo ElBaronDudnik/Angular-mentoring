@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 @NgModule({
   imports: [],
   declarations: [
-    BreadcrumbsComponent
+    BreadcrumbsComponent,
   ],
   exports: [
     BreadcrumbsComponent

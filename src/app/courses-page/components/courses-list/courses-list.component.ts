@@ -10,8 +10,6 @@ import { coursesMock } from '../../courses.mock';
 })
 export class CoursesListComponent implements OnInit {
   public courses: CourseInterface[] = [];
-  @Output() search = new EventEmitter<string>();
-  @Output() addCourse = new EventEmitter<void>();
 
   constructor() { }
 
@@ -31,15 +29,15 @@ export class CoursesListComponent implements OnInit {
     console.log('Load More');
   }
 
+  onEdit(): void {
+    console.log('Edit');
+  }
+
   onSearch(searchQuery: string): void {
     console.log(`Search: ${searchQuery}`);
   }
 
   onAddCourse(): void {
     console.log('Add course');
-  }
-
-  onEdit(): void {
-    console.log('Edit');
   }
 }
