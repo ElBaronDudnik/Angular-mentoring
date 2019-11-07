@@ -1,8 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CourseAdditionComponent } from './course-addition.component';
-import {NO_ERRORS_SCHEMA} from '@angular/core';
-import {By} from '@angular/platform-browser';
+import { By } from '@angular/platform-browser';
 
 describe('CourseAdditionComponent', () => {
   let component: CourseAdditionComponent;
@@ -11,7 +10,6 @@ describe('CourseAdditionComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ CourseAdditionComponent ],
-      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));
@@ -26,7 +24,7 @@ describe('CourseAdditionComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should emit addCourse', () => {
+  it('should emit addCourse event', () => {
     const spy = spyOn(component.addCourse, 'emit');
 
     const button = fixture.debugElement.query(By.css('button'));

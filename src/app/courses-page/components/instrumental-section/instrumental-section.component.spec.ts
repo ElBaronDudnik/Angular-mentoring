@@ -1,10 +1,24 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { InstrumentalSectionComponent } from './instrumental-section.component';
-import {NO_ERRORS_SCHEMA} from '@angular/core';
-import {CourseAdditionComponent} from './course-addition/course-addition.component';
-import {By} from '@angular/platform-browser';
-import {CourseSearchComponent} from './course-search/course-search.component';
+import { By } from '@angular/platform-browser';
+import { Component, EventEmitter, Output } from '@angular/core';
+
+@Component({
+  selector: 'app-course-addition',
+  template: ''
+})
+class MockCourseAdditionComponent {
+  @Output() addCourse = new EventEmitter();
+}
+
+@Component({
+  selector: 'app-course-search',
+  template: ''
+})
+class MockCourseSearchComponent {
+  @Output() search = new EventEmitter();
+}
 
 describe('InstrumentalSectionComponent', () => {
   let component: InstrumentalSectionComponent;
@@ -14,10 +28,9 @@ describe('InstrumentalSectionComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         InstrumentalSectionComponent,
-        CourseSearchComponent,
-        CourseAdditionComponent
+        MockCourseSearchComponent,
+        MockCourseAdditionComponent
       ],
-      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));
@@ -32,23 +45,23 @@ describe('InstrumentalSectionComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should emit addCourse', () => {
+  it('should emit addCourse event', () => {
     const spy = spyOn(component.addCourse, 'emit');
 
-    const courseAdd = fixture.debugElement.query(By.directive(CourseAdditionComponent));
-    const cmp = courseAdd.componentInstance;
+    const courseAdd = fixture.debugElement.query(By.directive(MockCourseAdditionComponent));
+    const courseAddInstance = courseAdd.componentInstance;
 
-    cmp.addCourse.emit();
+    courseAddInstance.addCourse.emit();
     expect(spy).toHaveBeenCalled();
   });
 
-  it('should emit search', () => {
+  it('should emit search event', () => {
     const spy = spyOn(component.search, 'emit');
 
-    const courseSearch = fixture.debugElement.query(By.directive(CourseSearchComponent));
-    const cmp = courseSearch.componentInstance;
+    const courseSearch = fixture.debugElement.query(By.directive(MockCourseSearchComponent));
+    const courseSearchInstance = courseSearch.componentInstance;
 
-    cmp.search.emit('search');
+    courseSearchInstance.search.emit('search');
     expect(spy).toHaveBeenCalledWith('search');
   });
 });

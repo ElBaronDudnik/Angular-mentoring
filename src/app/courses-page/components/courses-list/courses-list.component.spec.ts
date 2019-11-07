@@ -3,11 +3,45 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoursesListComponent } from './courses-list.component';
 
 import { coursesMock } from '../../courses.mock';
-import { InstrumentalSectionComponent } from '../instrumental-section/instrumental-section.component';
-import { CourseItemComponent } from './course-item/course-item.component';
-import {NO_ERRORS_SCHEMA} from '@angular/core';
-import {DurationPipe} from '../../../shared/pipes/duration-pipe/duration-pipe.pipe';
 import {By} from '@angular/platform-browser';
+import { Component, EventEmitter, Input, Output, Pipe, PipeTransform } from '@angular/core';
+import { faCalendar, faPencilAlt, faTrash, faClock } from '@fortawesome/free-solid-svg-icons';
+import { CourseInterface } from '../../course.interface';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
+@Pipe({name: 'durationPipe'})
+class MockDurationPipe implements PipeTransform {
+  transform(value: number): string {
+    return 'value';
+  }
+}
+
+@Component({
+  selector: 'app-course-item',
+  template: `<fa-icon [icon]="faClockO"></fa-icon>
+             <fa-icon [icon]="faCalendar"></fa-icon>
+             <fa-icon [icon]="faPencil"></fa-icon>
+             <fa-icon [icon]="faTrash"></fa-icon>`
+})
+class MockCourseItemComponent {
+  @Input() course !: CourseInterface;
+  faCalendar = faCalendar;
+  faPencil = faPencilAlt;
+  faClockO = faClock;
+  faTrash = faTrash;
+  @Output() delete = new EventEmitter();
+  @Output() edit = new EventEmitter();
+}
+
+@Component({
+  selector: 'app-instrumental-section',
+  template: ''
+})
+class MockInstrumentalSectionComponent {
+  @Output() addCourse = new EventEmitter();
+  @Output() search = new EventEmitter();
+}
+
 
 describe('CoursesListComponent', () => {
   let component: CoursesListComponent;
@@ -17,14 +51,11 @@ describe('CoursesListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         CoursesListComponent,
-        InstrumentalSectionComponent,
-        CourseItemComponent,
-        DurationPipe
+        MockInstrumentalSectionComponent,
+        MockCourseItemComponent,
+        MockDurationPipe
       ],
-      providers: [
-        InstrumentalSectionComponent,
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
+      imports: [FontAwesomeModule]
     })
     .compileComponents();
   }));
@@ -65,40 +96,40 @@ describe('CoursesListComponent', () => {
   it('should onDelete be called with appropriate id', () => {
     spyOn(component, 'onDelete');
 
-    const courseItem = fixture.debugElement.query(By.directive(CourseItemComponent));
-    const cmp = courseItem.componentInstance;
+    const courseItem = fixture.debugElement.query(By.directive(MockCourseItemComponent));
+    const courseItemInstance = courseItem.componentInstance;
 
-    cmp.delete.emit(2);
+    courseItemInstance.delete.emit(2);
     expect(component.onDelete).toHaveBeenCalledWith(2);
   });
 
-  it('should onEdit be called', () => {
+  it('should onEdit method be called', () => {
     spyOn(component, 'onEdit');
 
-    const courseItem = fixture.debugElement.query(By.directive(CourseItemComponent));
-    const cmp = courseItem.componentInstance;
+    const courseItem = fixture.debugElement.query(By.directive(MockCourseItemComponent));
+    const courseItemInstance = courseItem.componentInstance;
 
-    cmp.edit.emit();
+    courseItemInstance.edit.emit();
     expect(component.onEdit).toHaveBeenCalled();
   });
 
-  it('should onAddCourse be called', () => {
+  it('should onAddCourse method be called', () => {
     spyOn(component, 'onAddCourse');
 
-    const courseInstrumental = fixture.debugElement.query(By.directive(InstrumentalSectionComponent));
-    const cmp = courseInstrumental.componentInstance;
+    const courseInstrumental = fixture.debugElement.query(By.directive(MockInstrumentalSectionComponent));
+    const courseInstrumentalInstance = courseInstrumental.componentInstance;
 
-    cmp.addCourse.emit()
+    courseInstrumentalInstance.addCourse.emit()
     expect(component.onAddCourse).toHaveBeenCalled();
   });
 
-  it('should onSearch be called', () => {
+  it('should onSearch method be called', () => {
     spyOn(component, 'onSearch');
 
-    const courseInstrumental = fixture.debugElement.query(By.directive(InstrumentalSectionComponent));
-    const cmp = courseInstrumental.componentInstance;
+    const courseInstrumental = fixture.debugElement.query(By.directive(MockInstrumentalSectionComponent));
+    const courseInstrumentalInstance = courseInstrumental.componentInstance;
 
-    cmp.search.emit('search')
+    courseInstrumentalInstance.search.emit('search')
     expect(component.onSearch).toHaveBeenCalledWith('search');
   });
 });

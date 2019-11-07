@@ -1,10 +1,17 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CourseItemComponent } from './course-item.component';
-import {NO_ERRORS_SCHEMA} from '@angular/core';
-import {DurationPipe} from '../../../../shared/pipes/duration-pipe/duration-pipe.pipe';
+import { Pipe, PipeTransform } from '@angular/core';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
-const course = {
+@Pipe({name: 'durationPipe'})
+class MockDurationPipe implements PipeTransform {
+  transform(value: number): string {
+    return 'value';
+  }
+}
+
+const courseMock = {
   id: 2,
   title: 'Hello',
   duration: 25,
@@ -20,9 +27,9 @@ describe('CourseItemComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         CourseItemComponent,
-        DurationPipe
+        MockDurationPipe
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      imports: [FontAwesomeModule]
     })
     .compileComponents();
   }));
@@ -30,7 +37,7 @@ describe('CourseItemComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CourseItemComponent);
     component = fixture.componentInstance;
-    component.course = course;
+    component.course = courseMock;
     fixture.detectChanges();
   });
 
@@ -54,5 +61,5 @@ describe('CourseItemComponent', () => {
     button.click();
 
     expect(component.edit.emit).toHaveBeenCalled();
-  })
+  });
 });

@@ -1,8 +1,8 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CourseSearchComponent } from './course-search.component';
 import { By } from '@angular/platform-browser';
-import {NO_ERRORS_SCHEMA} from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 describe('CourseSearchComponent', () => {
   let component: CourseSearchComponent;
@@ -10,8 +10,10 @@ describe('CourseSearchComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CourseSearchComponent ],
-      schemas: [NO_ERRORS_SCHEMA]
+      declarations: [
+        CourseSearchComponent,
+      ],
+      imports: [FormsModule]
     })
     .compileComponents();
   }));
@@ -26,7 +28,7 @@ describe('CourseSearchComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should emit search method', () => {
+  it('should emit search event', () => {
     const spy = spyOn(component.search, 'emit');
     const submitButton = fixture.debugElement.query(By.css('button'));
     component.searchQuery = 'search';
