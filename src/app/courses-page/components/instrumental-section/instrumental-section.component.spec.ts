@@ -20,14 +20,35 @@ class MockCourseSearchComponent {
   @Output() search = new EventEmitter();
 }
 
+@Component({
+  template: `
+      <app-instrumental-section
+              (addCourse)="onAddCourse()"
+              (search)="onSearch($event)">
+      </app-instrumental-section>`
+})
+class TestHostComponent {
+  @Output() search = new EventEmitter<string>();
+  @Output() addCourse = new EventEmitter<void>();
+
+  onSearch(value: string): void {
+    this.search.emit(value);
+  }
+
+  onAddCourse() {
+    this.addCourse.emit();
+  }
+}
+
 describe('InstrumentalSectionComponent', () => {
-  let component: InstrumentalSectionComponent;
-  let fixture: ComponentFixture<InstrumentalSectionComponent>;
+  let component: TestHostComponent;
+  let fixture: ComponentFixture<TestHostComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
         InstrumentalSectionComponent,
+        TestHostComponent,
         MockCourseSearchComponent,
         MockCourseAdditionComponent
       ],
@@ -36,7 +57,7 @@ describe('InstrumentalSectionComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InstrumentalSectionComponent);
+    fixture = TestBed.createComponent(TestHostComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
