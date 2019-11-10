@@ -4,7 +4,7 @@ import { CoursesListComponent } from './courses-list.component';
 
 import { coursesMock } from '../../courses.mock';
 import {By} from '@angular/platform-browser';
-import { Component, EventEmitter, Input, Output, Pipe, PipeTransform } from '@angular/core';
+import { Component, Directive, EventEmitter, Input, Output, Pipe, PipeTransform } from '@angular/core';
 import { faCalendar, faPencilAlt, faTrash, faClock } from '@fortawesome/free-solid-svg-icons';
 import { CourseInterface } from '../../course.interface';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -15,6 +15,18 @@ class MockDurationPipe implements PipeTransform {
     return 'value';
   }
 }
+
+@Pipe({name: 'orderBy'})
+class MockOrderByPipe implements PipeTransform {
+  transform(array: CourseInterface[]): null {
+    return null;
+  }
+}
+
+@Directive({
+  selector: '[appBorderStyle]'
+})
+class MockBordeStyleDirective {}
 
 @Component({
   selector: 'app-course-item',
@@ -53,7 +65,9 @@ describe('CoursesListComponent', () => {
         CoursesListComponent,
         MockInstrumentalSectionComponent,
         MockCourseItemComponent,
-        MockDurationPipe
+        MockDurationPipe,
+        MockOrderByPipe,
+        MockBordeStyleDirective,
       ],
       imports: [FontAwesomeModule]
     })

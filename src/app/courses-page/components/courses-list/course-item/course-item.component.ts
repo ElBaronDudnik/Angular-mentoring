@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from '@angular/core';
 import { CourseInterface } from '../../../course.interface';
-import { faCalendar, faPencilAlt, faClock, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faCalendar, faPencilAlt, faClock, faTrash, faStar } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-course-item',
@@ -12,10 +12,11 @@ export class CourseItemComponent implements OnInit {
   @Input() course!: CourseInterface;
   @Output() delete = new EventEmitter();
   @Output() edit = new EventEmitter();
-  faCalendar = faCalendar;
-  faPencil = faPencilAlt;
-  faClockO = faClock;
-  faTrash = faTrash;
+  public faCalendar = faCalendar;
+  public faPencil = faPencilAlt;
+  public faClockO = faClock;
+  public faTrash = faTrash;
+  public faStar = faStar;
   constructor() { }
 
   ngOnInit() {}
