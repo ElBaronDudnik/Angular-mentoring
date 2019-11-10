@@ -9,7 +9,7 @@ import { CourseAdditionComponent } from './components/instrumental-section/cours
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule } from '@angular/forms';
 import { CoursesPageRoutingModule } from './courses-page-routing.module';
-import {DurationPipe} from '../shared/pipes/duration-pipe/duration-pipe.pipe';
+import { SharedModule } from '../shared/shared.module';
 
 
 
@@ -18,7 +18,8 @@ import {DurationPipe} from '../shared/pipes/duration-pipe/duration-pipe.pipe';
     CommonModule,
     FontAwesomeModule,
     FormsModule,
-    CoursesPageRoutingModule
+    CoursesPageRoutingModule,
+    SharedModule
   ],
   declarations: [
     CoursesListComponent,
@@ -26,7 +27,6 @@ import {DurationPipe} from '../shared/pipes/duration-pipe/duration-pipe.pipe';
     CourseItemComponent,
     CourseSearchComponent,
     CourseAdditionComponent,
-    DurationPipe
   ],
 })
 export class CoursesPageModule { }

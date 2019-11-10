@@ -1,7 +1,10 @@
-<div class="full-container">
+<div class="full-container" [ngClass]="{'top-rate': course.topRated}">
   <div class="main-container">
     <div class="first-row">
-      <h1>{{ course.title }}</h1>
+      <h1>{{ course.title | uppercase }}</h1>
+      <span class="fa-star">
+        <fa-icon [icon]="faStar" *ngIf = "course.topRated" ></fa-icon>
+      </span>
       <div class="instruments">
         <span><fa-icon [icon]="faClockO"></fa-icon>{{ course.duration | durationPipe}}</span>
         <span><fa-icon [icon]="faCalendar"></fa-icon>{{ course.creationDate | date: 'd MMM, yyyy' }}</span>
@@ -14,3 +17,4 @@
     <button (click) = "onDelete()" class="delete-button"><fa-icon [icon]="faTrash"></fa-icon>Delete</button>
   </div>
 </div>
+

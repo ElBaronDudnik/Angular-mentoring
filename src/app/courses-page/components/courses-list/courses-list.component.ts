@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
 import { CourseInterface } from '../../course.interface';
 import { coursesMock } from '../../courses.mock';
+import {OrderByPipe} from '../../../shared/pipes/order-by-pipe/order-by.pipe';
 
 @Component({
   selector: 'app-courses-list',

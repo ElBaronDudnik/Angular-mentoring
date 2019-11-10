@@ -9,6 +9,21 @@
   display: flex;
 }
 
+.top-rate {
+  background: floralwhite;
+}
+
+.fa-star {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+}
+
+.fa-star fa-icon{
+  color: goldenrod;
+}
+
 h1 {
   margin: 0;
   font-size: 24px;
@@ -55,3 +70,4 @@ fa {
 .instruments span {
   padding-right: 20px;
 }
+
