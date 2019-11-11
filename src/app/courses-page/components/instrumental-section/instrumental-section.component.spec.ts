@@ -6,7 +6,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-course-addition',
-  template: ''
+  template: ``
 })
 class MockCourseAdditionComponent {
   @Output() addCourse = new EventEmitter();
@@ -28,15 +28,11 @@ class MockCourseSearchComponent {
       </app-instrumental-section>`
 })
 class TestHostComponent {
-  @Output() search = new EventEmitter<string>();
-  @Output() addCourse = new EventEmitter<void>();
-
   onSearch(value: string): void {
-    this.search.emit(value);
+    console.log(value);
   }
-
   onAddCourse() {
-    this.addCourse.emit();
+    console.log('Add course');
   }
 }
 
@@ -67,7 +63,7 @@ describe('InstrumentalSectionComponent', () => {
   });
 
   it('should emit addCourse event', () => {
-    const spy = spyOn(component.addCourse, 'emit');
+    const spy = spyOn(component, 'onAddCourse');
 
     const courseAdd = fixture.debugElement.query(By.directive(MockCourseAdditionComponent));
     const courseAddInstance = courseAdd.componentInstance;
@@ -77,12 +73,12 @@ describe('InstrumentalSectionComponent', () => {
   });
 
   it('should emit search event', () => {
-    const spy = spyOn(component.search, 'emit');
+    const spy = spyOn(component, 'onSearch');
 
     const courseSearch = fixture.debugElement.query(By.directive(MockCourseSearchComponent));
     const courseSearchInstance = courseSearch.componentInstance;
 
     courseSearchInstance.search.emit('search');
-    expect(spy).toHaveBeenCalledWith('search');
+    expect(spy).toHaveBeenCalled();
   });
 });
