@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CourseItemComponent } from './course-item.component';
-import { Pipe, PipeTransform } from '@angular/core';
+import { Component, Pipe, PipeTransform } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Pipe({name: 'durationPipe'})
@@ -19,13 +19,32 @@ const courseMock = {
   description: 'Hello World'
 }
 
+@Component({
+  template: `
+      <app-course-item
+          [course]="course"
+          (delete)="onDelete($event)"
+          (edit)="onEdit()">
+      </app-course-item>`
+})
+class TestHostComponent {
+  course = courseMock;
+  onDelete(id: number): void {
+    console.log(`Id of the item to delete: ${id}`);
+  }
+  onEdit(): void {
+    console.log('Edit');
+  }
+}
+
 describe('CourseItemComponent', () => {
-  let component: CourseItemComponent;
-  let fixture: ComponentFixture<CourseItemComponent>;
+  let component: TestHostComponent;
+  let fixture: ComponentFixture<TestHostComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
+        TestHostComponent,
         CourseItemComponent,
         MockDurationPipe
       ],
@@ -35,7 +54,7 @@ describe('CourseItemComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CourseItemComponent);
+    fixture = TestBed.createComponent(TestHostComponent);
     component = fixture.componentInstance;
     component.course = courseMock;
     fixture.detectChanges();
@@ -45,21 +64,21 @@ describe('CourseItemComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should emit delete with corresponding id', () => {
-    spyOn(component.delete, 'emit');
+  it('should proceed course deletion', () => {
+    spyOn(component, 'onDelete');
 
     const button = fixture.nativeElement.querySelector('.delete-button');
     button.click();
 
-    expect(component.delete.emit).toHaveBeenCalledWith(2);
+    expect(component.onDelete).toHaveBeenCalledWith(2);
   });
 
-  it('should emit edit', () => {
-    spyOn(component.edit, 'emit');
+  it('should proceed course edition', () => {
+    spyOn(component, 'onEdit');
 
     const button = fixture.nativeElement.querySelector('.edit-button');
     button.click();
 
-    expect(component.edit.emit).toHaveBeenCalled();
+    expect(component.onEdit).toHaveBeenCalled();
   });
 });

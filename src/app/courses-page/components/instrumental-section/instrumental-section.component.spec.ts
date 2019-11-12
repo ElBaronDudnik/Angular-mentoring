@@ -6,7 +6,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-course-addition',
-  template: ``
+  template: ''
 })
 class MockCourseAdditionComponent {
   @Output() addCourse = new EventEmitter();
@@ -62,7 +62,7 @@ describe('InstrumentalSectionComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should proceed addition of course', () => {
+  it('should proceed course addition', () => {
     const spy = spyOn(component, 'onAddCourse');
 
     const courseAdd = fixture.debugElement.query(By.directive(MockCourseAdditionComponent));
@@ -72,7 +72,7 @@ describe('InstrumentalSectionComponent', () => {
     expect(spy).toHaveBeenCalled();
   });
 
-  it('should proceed search', () => {
+  it('should proceed courses search', () => {
     const spy = spyOn(component, 'onSearch');
 
     const courseSearch = fixture.debugElement.query(By.directive(MockCourseSearchComponent));

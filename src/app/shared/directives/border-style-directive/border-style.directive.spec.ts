@@ -37,7 +37,7 @@ class TestComponent {
 
 describe('BorderStyleDirective', () => {
   let fixture: ComponentFixture<TestComponent>;
-  let directiveElements: DebugElement[];
+  let hostElements: DebugElement[];
 
   beforeEach(() => {
     fixture = TestBed.configureTestingModule({
@@ -46,26 +46,21 @@ describe('BorderStyleDirective', () => {
       .createComponent(TestComponent);
 
     fixture.detectChanges();
-    directiveElements = fixture.debugElement.queryAll(By.directive(BorderStyleDirective));
+    hostElements = fixture.debugElement.queryAll(By.directive(BorderStyleDirective));
   });
 
-  it('should create an instance', () => {
-    const directive = new BorderStyleDirective();
-    expect(directive).toBeTruthy();
-  });
-
-  it('should borderColor of the element with old date be transparent', () => {
-    const borderColor = directiveElements[0].nativeElement.style.borderColor;
+  it('should borderColor be transparent by default', () => {
+    const borderColor = hostElements[0].nativeElement.style.borderColor;
     expect(borderColor).toBe('');
   });
 
-  it('should borderColorof the element with fresh date be transparent', () => {
-    const borderColor = directiveElements[1].nativeElement.style.borderColor;
-    expect(borderColor).toBe('green');
+  it('should borderColor be green for fresh courses', () => {
+    const borderColor = hostElements[1].nativeElement.style.borderColor;
+    expect(borderColor).toBe('lightseagreen');
   });
 
-  it('should borderColor of the element with upcoming date be transparent', () => {
-    const borderColor = directiveElements[2].nativeElement.style.borderColor;
-    expect(borderColor).toBe('blue');
+  it('should borderColor be blue for upcoming courses', () => {
+    const borderColor = hostElements[2].nativeElement.style.borderColor;
+    expect(borderColor).toBe('cornflowerblue');
   });
 });
