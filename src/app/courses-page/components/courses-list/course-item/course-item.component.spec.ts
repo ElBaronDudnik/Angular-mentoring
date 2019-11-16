@@ -16,8 +16,9 @@ const courseMock = {
   title: 'Hello',
   duration: 25,
   creationDate: new Date(1, 1, 2019),
-  description: 'Hello World'
-}
+  description: 'Hello World',
+  topRated: false
+};
 
 @Component({
   template: `
@@ -29,12 +30,8 @@ const courseMock = {
 })
 class TestHostComponent {
   course = courseMock;
-  onDelete(id: number): void {
-    console.log(`Id of the item to delete: ${id}`);
-  }
-  onEdit(): void {
-    console.log('Edit');
-  }
+  onDelete = jasmine.createSpy('onDeleteSpy');
+  onEdit = jasmine.createSpy('onEditSpy');
 }
 
 describe('CourseItemComponent', () => {
@@ -60,25 +57,31 @@ describe('CourseItemComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
-  it('should proceed course deletion', () => {
-    spyOn(component, 'onDelete');
-
+  it('should delete course', () => {
     const button = fixture.nativeElement.querySelector('.delete-button');
     button.click();
 
     expect(component.onDelete).toHaveBeenCalledWith(2);
   });
 
-  it('should proceed course edition', () => {
-    spyOn(component, 'onEdit');
-
+  it('should edit course', () => {
     const button = fixture.nativeElement.querySelector('.edit-button');
     button.click();
 
-    expect(component.onEdit).toHaveBeenCalled();
+    expect(component.onEdit).toHaveBeenCalledWith();
+  });
+
+  it('should show star icon for top-rated course', () => {
+    const starContainer = fixture.nativeElement.querySelector('.fa-star');
+    component.course.topRated = true;
+    fixture.detectChanges();
+
+    expect(starContainer).not.toBeNull();
+  });
+
+  it('should show title in uppercase', () => {
+    const title = fixture.nativeElement.querySelector('h1');
+    fixture.detectChanges();
+    expect(title.textContent).toContain('HELLO');
   });
 });

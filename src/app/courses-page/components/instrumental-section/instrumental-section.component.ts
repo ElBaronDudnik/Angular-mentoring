@@ -14,8 +14,8 @@ import { Component, OnInit, ChangeDetectionStrategy, EventEmitter, Output } from
   ngOnInit() {
   }
 
-  onSearch(value: Event): void {
-    this.search.emit(value);
+  onSearch(event: Event): void {
+    this.search.emit(event);
   }
 
   onAddCourse() {

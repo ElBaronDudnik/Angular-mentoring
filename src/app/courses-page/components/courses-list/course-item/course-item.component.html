@@ -2,7 +2,7 @@
   <div class="first-row">
     <h1>{{ course.title | uppercase }}</h1>
     <span class="fa-star">
-      <fa-icon [icon]="faStar" *ngIf = "course.topRated" ></fa-icon>
+      <fa-icon [icon]="faStar" *ngIf="course.topRated" ></fa-icon>
     </span>
     <div class="instruments">
       <span><fa-icon [icon]="faClockO"></fa-icon>{{ course.duration | durationPipe}}</span>

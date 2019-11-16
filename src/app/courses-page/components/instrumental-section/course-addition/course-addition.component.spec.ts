@@ -8,9 +8,7 @@ import { Component } from '@angular/core';
   template: `<app-course-addition (addCourse)="onAddCourse()"></app-course-addition>`
 })
 class TestHostComponent {
-  onAddCourse() {
-    console.log('Add course');
-  }
+  onAddCourse = jasmine.createSpy('onAddCourse');
 }
 
 describe('CourseAdditionComponent', () => {
@@ -38,11 +36,9 @@ describe('CourseAdditionComponent', () => {
   });
 
   it('should proceed course addition', () => {
-    const spy = spyOn(component, 'onAddCourse');
-
     const button = fixture.debugElement.query(By.css('button'));
     button.triggerEventHandler('click', null);
 
-    expect(spy).toHaveBeenCalled();
+    expect(component.onAddCourse).toHaveBeenCalledWith();
   });
 });

@@ -26,18 +26,20 @@ export class BorderStyleDirective implements OnInit {
   setBorder() {
     const dateDiff = this.getDateDiff();
 
-    if (dateDiff < FRESH_DATE && dateDiff > 0) {
-      this.isFresh();
-    } else if (dateDiff < 0) {
-      this.isUpcoming();
+    if (this.isFresh(dateDiff)) {
+      this.borderColor = this.freshColor;
+    }
+
+    if (this.isUpcoming(dateDiff)) {
+      this.borderColor = this.upcomingColor;
     }
   }
 
-  isFresh() {
-    this.borderColor = this.freshColor;
+  isFresh(dateDiff: number): boolean {
+    return dateDiff < FRESH_DATE && dateDiff > 0;
   }
 
-  isUpcoming() {
-    this.borderColor = this.upcomingColor;
+  isUpcoming(dateDiff: number): boolean {
+    return dateDiff <= 0;
   }
 }

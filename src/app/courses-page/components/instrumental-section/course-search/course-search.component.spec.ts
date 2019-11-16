@@ -9,19 +9,18 @@ import { Component } from '@angular/core';
   template: `<app-course-search (search)="onSearch($event)"></app-course-search>`
 })
 class TestHostComponent {
-  onSearch(value: Event) {
-    console.log('Search');
-  }
+  onSearch = jasmine.createSpy('onSearchSpy');
 }
 
 describe('CourseSearchComponent', () => {
-  let component: CourseSearchComponent;
-  let fixture: ComponentFixture<CourseSearchComponent>;
+  let component: TestHostComponent;
+  let fixture: ComponentFixture<TestHostComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
         CourseSearchComponent,
+        TestHostComponent
       ],
       imports: [FormsModule]
     })
@@ -29,7 +28,7 @@ describe('CourseSearchComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CourseSearchComponent);
+    fixture = TestBed.createComponent(TestHostComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -39,10 +38,9 @@ describe('CourseSearchComponent', () => {
   });
 
   it('should proceed courses search', () => {
-    const spy = spyOn(component.search, 'emit');
     const submitButton = fixture.debugElement.query(By.css('button'));
 
     submitButton.triggerEventHandler('click', null);
-    expect(spy).toHaveBeenCalled();
+    expect(component.onSearch).toHaveBeenCalled();
   });
 });
