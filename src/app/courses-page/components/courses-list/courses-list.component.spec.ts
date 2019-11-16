@@ -4,7 +4,7 @@ import { CoursesListComponent } from './courses-list.component';
 
 import { coursesMock } from '../../courses.mock';
 import {By} from '@angular/platform-browser';
-import { Component, EventEmitter, Input, Output, Pipe, PipeTransform } from '@angular/core';
+import { Component, Directive, EventEmitter, Input, Output, Pipe, PipeTransform } from '@angular/core';
 import { faCalendar, faPencilAlt, faTrash, faClock } from '@fortawesome/free-solid-svg-icons';
 import { CourseInterface } from '../../course.interface';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -16,9 +16,22 @@ class MockDurationPipe implements PipeTransform {
   }
 }
 
+@Pipe({name: 'orderCoursesByDate'})
+class MockOrderCoursesByDatePipe implements PipeTransform {
+  transform(array: CourseInterface[]): null {
+    return null;
+  }
+}
+
+@Directive({
+  selector: '[appBorderStyle]'
+})
+class MockBordeStyleDirective {}
+
 @Component({
   selector: 'app-course-item',
-  template: `<fa-icon [icon]="faClockO"></fa-icon>
+  template: `<app-course-item></app-course-item>
+             <fa-icon [icon]="faClockO"></fa-icon>
              <fa-icon [icon]="faCalendar"></fa-icon>
              <fa-icon [icon]="faPencil"></fa-icon>
              <fa-icon [icon]="faTrash"></fa-icon>`
@@ -53,7 +66,9 @@ describe('CoursesListComponent', () => {
         CoursesListComponent,
         MockInstrumentalSectionComponent,
         MockCourseItemComponent,
-        MockDurationPipe
+        MockDurationPipe,
+        MockOrderCoursesByDatePipe,
+        MockBordeStyleDirective,
       ],
       imports: [FontAwesomeModule]
     })
@@ -77,14 +92,14 @@ describe('CoursesListComponent', () => {
     expect(component.courses).toBe(coursesMock);
   });
 
-  it('should emit console.log clicking on getCourses with corresponding text', () => {
+  it('should proceed courses obtaining', () => {
     const consoleSpy = spyOn(console, 'log');
     component.getCourses();
 
     expect(consoleSpy).toHaveBeenCalledWith('Courses: ');
   });
 
-  it('should emit console.log clicking on LoadMore button with corresponding text', () => {
+  it('should proceed loading more courses', () => {
     const consoleSpy = spyOn(console, 'log');
     const button = fixture.nativeElement.querySelector('.load-more');
 
@@ -93,7 +108,7 @@ describe('CoursesListComponent', () => {
     expect(consoleSpy).toHaveBeenCalledWith('Load More');
   });
 
-  it('should onDelete be called with appropriate id', () => {
+  it('should proceed course deletion', () => {
     spyOn(component, 'onDelete');
 
     const courseItem = fixture.debugElement.query(By.directive(MockCourseItemComponent));
@@ -103,7 +118,7 @@ describe('CoursesListComponent', () => {
     expect(component.onDelete).toHaveBeenCalledWith(2);
   });
 
-  it('should onEdit method be called', () => {
+  it('should proceed course edition', () => {
     spyOn(component, 'onEdit');
 
     const courseItem = fixture.debugElement.query(By.directive(MockCourseItemComponent));
@@ -113,7 +128,7 @@ describe('CoursesListComponent', () => {
     expect(component.onEdit).toHaveBeenCalled();
   });
 
-  it('should onAddCourse method be called', () => {
+  it('should proceed course addition', () => {
     spyOn(component, 'onAddCourse');
 
     const courseInstrumental = fixture.debugElement.query(By.directive(MockInstrumentalSectionComponent));
@@ -123,7 +138,7 @@ describe('CoursesListComponent', () => {
     expect(component.onAddCourse).toHaveBeenCalled();
   });
 
-  it('should onSearch method be called', () => {
+  it('should proceed course search', () => {
     spyOn(component, 'onSearch');
 
     const courseInstrumental = fixture.debugElement.query(By.directive(MockInstrumentalSectionComponent));

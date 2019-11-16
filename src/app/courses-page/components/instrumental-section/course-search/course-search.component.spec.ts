@@ -3,6 +3,16 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CourseSearchComponent } from './course-search.component';
 import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { Component } from '@angular/core';
+
+@Component({
+  template: `<app-course-search (search)="onSearch($event)"></app-course-search>`
+})
+class TestHostComponent {
+  onSearch(value: Event) {
+    console.log('Search');
+  }
+}
 
 describe('CourseSearchComponent', () => {
   let component: CourseSearchComponent;
@@ -28,12 +38,11 @@ describe('CourseSearchComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should emit search event', () => {
+  it('should proceed courses search', () => {
     const spy = spyOn(component.search, 'emit');
     const submitButton = fixture.debugElement.query(By.css('button'));
-    component.searchQuery = 'search';
 
     submitButton.triggerEventHandler('click', null);
-    expect(spy).toHaveBeenCalledWith('search');
+    expect(spy).toHaveBeenCalled();
   });
 });

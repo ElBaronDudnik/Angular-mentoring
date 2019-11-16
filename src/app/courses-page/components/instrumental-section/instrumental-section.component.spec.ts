@@ -28,15 +28,11 @@ class MockCourseSearchComponent {
       </app-instrumental-section>`
 })
 class TestHostComponent {
-  @Output() search = new EventEmitter<string>();
-  @Output() addCourse = new EventEmitter<void>();
-
   onSearch(value: string): void {
-    this.search.emit(value);
+    console.log(value);
   }
-
   onAddCourse() {
-    this.addCourse.emit();
+    console.log('Add course');
   }
 }
 
@@ -53,7 +49,7 @@ describe('InstrumentalSectionComponent', () => {
         MockCourseAdditionComponent
       ],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -66,8 +62,8 @@ describe('InstrumentalSectionComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should emit addCourse event', () => {
-    const spy = spyOn(component.addCourse, 'emit');
+  it('should proceed course addition', () => {
+    const spy = spyOn(component, 'onAddCourse');
 
     const courseAdd = fixture.debugElement.query(By.directive(MockCourseAdditionComponent));
     const courseAddInstance = courseAdd.componentInstance;
@@ -76,13 +72,13 @@ describe('InstrumentalSectionComponent', () => {
     expect(spy).toHaveBeenCalled();
   });
 
-  it('should emit search event', () => {
-    const spy = spyOn(component.search, 'emit');
+  it('should proceed courses search', () => {
+    const spy = spyOn(component, 'onSearch');
 
     const courseSearch = fixture.debugElement.query(By.directive(MockCourseSearchComponent));
     const courseSearchInstance = courseSearch.componentInstance;
 
-    courseSearchInstance.search.emit('search');
-    expect(spy).toHaveBeenCalledWith('search');
+    courseSearchInstance.search.emit();
+    expect(spy).toHaveBeenCalled();
   });
 });

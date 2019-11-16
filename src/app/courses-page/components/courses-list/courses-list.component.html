@@ -1,8 +1,14 @@
 <app-instrumental-section (addCourse)="onAddCourse()" (search)="onSearch($event)"></app-instrumental-section>
 <div class="container" *ngIf="courses.length; else noContent">
   <ul>
-    <li *ngFor="let course of courses | orderBy">
-      <app-course-item appBorderStyle [course]="course" (delete)="onDelete($event)" (edit)="onEdit()"></app-course-item>
+    <li *ngFor="let course of filteredCourses | orderCoursesByDate">
+      <app-course-item
+        appBorderStyle
+        [course]="course"
+        (delete)="onDelete($event)"
+        (edit)="onEdit()"
+        [ngClass]="{'top-rate': course.topRated}">
+      </app-course-item>
     </li>
   </ul>
   <div class="load-more-container">

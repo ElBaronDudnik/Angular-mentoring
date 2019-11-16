@@ -7,7 +7,7 @@ import { Component, OnInit, ChangeDetectionStrategy, EventEmitter, Output } from
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CourseSearchComponent implements OnInit {
-  public searchQuery = '';
+  public searchQuery !: Event;
   @Output() search = new EventEmitter();
   constructor() { }
 
