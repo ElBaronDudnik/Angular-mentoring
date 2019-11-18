@@ -1,4 +1,5 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { AuthService } from './core/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -6,6 +7,11 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent {
-  title = 'angular-mentoring';
+export class AppComponent implements OnInit {
+  public isUserLogin !: boolean;
+  constructor(private authService: AuthService) {}
+  ngOnInit() {
+    this.isUserLogin = !this.authService.isAuthenticated();
+    console.log(this.isUserLogin);
+  }
 }

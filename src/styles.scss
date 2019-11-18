@@ -2,7 +2,8 @@
 
 $soft-blue: #577ce6;
 $dark-sky-blue: #30b6dd;
-$pale-grey: #f2f3f7;
+$pale-grey-two: #f2f3f7;
+$pale-grey: #d9dbe3;
 $steel: #868996;
 $charcoal-grey: #414452;
 $silver: #c0c3ce;
@@ -14,6 +15,7 @@ $dark: #2c2f3c;
 $black: #000000;
 $seafoam-blue: #76cdd8;
 $pear: #e2f86a;
+$battleship-grey: #6c7283;
 
 @mixin button($color: transparent, $size: 12px) {
   background-color: $color;
