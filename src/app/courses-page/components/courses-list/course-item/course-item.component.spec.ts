@@ -82,6 +82,6 @@ describe('CourseItemComponent', () => {
   it('should show title in uppercase', () => {
     const title = fixture.nativeElement.querySelector('h1');
     fixture.detectChanges();
-    expect(title.textContent).toContain('HELLO');
+    expect(title.textContent).toContain(courseMock.title.toUpperCase());
   });
 });

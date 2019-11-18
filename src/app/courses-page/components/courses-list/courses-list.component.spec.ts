@@ -130,14 +130,14 @@ describe('CoursesListComponent', () => {
     expect(consoleSpy).toHaveBeenCalledWith('Add course');
   });
 
-  // it('should proceed course search', () => {
-  //   const consoleSpy = spyOn(console, 'log');
-  //   const event = new Event('click');
-  //
-  //   const courseInstrumental = fixture.debugElement.query(By.directive(MockInstrumentalSectionComponent));
-  //   const courseInstrumentalInstance = courseInstrumental.componentInstance;
-  //
-  //   courseInstrumentalInstance.search.emit(event);
-  //   expect(consoleSpy).toHaveBeenCalledWith('');
-  // });
+  it('should proceed course search', () => {
+    const consoleSpy = spyOn(console, 'log');
+    const searchString = 'search'
+
+    const courseInstrumental = fixture.debugElement.query(By.directive(MockInstrumentalSectionComponent));
+    const courseInstrumentalInstance = courseInstrumental.componentInstance;
+    courseInstrumentalInstance.search.emit(searchString);
+
+    expect(consoleSpy).toHaveBeenCalledWith(`Search: ${searchString}`);
+  });
 });

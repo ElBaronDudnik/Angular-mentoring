@@ -36,11 +36,9 @@ export class CoursesListComponent implements OnInit {
     console.log('Edit');
   }
 
-  onSearch(event: Event): void {
-    const element = event.target as HTMLInputElement;
-    const searchQueryString = element.value;
-    this.filteredCourses = this.filterPipe.transform(searchQueryString, this.courses);
-    console.log(`Search: ${searchQueryString}`);
+  onSearch(searchQuery: string): void {
+    this.filteredCourses = this.filterPipe.transform(searchQuery, this.courses);
+    console.log(`Search: ${searchQuery}`);
   }
 
   onAddCourse(): void {
