@@ -49,7 +49,7 @@ describe('InstrumentalSectionComponent', () => {
         MockCourseAdditionComponent
       ],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -62,7 +62,8 @@ describe('InstrumentalSectionComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should emit addCourse event', () => {
+
+  it('should proceed course addition', () => {
     const spy = spyOn(component, 'onAddCourse');
 
     const courseAdd = fixture.debugElement.query(By.directive(MockCourseAdditionComponent));
@@ -72,13 +73,13 @@ describe('InstrumentalSectionComponent', () => {
     expect(spy).toHaveBeenCalled();
   });
 
-  it('should emit search event', () => {
+  it('should proceed courses search', () => {
     const spy = spyOn(component, 'onSearch');
 
     const courseSearch = fixture.debugElement.query(By.directive(MockCourseSearchComponent));
     const courseSearchInstance = courseSearch.componentInstance;
 
-    courseSearchInstance.search.emit('search');
+    courseSearchInstance.search.emit();
     expect(spy).toHaveBeenCalled();
   });
 });

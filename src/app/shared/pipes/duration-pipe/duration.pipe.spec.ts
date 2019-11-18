@@ -11,7 +11,7 @@ describe('DurationPipe', () => {
     expect(durationPipe).toBeDefined();
   });
 
-  it('should return right value in format `11h 2m`', () => {
+  it('should show duration in appropriate format `1h 3m`', () => {
     const duration = 66;
 
     const transformed = durationPipe.transform(duration);
@@ -19,7 +19,7 @@ describe('DurationPipe', () => {
     expect(transformed).toEqual('1h 6m');
   });
 
-  it('should return right value in format `2m`', () => {
+  it('should show duration in appropriate format `2m`', () => {
     const duration = 26;
 
     const transformed = durationPipe.transform(duration);

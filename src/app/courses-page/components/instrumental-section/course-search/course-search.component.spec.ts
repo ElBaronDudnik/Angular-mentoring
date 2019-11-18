@@ -3,15 +3,24 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CourseSearchComponent } from './course-search.component';
 import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { Component } from '@angular/core';
+
+@Component({
+  template: `<app-course-search (search)="onSearch($event)"></app-course-search>`
+})
+class TestHostComponent {
+  onSearch = jasmine.createSpy('onSearchSpy');
+}
 
 describe('CourseSearchComponent', () => {
-  let component: CourseSearchComponent;
-  let fixture: ComponentFixture<CourseSearchComponent>;
+  let component: TestHostComponent;
+  let fixture: ComponentFixture<TestHostComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
         CourseSearchComponent,
+        TestHostComponent
       ],
       imports: [FormsModule]
     })
@@ -19,7 +28,7 @@ describe('CourseSearchComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CourseSearchComponent);
+    fixture = TestBed.createComponent(TestHostComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -28,12 +37,10 @@ describe('CourseSearchComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should emit search event', () => {
-    const spy = spyOn(component.search, 'emit');
+  it('should proceed courses search', () => {
     const submitButton = fixture.debugElement.query(By.css('button'));
-    component.searchQuery = 'search';
 
     submitButton.triggerEventHandler('click', null);
-    expect(spy).toHaveBeenCalledWith('search');
+    expect(component.onSearch).toHaveBeenCalled();
   });
 });
