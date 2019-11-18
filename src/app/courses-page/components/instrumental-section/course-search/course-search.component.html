@@ -1,7 +1,7 @@
 <label class="icon-search">
   <img src="../../../../../assets/img/ic-search.png" alt="Search Icon">
-  <input type="search" placeholder="Text to search" [(ngModel)] = "searchQuery">
+  <input type="text" placeholder="Text to search" [(ngModel)] = "searchQuery" (keydown.enter)="onSearch()" >
 </label>
-<button (click) = "onSearch()">Search</button>
+<button (click) = "onSearch()" type="submit">Search</button>
 
 

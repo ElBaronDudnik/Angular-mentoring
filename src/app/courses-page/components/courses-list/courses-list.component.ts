@@ -1,22 +1,23 @@
-import { Component, OnInit, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CourseInterface } from '../../course.interface';
 import { coursesMock } from '../../courses.mock';
+import { FilterCoursesByNamePipe } from '../../../shared/pipes/filter-pipe/filter-courses-by-name.pipe';
 
 @Component({
   selector: 'app-courses-list',
   templateUrl: './courses-list.component.html',
   styleUrls: ['./courses-list.component.scss'],
+  providers: [FilterCoursesByNamePipe],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CoursesListComponent implements OnInit {
   public courses: CourseInterface[] = [];
-  @Output() search = new EventEmitter<string>();
-  @Output() addCourse = new EventEmitter<void>();
-
-  constructor() { }
+  public filteredCourses: CourseInterface[] = [];
+  constructor(private filterPipe: FilterCoursesByNamePipe) { }
 
   ngOnInit() {
     this.courses = coursesMock;
+    this.filteredCourses = coursesMock;
   }
 
   getCourses(): void {
@@ -31,15 +32,16 @@ export class CoursesListComponent implements OnInit {
     console.log('Load More');
   }
 
+  onEdit(): void {
+    console.log('Edit');
+  }
+
   onSearch(searchQuery: string): void {
+    this.filteredCourses = this.filterPipe.transform(searchQuery, this.courses);
     console.log(`Search: ${searchQuery}`);
   }
 
   onAddCourse(): void {
     console.log('Add course');
-  }
-
-  onEdit(): void {
-    console.log('Edit');
   }
 }

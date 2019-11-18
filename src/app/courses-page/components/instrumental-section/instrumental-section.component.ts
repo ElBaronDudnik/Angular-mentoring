@@ -7,15 +7,15 @@ import { Component, OnInit, ChangeDetectionStrategy, EventEmitter, Output } from
     changeDetection: ChangeDetectionStrategy.OnPush
   })
   export class InstrumentalSectionComponent implements OnInit {
-  @Output() search = new EventEmitter<string>();
+  @Output() search = new EventEmitter();
   @Output() addCourse = new EventEmitter<void>();
   constructor() { }
 
   ngOnInit() {
   }
 
-  onSearch(value: string): void {
-    this.search.emit(value);
+  onSearch(event: Event): void {
+    this.search.emit(event);
   }
 
   onAddCourse() {

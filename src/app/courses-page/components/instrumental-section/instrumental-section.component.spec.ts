@@ -1,25 +1,84 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { InstrumentalSectionComponent } from './instrumental-section.component';
+import { By } from '@angular/platform-browser';
+import { Component, EventEmitter, Output } from '@angular/core';
+
+@Component({
+  selector: 'app-course-addition',
+  template: ''
+})
+class MockCourseAdditionComponent {
+  @Output() addCourse = new EventEmitter();
+}
+
+@Component({
+  selector: 'app-course-search',
+  template: ''
+})
+class MockCourseSearchComponent {
+  @Output() search = new EventEmitter();
+}
+
+@Component({
+  template: `
+      <app-instrumental-section
+              (addCourse)="onAddCourse()"
+              (search)="onSearch($event)">
+      </app-instrumental-section>`
+})
+class TestHostComponent {
+  onSearch(value: string): void {
+    console.log(value);
+  }
+  onAddCourse() {
+    console.log('Add course');
+  }
+}
 
 describe('InstrumentalSectionComponent', () => {
-  let component: InstrumentalSectionComponent;
-  let fixture: ComponentFixture<InstrumentalSectionComponent>;
+  let component: TestHostComponent;
+  let fixture: ComponentFixture<TestHostComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InstrumentalSectionComponent ]
+      declarations: [
+        InstrumentalSectionComponent,
+        TestHostComponent,
+        MockCourseSearchComponent,
+        MockCourseAdditionComponent
+      ],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InstrumentalSectionComponent);
+    fixture = TestBed.createComponent(TestHostComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should proceed course addition', () => {
+    const spy = spyOn(component, 'onAddCourse');
+
+    const courseAdd = fixture.debugElement.query(By.directive(MockCourseAdditionComponent));
+    const courseAddInstance = courseAdd.componentInstance;
+
+    courseAddInstance.addCourse.emit();
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('should proceed courses search', () => {
+    const spy = spyOn(component, 'onSearch');
+
+    const courseSearch = fixture.debugElement.query(By.directive(MockCourseSearchComponent));
+    const courseSearchInstance = courseSearch.componentInstance;
+
+    courseSearchInstance.search.emit();
+    expect(spy).toHaveBeenCalled();
   });
 });
