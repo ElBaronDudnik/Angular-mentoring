@@ -39,7 +39,7 @@ export const coursesMock: CourseInterface[] = [{
     for all courses offered during a particular semester.`
   },
   {
-    id: 3,
+    id: 10,
     title: 'Video Course 3. Name Tag',
     duration: 61,
     creationDate: new Date(2012, 8, 14),
@@ -65,7 +65,7 @@ export const coursesMock: CourseInterface[] = [{
     for all courses offered during a particular semester.`
   },
   {
-    id: 4,
+    id: 7,
     title: 'Video Course 4. Name Tag',
     duration: 10,
     creationDate: new Date(2019, 10, 1),

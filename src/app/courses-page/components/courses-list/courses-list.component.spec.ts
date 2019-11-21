@@ -7,6 +7,8 @@ import {By} from '@angular/platform-browser';
 import { Component, Directive, EventEmitter, Input, Output, Pipe, PipeTransform } from '@angular/core';
 import { CourseInterface } from '../../course.interface';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import {ApiService} from '../../../core/services/api.service';
+import {ApiServiceStub} from '../../../core/services/api.service.mock';
 
 @Pipe({name: 'durationPipe'})
 class MockDurationPipe implements PipeTransform {
@@ -66,7 +68,8 @@ describe('CoursesListComponent', () => {
         MockOrderCoursesByDatePipe,
         MockBordeStyleDirective,
       ],
-      imports: [FontAwesomeModule]
+      imports: [FontAwesomeModule],
+      providers: [{provide: ApiService, useClass: ApiServiceStub}]
     })
     .compileComponents();
   }));
@@ -85,10 +88,9 @@ describe('CoursesListComponent', () => {
   });
 
   it('should get courses', () => {
-    const consoleSpy = spyOn(console, 'log');
     component.getCourses();
 
-    expect(consoleSpy).toHaveBeenCalledWith('Courses: ');
+    expect(component.courses).toEqual(coursesMock);
   });
 
   it('should load more courses', () => {
@@ -132,7 +134,7 @@ describe('CoursesListComponent', () => {
 
   it('should proceed course search', () => {
     const consoleSpy = spyOn(console, 'log');
-    const searchString = 'search'
+    const searchString = 'search';
 
     const courseInstrumental = fixture.debugElement.query(By.directive(MockInstrumentalSectionComponent));
     const courseInstrumentalInstance = courseInstrumental.componentInstance;

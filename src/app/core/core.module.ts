@@ -14,13 +14,11 @@ import { FormsModule } from '@angular/forms';
     HeaderComponent,
     FooterComponent,
     LogoComponent,
-    LoginPageComponent,
   ],
   exports: [
     HeaderComponent,
     FooterComponent,
     LogoComponent,
-    LoginPageComponent
   ]
 })
 export class CoreModule {

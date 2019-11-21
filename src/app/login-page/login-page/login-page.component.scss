@@ -1,7 +1,7 @@
 @import '../../../styles';
 
 .form-container {
-  height: calc(100vh - 144px)
+  height: calc(100vh - 64px * 2); //64px - height of footer and header
 }
 
 h2 {
@@ -18,7 +18,7 @@ input::placeholder {
 }
 
 form {
-  top: 25%;
+  top: 15vh;
   position: relative;
   margin: 0 auto;
   width: 368px;
@@ -36,7 +36,7 @@ form {
   align-items: center;
 }
 
-input{
+input {
   width: 100%;
   height: 36px;
   margin-top: 10px;
@@ -65,6 +65,7 @@ label {
 
 button {
   @include button($sick-green, 14px);
+
   width: 68px;
   height: 36px;
 }

@@ -9,7 +9,7 @@ export class AuthService {
 
   login(userName: string, password: string): void {
     if (userName && password) {
-      const token = 'fl;erfk;wegfkw';
+      const token = '1234567890';
       const userObj = JSON.stringify({userName, password, token});
       localStorage.setItem('user', userObj);
     }

@@ -14,25 +14,26 @@ export class ApiService {
     return this.courses;
   }
 
-  createCourse(props: CourseInterface): CourseInterface {
+  createCourse(props: CourseInterface): CourseInterface[] {
     const course = new Course(props);
-    return course;
+    this.courses.push(course);
+    return this.courses;
   }
 
   getCourseById(id: number): CourseInterface | undefined {
-    const course = coursesMock.find(item => item.id === id);
+    const course = this.courses.find((item: CourseInterface) => item.id === id);
     return course;
   }
 
   updateItem(oldCourse: CourseInterface, newCourse: CourseInterface): void {
-    const index = coursesMock.findIndex(el => el === oldCourse);
-    coursesMock[index] = newCourse;
+    const index = this.courses.findIndex((el: CourseInterface) => el === oldCourse);
+    this.courses[index] = newCourse;
   }
 
   removeItem(id: number): CourseInterface[] {
-    const index = coursesMock.findIndex(el => el.id === id);
-    coursesMock.splice(index, 1);
-    return coursesMock;
+    const index = this.courses.findIndex((el: CourseInterface) => el.id === id);
+    this.courses.splice(index, 1);
+    return this.courses;
   }
 }
 

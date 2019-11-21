@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';
 import { FormControl } from '@angular/forms';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
@@ -11,12 +12,14 @@ import { FormControl } from '@angular/forms';
 export class LoginPageComponent implements OnInit {
   email !: string;
   password !: string;
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService,
+              private router: Router) { }
 
   ngOnInit() {}
 
   onLogin() {
     console.log('logged in successfully');
     this.authService.login(this.email, this.password);
+    this.router.navigate(['/courses']);
   }
 }

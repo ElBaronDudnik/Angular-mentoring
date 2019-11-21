@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import {Component, ChangeDetectionStrategy, OnInit, OnChanges, AfterViewInit, DoCheck} from '@angular/core';
 import { AuthService } from './core/services/auth.service';
 
 @Component({
@@ -7,11 +7,19 @@ import { AuthService } from './core/services/auth.service';
   styleUrls: ['./app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements DoCheck, OnInit {
   public isUserLogin !: boolean;
   constructor(private authService: AuthService) {}
+
   ngOnInit() {
+    this.isAuth();
+  }
+
+  ngDoCheck() {
+    this.isAuth();
+  }
+
+  isAuth() {
     this.isUserLogin = !this.authService.isAuthenticated();
-    console.log(this.isUserLogin);
   }
 }
