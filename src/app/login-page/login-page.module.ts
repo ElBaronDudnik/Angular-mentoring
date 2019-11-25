@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
-import { LoginPageRoutingComponent } from './login-page-routing.module';
+import { LoginPageRoutingModule } from './login-page-routing.module';
 
 
 
@@ -15,7 +15,7 @@ import { LoginPageRoutingComponent } from './login-page-routing.module';
     CommonModule,
     FormsModule,
     SharedModule,
-    LoginPageRoutingComponent
+    LoginPageRoutingModule
   ]
 })
 export class LoginPageModule { }

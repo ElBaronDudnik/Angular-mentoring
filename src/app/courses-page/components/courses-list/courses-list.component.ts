@@ -1,8 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CourseInterface } from '../../course.interface';
-import { coursesMock } from '../../courses.mock';
 import { FilterCoursesByNamePipe } from '../../../shared/pipes/filter-pipe/filter-courses-by-name.pipe';
-import { ApiService } from '../../../core/services/api.service';
+import { CoursesService } from '../../../core/services/courses.service';
 
 @Component({
   selector: 'app-courses-list',
@@ -15,21 +14,21 @@ export class CoursesListComponent implements OnInit {
   public courses: CourseInterface[] = [];
   public filteredCourses: CourseInterface[] = [];
   constructor(private filterPipe: FilterCoursesByNamePipe,
-              private apiService: ApiService) { }
+              private coursesService: CoursesService) { }
 
   ngOnInit() {
     this.getCourses();
   }
 
   getCourses(): void {
-    this.courses = this.apiService.getCoursesList();
-    this.filteredCourses = this.apiService.getCoursesList();
+    this.courses = this.coursesService.getCoursesList();
+    this.filteredCourses = this.coursesService.getCoursesList();
   }
 
   onDelete(id: number): void {
     const answer = confirm('Do you really want to delete this course?');
     if (answer) {
-      this.apiService.removeItem(id);
+      this.coursesService.removeItem(id);
     }
     console.log(`Id of the item to delete: ${id}`);
   }

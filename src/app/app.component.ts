@@ -1,4 +1,4 @@
-import {Component, ChangeDetectionStrategy, OnInit, OnChanges, AfterViewInit, DoCheck} from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit, DoCheck } from '@angular/core';
 import { AuthService } from './core/services/auth.service';
 
 @Component({

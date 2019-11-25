@@ -1,19 +1,19 @@
 import {getTestBed, TestBed} from '@angular/core/testing';
 
-import { ApiService } from './api.service';
+import { CoursesService } from './courses.service';
 import { coursesMock } from '../../courses-page/courses.mock';
 
-describe('ApiService', () => {
+describe('CoursesService', () => {
   let injector: TestBed;
-  let service: ApiService;
+  let service: CoursesService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ApiService],
+      providers: [CoursesService],
     });
 
     injector = getTestBed();
-    service = injector.get(ApiService);
+    service = injector.get(CoursesService);
   });
 
   it('should return courses list', () => {

@@ -3,12 +3,12 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoursesListComponent } from './courses-list.component';
 
 import { coursesMock } from '../../courses.mock';
-import {By} from '@angular/platform-browser';
+import { By } from '@angular/platform-browser';
 import { Component, Directive, EventEmitter, Input, Output, Pipe, PipeTransform } from '@angular/core';
 import { CourseInterface } from '../../course.interface';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import {ApiService} from '../../../core/services/api.service';
-import {ApiServiceStub} from '../../../core/services/api.service.mock';
+import { CoursesService } from '../../../core/services/courses.service';
+import { CoursesServiceStub } from './courses.service.mock';
 
 @Pipe({name: 'durationPipe'})
 class MockDurationPipe implements PipeTransform {
@@ -69,7 +69,7 @@ describe('CoursesListComponent', () => {
         MockBordeStyleDirective,
       ],
       imports: [FontAwesomeModule],
-      providers: [{provide: ApiService, useClass: ApiServiceStub}]
+      providers: [{provide: CoursesService, useClass: CoursesServiceStub}]
     })
     .compileComponents();
   }));
