@@ -17,9 +17,13 @@ describe('AuthService', () => {
 
   it('should user login with credentials', () => {
     const spy = spyOn(localStorage, 'setItem');
+    const userName = 'userName';
+    const password = 'password';
+    const token = '1234567890';
+    const resultString = `user', '{"userName":"${userName}","password":"${password}","token":"${token}"}`;
 
-    service.login('foo', 'bar');
-    expect(spy).toHaveBeenCalledWith( 'user', '{"userName":"foo","password":"bar","token":"1234567890"}' );
+    service.login(userName, password);
+    expect(spy).toHaveBeenCalledWith( resultString );
   });
 
   it('should user not login without credentials', () => {
@@ -36,17 +40,4 @@ describe('AuthService', () => {
     expect(spy).toHaveBeenCalled();
   });
 
-  // it('should check whether user authenticated', () => {
-  //   const spy = spyOn(localStorage, 'getItem');
-  //
-  //   service.isAuthenticated();
-  //   expect(spy).toHaveBeenCalledWith('user');
-  // });
-  //
-  // it('should get user info', () => {
-  //   const spy = spyOn(localStorage, 'getItem');
-  //
-  //   service.getUserInfo();
-  //   expect(spy).toHaveBeenCalledWith('user');
-  // });
 });

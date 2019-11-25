@@ -23,7 +23,7 @@ export class CoursesListComponent implements OnInit {
 
   getCourses(): void {
     this.courses = this.apiService.getCoursesList();
-    this.filteredCourses = this.apiService.getCoursesList();
+    this.filteredCourses = this.courses.slice();
   }
 
   onDelete(id: number): void {

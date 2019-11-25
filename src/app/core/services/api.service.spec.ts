@@ -17,7 +17,6 @@ describe('ApiService', () => {
   });
 
   it('should return courses list', () => {
-    service.courses = coursesMock;
     const list = service.getCoursesList();
     expect(list).toBe(coursesMock);
   });
@@ -36,10 +35,6 @@ describe('ApiService', () => {
   it('should return course by its id', () => {
     const course = service.getCourseById(1);
     expect(course).toBe(coursesMock[0]);
-  });
-
-  it('should update course', () => {
-
   });
 
   it('should remove course', () => {
