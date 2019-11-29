@@ -6,12 +6,18 @@ import { Course } from '../../courses-page/course.model';
 @Injectable({
   providedIn: 'root'
 })
-export class ApiService {
-  courses = coursesMock;
-  constructor() { }
+export class CoursesService {
+  private courses !: CourseInterface[];
+  constructor() {
+    this.coursesList = coursesMock;
+  }
 
-  getCoursesList(): CourseInterface[] {
+  get coursesList(): CourseInterface[] {
     return this.courses;
+  }
+
+  set coursesList(courses: CourseInterface[]) {
+    this.courses = courses;
   }
 
   createCourse(props: CourseInterface): CourseInterface[] {
@@ -37,11 +43,3 @@ export class ApiService {
   }
 }
 
-
-// {
-//   id: 10,
-//     title: 'Angular Course',
-//   creationDate: new Date(12, 11, 2019),
-//   duration: 12,
-//   description: 'Angular course description'
-// }

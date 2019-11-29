@@ -1,9 +1,15 @@
-import {CourseInterface} from '../../courses-page/course.interface';
-import {coursesMock} from '../../courses-page/courses.mock';
+import { CourseInterface } from '../../course.interface';
+import { coursesMock } from '../../courses.mock';
 
-export class ApiServiceStub {
-  getCoursesList(): CourseInterface[] {
+export class CoursesServiceStub {
+  private courses !: CourseInterface[];
+
+  get coursesList(): CourseInterface[] {
     return coursesMock;
+  }
+
+  set coursesList(courses) {
+    this.courses = courses;
   }
 
   createCourse(): CourseInterface[] {

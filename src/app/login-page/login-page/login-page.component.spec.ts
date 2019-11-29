@@ -2,14 +2,14 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoginPageComponent } from './login-page.component';
 import { AuthService } from '../../core/services/auth.service';
-import {FormsModule} from '@angular/forms';
-import {RouterTestingModule} from '@angular/router/testing';
-import {Router} from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Router } from '@angular/router';
+import { AuthServiceStub } from './auth.service.mock';
 
 describe('LoginPageComponent', () => {
   let component: LoginPageComponent;
   let fixture: ComponentFixture<LoginPageComponent>;
-  let authService;
   const mockRouter = {
     navigate: jasmine.createSpy('navigate')
   };
@@ -18,7 +18,7 @@ describe('LoginPageComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ LoginPageComponent ],
       imports: [ FormsModule, RouterTestingModule ],
-      providers: [ AuthService, { provide: Router, useValue: mockRouter}]
+      providers: [ { provide: AuthService, useClass: AuthServiceStub}, { provide: Router, useValue: mockRouter}]
     })
     .compileComponents();
   }));
@@ -26,22 +26,21 @@ describe('LoginPageComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(LoginPageComponent);
     component = fixture.componentInstance;
-    authService = fixture.debugElement.injector.get(AuthService);
-    // router = fixture.debugElement.injector.get(RouterModule);
     fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
   });
 
   it('should log user in', () => {
     const spy = spyOn(localStorage, 'setItem');
-    component.email = 'var@epam.com';
-    component.password = 'Secret1';
+    const email = 'email';
+    const password = 'password';
+    const token = '1234567890';
+    const resultString = `user', '{"email":"${email}","password":"${password}","token":"${token}"}`;
+
+    component.email = email;
+    component.password = password;
     component.onLogin();
 
-    expect(spy).toHaveBeenCalledWith( 'user', '{"userName":"var@epam.com","password":"Secret1","token":"1234567890"}');
+    expect(spy).toHaveBeenCalledWith(resultString);
   });
 
   it('should redirect to courses page', () => {

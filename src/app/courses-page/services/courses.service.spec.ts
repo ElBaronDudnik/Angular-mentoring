@@ -1,23 +1,23 @@
-import {getTestBed, TestBed} from '@angular/core/testing';
+import { getTestBed, TestBed } from '@angular/core/testing';
 
-import { ApiService } from './api.service';
+import { CoursesService } from './courses.service';
 import { coursesMock } from '../../courses-page/courses.mock';
 
-describe('ApiService', () => {
+describe('CoursesService', () => {
   let injector: TestBed;
-  let service: ApiService;
+  let service: CoursesService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ApiService],
+      providers: [CoursesService],
     });
 
     injector = getTestBed();
-    service = injector.get(ApiService);
+    service = injector.get(CoursesService);
   });
 
   it('should return courses list', () => {
-    const list = service.getCoursesList();
+    const list = service.coursesList;
     expect(list).toBe(coursesMock);
   });
 
@@ -29,7 +29,7 @@ describe('ApiService', () => {
       duration: 12,
       description: 'Angular course description'
     });
-    expect(service.courses).toBe(courses);
+    expect(service.coursesList).toBe(courses);
   });
 
   it('should return course by its id', () => {
@@ -43,3 +43,5 @@ describe('ApiService', () => {
     expect(courses).toBe(coursesMock);
   });
 });
+
+

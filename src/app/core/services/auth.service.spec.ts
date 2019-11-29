@@ -1,4 +1,4 @@
-import {getTestBed, TestBed} from '@angular/core/testing';
+import { getTestBed, TestBed } from '@angular/core/testing';
 
 import { AuthService } from './auth.service';
 
@@ -17,12 +17,12 @@ describe('AuthService', () => {
 
   it('should user login with credentials', () => {
     const spy = spyOn(localStorage, 'setItem');
-    const userName = 'userName';
+    const email = 'email';
     const password = 'password';
     const token = '1234567890';
-    const resultString = `user', '{"userName":"${userName}","password":"${password}","token":"${token}"}`;
+    const resultString = `user', '{"email":"${email}","password":"${password}","token":"${token}"}`;
 
-    service.login(userName, password);
+    service.login(email, password);
     expect(spy).toHaveBeenCalledWith( resultString );
   });
 
