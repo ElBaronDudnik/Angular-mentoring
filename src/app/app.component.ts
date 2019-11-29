@@ -8,5 +8,5 @@ import { AuthService } from './core/services/auth.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
-  constructor(private authService: AuthService) {}
+  constructor(public authService: AuthService) {}
 }
