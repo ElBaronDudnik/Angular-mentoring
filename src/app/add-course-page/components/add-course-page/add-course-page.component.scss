@@ -1,8 +1,4 @@
-@import '../../../styles';
-
-.form-container {
-  height: calc(100vh - 64px * 2); //64px - height of footer and header
-}
+@import '../../../../styles';
 
 h2 {
   font-family: 'Source Sans Pro', sans-serif;
@@ -19,9 +15,8 @@ input::placeholder {
 
 form {
   top: 15vh;
-  position: relative;
-  margin: 0 auto;
-  width: 368px;
+  margin: 40px auto;
+  width: 668px;
   padding: 24px 23px;
   border-radius: 6px;
   box-shadow: 0 1px 24px 0 rgba(18, 21, 35, 0.08);
@@ -36,7 +31,8 @@ form {
   align-items: center;
 }
 
-input {
+input,
+textarea {
   width: 100%;
   height: 36px;
   margin-top: 10px;
@@ -44,6 +40,10 @@ input {
   border-radius: 3px;
   border: solid 1px $pale-grey;
   background-color: $white;
+}
+
+textarea {
+  height: 72px;
 }
 
 label {
@@ -63,9 +63,14 @@ label {
   color: $battleship-grey;
 }
 
+.buttons-container {
+  justify-content: flex-end;
+}
+
 button {
   width: 68px;
   height: 36px;
+  margin-left: 20px;
 }
 
 button.green {

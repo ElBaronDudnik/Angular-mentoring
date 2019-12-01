@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CourseInterface } from '../../course.interface';
 import { FilterCoursesByNamePipe } from '../../../shared/pipes/filter-pipe/filter-courses-by-name.pipe';
 import { CoursesService } from '../../services/courses.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-courses-list',
@@ -14,7 +15,8 @@ export class CoursesListComponent implements OnInit {
   public courses: CourseInterface[] = [];
   public filteredCourses: CourseInterface[] = [];
   constructor(private filterPipe: FilterCoursesByNamePipe,
-              private coursesService: CoursesService) { }
+              private coursesService: CoursesService,
+              private router: Router) { }
 
   ngOnInit() {
     this.getCourses();
@@ -47,6 +49,6 @@ export class CoursesListComponent implements OnInit {
   }
 
   onAddCourse(): void {
-    console.log('Add course');
+    this.router.navigate(['courses/new']);
   }
 }

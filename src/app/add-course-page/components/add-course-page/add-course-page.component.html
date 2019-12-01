@@ -15,25 +15,13 @@
       <textarea placeholder="Add description" id="description" name="description"></textarea>
     </div>
 
-    <div class="form-field">
-      <label for="duration">Duration:</label>
-      <span class="required">*required</span>
-      <input type="text" placeholder="minutes" id="duration" name="duration">
-    </div>
+    <app-date-input-field></app-date-input-field>
 
-    <div class="form-field">
-      <label for="date">Date:</label>
-      <span class="required">*required</span>
-      <input type="date" placeholder="mm-dd-yyyy" id="date" name="date">
-    </div>
+    <app-duration-input-field></app-duration-input-field>
 
-    <div class="form-field">
-      <label for="authors">Authors:</label>
-      <span class="required">*required</span>
-      <input type="text" placeholder="Start typing" id="authors" name="duration">
-    </div>
+    <app-authors-input-field></app-authors-input-field>
 
-    <div class="form-field">
+    <div class="form-field buttons-container">
       <button (click) = "onCancel()" class="grey">Cancel</button>
       <button (click) = "onSave()" class="green">Save</button>
     </div>

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LoginPageModule } from './login-page/login-page.module';
-import { AddCoursePageModule } from './add-course-page/add-course-page.module';
+import { LoginPageComponent } from './login-page/login-page/login-page.component';
 
 
 const routes: Routes = [
@@ -9,10 +8,7 @@ const routes: Routes = [
       loadChildren: () => import('./courses-page/courses-page.module').then(m => m.CoursesPageModule)
     },
     { path: 'login',
-      loadChildren: () => LoginPageModule
-    },
-    { path: 'add-course',
-      loadChildren: () => AddCoursePageModule
+      component: LoginPageComponent
     },
     { path: '',
       redirectTo: 'login',

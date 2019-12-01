@@ -8,6 +8,10 @@ const routes: Routes = [
     path: '',
     component: CoursesListComponent
   },
+  {
+    path: 'new',
+    loadChildren: () => import('../add-course-page/add-course-page.module').then(m => m.AddCoursePageModule)
+  },
 ];
 
 @NgModule({

@@ -7,6 +7,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule } from '@angular/forms';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
+import { LoginPageModule } from './login-page/login-page.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { SharedModule } from './shared/shared.module';
     FontAwesomeModule,
     FormsModule,
     CoreModule,
-    SharedModule
+    SharedModule,
+    LoginPageModule
   ],
   providers: [],
   bootstrap: [AppComponent]

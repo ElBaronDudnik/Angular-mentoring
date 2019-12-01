@@ -13,4 +13,12 @@ export class AddCoursePageComponent implements OnInit {
   ngOnInit() {
   }
 
+  onCancel() {
+    console.log('Cancel');
+  }
+
+  onSave() {
+    console.log('Save');
+  }
+
 }
