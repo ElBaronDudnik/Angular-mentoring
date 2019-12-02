@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { LoginPageModule } from './login-page/login-page.module';
+import {PageNotFoundModule} from './page-not-found/page-not-found.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { LoginPageModule } from './login-page/login-page.module';
     FormsModule,
     CoreModule,
     SharedModule,
-    LoginPageModule
+    LoginPageModule,
+    PageNotFoundModule
   ],
   providers: [],
   bootstrap: [AppComponent]
