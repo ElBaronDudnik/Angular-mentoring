@@ -27,6 +27,17 @@ export class CoursesService {
     return this.courses;
   }
 
+  getBiggestId(): number {
+    let max = 0;
+    this.courses.forEach(course => {
+      if (course.id > max) {
+        max = course.id;
+      }
+    });
+
+    return max;
+  }
+
   getCourseById(id: number): CourseInterface | undefined {
     const course = this.courses.find((item: CourseInterface) => item.id === id);
     return course;

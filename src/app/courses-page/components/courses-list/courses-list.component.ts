@@ -39,8 +39,9 @@ export class CoursesListComponent implements OnInit {
     console.log('Load More');
   }
 
-  onEdit(): void {
-    console.log('Edit');
+  onEdit(id: number): void {
+    console.log(id);
+    this.router.navigate([`courses/${id}`]);
   }
 
   onSearch(searchQuery: string): void {

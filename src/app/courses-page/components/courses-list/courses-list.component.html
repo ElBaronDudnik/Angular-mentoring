@@ -4,9 +4,10 @@
     <li *ngFor="let course of filteredCourses | orderCoursesByDate">
       <app-course-item
         appBorderStyle
+        [id]="course.id"
         [course]="course"
         (delete)="onDelete($event)"
-        (edit)="onEdit()"
+        (edit)="onEdit($event)"
         [ngClass]="{'top-rate': course.topRated}">
       </app-course-item>
     </li>

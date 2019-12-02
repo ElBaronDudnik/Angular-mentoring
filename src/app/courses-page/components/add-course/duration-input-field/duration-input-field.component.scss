@@ -26,3 +26,20 @@ input {
   width: 80%;
   text-align: right;
 }
+
+label {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.22px;
+  color: $slate-grey;
+}
+
+.required {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 12px;
+  font-weight: normal;
+  line-height: 1.5;
+  letter-spacing: 0.19px;
+  color: $battleship-grey;
+}

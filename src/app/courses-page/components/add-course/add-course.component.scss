@@ -80,3 +80,7 @@ button.save-button {
 button.cancel-button {
   @include button($silver, 14px);
 }
+
+button.green:disabled {
+  background-color: $pale-grey;
+}

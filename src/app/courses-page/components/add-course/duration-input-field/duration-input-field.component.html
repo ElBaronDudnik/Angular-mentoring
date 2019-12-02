@@ -1,6 +1,6 @@
-<div class="form-field not-full">
+<div class="form-field not-full" [formGroup]="newUserForm">
   <label for="duration">Duration:</label>
   <span class="required">*required</span>
-  <input type="number" placeholder="minutes" id="duration" name="duration" [(ngModel)]="duration">
+  <input type="number" placeholder="minutes" id="duration" name="duration" [(ngModel)]="duration" formControlName="duration">
   <div class="duration">{{ duration | durationPipe }}</div>
 </div>
