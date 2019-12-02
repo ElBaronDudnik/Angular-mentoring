@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { PageNotFoundComponent } from './page-not-found/page-not-found/page-not-found.component';
+
 
 const routes: Routes = [
     { path: 'courses',
@@ -10,7 +12,7 @@ const routes: Routes = [
       pathMatch: 'full'
     },
     { path: '**',
-      redirectTo: 'login',
+      component: PageNotFoundComponent,
     }
 ];
 
