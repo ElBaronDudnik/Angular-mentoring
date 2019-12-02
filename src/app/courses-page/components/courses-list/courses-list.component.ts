@@ -21,7 +21,7 @@ export class CoursesListComponent implements OnInit {
   }
 
   getCourses(): void {
-    this.courses = this.coursesService.coursesList;
+    this.courses = this.coursesService.getCoursesList();
     this.filteredCourses = this.courses;
   }
 
@@ -30,7 +30,6 @@ export class CoursesListComponent implements OnInit {
     if (answer) {
       this.coursesService.removeItem(id);
     }
-    console.log(`Id of the item to delete: ${id}`);
   }
 
   loadMore(): void {
@@ -43,7 +42,6 @@ export class CoursesListComponent implements OnInit {
 
   onSearch(searchQuery: string): void {
     this.filteredCourses = this.filterPipe.transform(searchQuery, this.courses);
-    console.log(`Search: ${searchQuery}`);
   }
 
   onAddCourse(): void {

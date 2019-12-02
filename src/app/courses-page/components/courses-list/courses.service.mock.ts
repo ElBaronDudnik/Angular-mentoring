@@ -4,12 +4,8 @@ import { coursesMock } from '../../courses.mock';
 export class CoursesServiceStub {
   private courses !: CourseInterface[];
 
-  get coursesList(): CourseInterface[] {
+  getCoursesList(): CourseInterface[] {
     return coursesMock;
-  }
-
-  set coursesList(courses) {
-    this.courses = courses;
   }
 
   createCourse(): CourseInterface[] {

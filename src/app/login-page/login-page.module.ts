@@ -5,8 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { LoginPageRoutingModule } from './login-page-routing.module';
 
-
-
 @NgModule({
   declarations: [
     LoginPageComponent,

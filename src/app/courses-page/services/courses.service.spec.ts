@@ -17,19 +17,22 @@ describe('CoursesService', () => {
   });
 
   it('should return courses list', () => {
-    const list = service.coursesList;
+    const list = service.getCoursesList();
     expect(list).toBe(coursesMock);
   });
 
   it('should create course', () => {
-    const courses = service.createCourse({
+    const courseData = {
       id: 10,
       title: 'Angular Course',
       creationDate: new Date(12, 11, 2019),
       duration: 12,
       description: 'Angular course description'
-    });
-    expect(service.coursesList).toBe(courses);
+    };
+    service.createCourse(courseData);
+    const lastCourse = service.getCoursesList()[coursesMock.length];
+
+    expect(lastCourse.id).toEqual(courseData.id);
   });
 
   it('should return course by its id', () => {

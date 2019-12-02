@@ -1,24 +1,22 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoginPageComponent } from './login-page.component';
-import { AuthService } from '../../core/services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
-import { AuthServiceStub } from './auth.service.mock';
+import { AuthService } from '../../core/services/auth.service';
 
 describe('LoginPageComponent', () => {
   let component: LoginPageComponent;
   let fixture: ComponentFixture<LoginPageComponent>;
-  const mockRouter = {
-    navigate: jasmine.createSpy('navigate')
-  };
+  let authService: jasmine.SpyObj<AuthService>;
+  let mockRouter: jasmine.SpyObj<Router>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ LoginPageComponent ],
       imports: [ FormsModule, RouterTestingModule ],
-      providers: [ { provide: AuthService, useClass: AuthServiceStub}, { provide: Router, useValue: mockRouter}]
+      providers: [ { provide: AuthService, useValue: authService}, { provide: Router, useValue: mockRouter}]
     })
     .compileComponents();
   }));
@@ -26,21 +24,27 @@ describe('LoginPageComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(LoginPageComponent);
     component = fixture.componentInstance;
+    authService = jasmine.createSpyObj('AuthServiceSpy', [
+      'login',
+      'logout',
+      'isAuthenticated',
+      'getUserInfo'
+    ]);
+    mockRouter = {
+      navigate: jasmine.createSpy('navigate')
+    };
     fixture.detectChanges();
   });
 
   it('should log user in', () => {
-    const spy = spyOn(localStorage, 'setItem');
     const email = 'email';
     const password = 'password';
-    const token = '1234567890';
-    const resultString = `user', '{"email":"${email}","password":"${password}","token":"${token}"}`;
 
     component.email = email;
     component.password = password;
     component.onLogin();
 
-    expect(spy).toHaveBeenCalledWith(resultString);
+    expect(authService.login).toHaveBeenCalledWith(email, password);
   });
 
   it('should redirect to courses page', () => {

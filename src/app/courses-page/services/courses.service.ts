@@ -7,17 +7,11 @@ import { Course } from '../../courses-page/course.model';
   providedIn: 'root'
 })
 export class CoursesService {
-  private courses !: CourseInterface[];
-  constructor() {
-    this.coursesList = coursesMock;
-  }
+  private courses: CourseInterface[] = [...coursesMock];
+  constructor() {}
 
-  get coursesList(): CourseInterface[] {
+  getCoursesList(): CourseInterface[] {
     return this.courses;
-  }
-
-  set coursesList(courses: CourseInterface[]) {
-    this.courses = courses;
   }
 
   createCourse(props: CourseInterface): CourseInterface[] {

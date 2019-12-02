@@ -7,7 +7,6 @@ export class AuthService {
   private isAuth !: boolean;
   constructor() {
     this.isAuth = !!localStorage.getItem('user');
-    console.log(this.isAuth);
   }
 
   login(email: string, password: string): void {

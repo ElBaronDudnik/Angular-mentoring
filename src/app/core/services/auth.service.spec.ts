@@ -15,29 +15,28 @@ describe('AuthService', () => {
     service = injector.get(AuthService);
   });
 
-  it('should user login with credentials', () => {
-    const spy = spyOn(localStorage, 'setItem');
+  it('should login users if they provide credentials', () => {
+    const setItemStub = spyOn(localStorage, 'setItem');
     const email = 'email';
     const password = 'password';
     const token = '1234567890';
-    const resultString = `user', '{"email":"${email}","password":"${password}","token":"${token}"}`;
+    const resultString = `{"email":"${email}","password":"${password}","token":"${token}"}`;
 
     service.login(email, password);
-    expect(spy).toHaveBeenCalledWith( resultString );
+    expect(setItemStub).toHaveBeenCalledWith('user', resultString);
   });
 
   it('should user not login without credentials', () => {
-    const spy = spyOn(localStorage, 'setItem');
+    const setItemStub = spyOn(localStorage, 'setItem');
 
     service.login('', '');
-    expect(spy).not.toHaveBeenCalled();
+    expect(setItemStub).not.toHaveBeenCalled();
   });
 
   it('should user logout', () => {
-    const spy = spyOn(localStorage, 'removeItem');
+    const removeItemStub = spyOn(localStorage, 'removeItem');
 
     service.logout();
-    expect(spy).toHaveBeenCalled();
+    expect(removeItemStub).toHaveBeenCalled();
   });
-
 });
