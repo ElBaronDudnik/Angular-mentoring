@@ -10,6 +10,10 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule } from '@angular/forms';
 import { CoursesPageRoutingModule } from './courses-page-routing.module';
 import { SharedModule } from '../shared/shared.module';
+import { AddCourseComponent } from './components/add-course/add-course.component';
+import { AuthorsInputFieldComponent } from './components/add-course/authors-input-field/authors-input-field.component';
+import { DateInputFieldComponent } from './components/add-course/date-input-field/date-input-field.component';
+import { DurationInputFieldComponent } from './components/add-course/duration-input-field/duration-input-field.component';
 
 
 
@@ -27,6 +31,10 @@ import { SharedModule } from '../shared/shared.module';
     CourseItemComponent,
     CourseSearchComponent,
     CourseAdditionComponent,
+    AddCourseComponent,
+    AuthorsInputFieldComponent,
+    DateInputFieldComponent,
+    DurationInputFieldComponent,
   ],
 })
 export class CoursesPageModule { }

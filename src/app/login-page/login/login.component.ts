@@ -4,11 +4,11 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
-  templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.scss'],
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LoginPageComponent implements OnInit {
+export class LoginComponent implements OnInit {
   email !: string;
   password !: string;
   constructor(private authService: AuthService,

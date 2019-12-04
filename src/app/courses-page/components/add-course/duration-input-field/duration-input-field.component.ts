@@ -7,7 +7,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DurationInputFieldComponent implements OnInit {
-  duration = 0;
+  public duration!: number;
   constructor() { }
 
   ngOnInit() {

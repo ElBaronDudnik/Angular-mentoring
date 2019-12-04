@@ -7,7 +7,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule } from '@angular/forms';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
-import { LoginPageModule } from './login-page/login-page.module';
+import { LoginModule } from './login-page/login.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +20,7 @@ import { LoginPageModule } from './login-page/login-page.module';
     FormsModule,
     CoreModule,
     SharedModule,
-    LoginPageModule
+    LoginModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

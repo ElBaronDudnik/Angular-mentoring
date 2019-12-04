@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LoginPageComponent } from './login-page/login-page/login-page.component';
+import { LoginComponent } from './login-page/login/login.component';
 
 
 const routes: Routes = [
@@ -8,7 +8,7 @@ const routes: Routes = [
       loadChildren: () => import('./courses-page/courses-page.module').then(m => m.CoursesPageModule)
     },
     { path: 'login',
-      component: LoginPageComponent
+      component: LoginComponent
     },
     { path: '',
       redirectTo: 'login',

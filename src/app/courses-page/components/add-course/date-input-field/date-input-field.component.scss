@@ -1,4 +1,4 @@
-@import '../../../../styles';
+@import '../../../../../styles';
 
 .form-field {
   display: flex;
@@ -9,11 +9,15 @@
 }
 
 input {
-  width: 100%;
   height: 36px;
   margin-top: 10px;
   text-indent: 12px;
   border-radius: 3px;
   border: solid 1px $pale-grey;
   background-color: $white;
+}
+
+.not-full span {
+  width: 80%;
+  text-align: right;
 }

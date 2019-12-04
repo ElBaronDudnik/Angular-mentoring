@@ -18,7 +18,7 @@ import { FilterCoursesByNamePipe } from './pipes/filter-pipe/filter-courses-by-n
     BreadcrumbsComponent,
     DurationPipe,
     BorderStyleDirective,
-    OrderCoursesByDatePipe
+    OrderCoursesByDatePipe,
   ]
 })
 export class SharedModule {

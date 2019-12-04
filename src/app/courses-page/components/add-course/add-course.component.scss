@@ -73,10 +73,10 @@ button {
   margin-left: 20px;
 }
 
-button.green {
+button.save-button {
   @include button($sick-green, 14px);
 }
 
-button.grey {
+button.cancel-button {
   @include button($silver, 14px);
 }

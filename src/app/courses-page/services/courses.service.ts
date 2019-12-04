@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { coursesMock } from '../../courses-page/courses.mock';
 import { CourseInterface } from '../../courses-page/course.interface';
 import { Course } from '../../courses-page/course.model';
+import { CoursesPageModule } from '../courses-page.module';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: CoursesPageModule
 })
 export class CoursesService {
   private courses !: CourseInterface[];

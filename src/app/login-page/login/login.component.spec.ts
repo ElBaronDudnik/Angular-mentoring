@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LoginPageComponent } from './login-page.component';
+import { LoginComponent } from './login.component';
 import { AuthService } from '../../core/services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -8,15 +8,15 @@ import { Router } from '@angular/router';
 import { AuthServiceStub } from './auth.service.mock';
 
 describe('LoginPageComponent', () => {
-  let component: LoginPageComponent;
-  let fixture: ComponentFixture<LoginPageComponent>;
+  let component: LoginComponent;
+  let fixture: ComponentFixture<LoginComponent>;
   const mockRouter = {
     navigate: jasmine.createSpy('navigate')
   };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoginPageComponent ],
+      declarations: [ LoginComponent ],
       imports: [ FormsModule, RouterTestingModule ],
       providers: [ { provide: AuthService, useClass: AuthServiceStub}, { provide: Router, useValue: mockRouter}]
     })
@@ -24,7 +24,7 @@ describe('LoginPageComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LoginPageComponent);
+    fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
