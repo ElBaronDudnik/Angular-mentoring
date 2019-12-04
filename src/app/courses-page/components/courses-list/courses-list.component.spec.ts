@@ -6,8 +6,9 @@ import { coursesMock } from '../../courses.mock';
 import { By } from '@angular/platform-browser';
 import { Component, Directive, EventEmitter, Input, Output, Pipe, PipeTransform } from '@angular/core';
 import { CourseInterface } from '../../course.interface';
-import { CoursesService } from '../../services/courses.service';
-import { CoursesServiceStub } from './courses.service.mock';
+import { CoursesService } from 'app/courses-page/services/courses.service';
+import { Course } from 'app/courses-page/course.model';
+import { FilterCoursesByNamePipe } from 'app/shared/pipes/filter-pipe/filter-courses-by-name.pipe';
 
 @Pipe({name: 'durationPipe'})
 class MockDurationPipe implements PipeTransform {
@@ -56,8 +57,21 @@ class MockInstrumentalSectionComponent {
 describe('CoursesListComponent', () => {
   let component: CoursesListComponent;
   let fixture: ComponentFixture<CoursesListComponent>;
+  let coursesService: jasmine.SpyObj<CoursesService>;
+  let filteredCourses: Course[];
+  let filterCoursesByNamePipe: jasmine.SpyObj<FilterCoursesByNamePipe>;
 
   beforeEach(async(() => {
+    filteredCourses = [{} as Course];
+    coursesService = jasmine.createSpyObj('courseServiceSpy', [
+      'getCoursesList',
+      'removeItem'
+    ]);
+    filterCoursesByNamePipe = jasmine.createSpyObj('mySPy', ['transform']);
+    filterCoursesByNamePipe.transform.and.returnValue(filteredCourses);
+
+    coursesService.getCoursesList.and.returnValue(coursesMock);
+
     TestBed.configureTestingModule({
       declarations: [
         CoursesListComponent,
@@ -65,11 +79,18 @@ describe('CoursesListComponent', () => {
         MockCourseItemComponent,
         MockDurationPipe,
         MockOrderCoursesByDatePipe,
-        MockBordeStyleDirective,
+        MockBordeStyleDirective
       ],
-      providers: [{provide: CoursesService, useClass: CoursesServiceStub}]
-    })
-    .compileComponents();
+      providers: [
+        { provide: CoursesService, useFactory: () => coursesService },
+      ]
+    }).overrideComponent(CoursesListComponent, {
+      set: {
+        providers: [
+          { provide: FilterCoursesByNamePipe, useValue: filterCoursesByNamePipe },
+        ]
+      }
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -78,17 +99,8 @@ describe('CoursesListComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should assing course varible after ngOnInit lifecycle hook', () => {
-    component.courses = [];
-    component.ngOnInit();
-
-    expect(component.courses).toBe(coursesMock);
-  });
-
   it('should get courses', () => {
-    component.getCourses();
-
-    expect(component.courses).toEqual(coursesMock);
+    expect(component.courses).toBe(coursesMock);
   });
 
   it('should load more courses', () => {
@@ -101,14 +113,13 @@ describe('CoursesListComponent', () => {
   });
 
   it('should delete course', () => {
-    const consoleSpy = spyOn(console, 'log');
-    const confirmSpy = spyOn(window, 'confirm').and.returnValue(true);
+    spyOn(window, 'confirm').and.returnValue(true);
 
     const courseItem = fixture.debugElement.query(By.directive(MockCourseItemComponent));
     const courseItemInstance = courseItem.componentInstance;
-
-    courseItemInstance.delete.emit(2);
-    expect(consoleSpy).toHaveBeenCalledWith('Id of the item to delete: 2');
+    const deletedCourseId = 2;
+    courseItemInstance.delete.emit(deletedCourseId);
+    expect(coursesService.removeItem).toHaveBeenCalledWith(deletedCourseId);
   });
 
   it('should edit course', () => {
@@ -132,13 +143,11 @@ describe('CoursesListComponent', () => {
   });
 
   it('should proceed course search', () => {
-    const consoleSpy = spyOn(console, 'log');
     const searchString = 'search';
-
     const courseInstrumental = fixture.debugElement.query(By.directive(MockInstrumentalSectionComponent));
     const courseInstrumentalInstance = courseInstrumental.componentInstance;
     courseInstrumentalInstance.search.emit(searchString);
 
-    expect(consoleSpy).toHaveBeenCalledWith(`Search: ${searchString}`);
+    expect(component.filteredCourses).toEqual(filteredCourses);
   });
 });

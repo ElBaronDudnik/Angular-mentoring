@@ -18,7 +18,7 @@ describe('CoursesService', () => {
 
   it('should return courses list', () => {
     const list = service.getCoursesList();
-    expect(list).toBe(coursesMock);
+    expect(list).toEqual(coursesMock);
   });
 
   it('should create course', () => {
@@ -43,7 +43,7 @@ describe('CoursesService', () => {
   it('should remove course', () => {
     const courses = service.removeItem(3);
     coursesMock.splice(2, 1);
-    expect(courses).toBe(coursesMock);
+    expect(courses).toEqual(coursesMock);
   });
 });
 

@@ -13,27 +13,28 @@ describe('LoginPageComponent', () => {
   let mockRouter: jasmine.SpyObj<Partial<Router>>;
 
   beforeEach(async(() => {
-    fixture = TestBed.createComponent(LoginPageComponent);
-    component = fixture.componentInstance;
     authService = jasmine.createSpyObj('AuthServiceSpy', [
       'login',
       'logout',
       'isAuthenticated',
       'getUserInfo'
     ]);
-    mockRouter = {
-      navigate: jasmine.createSpy('navigate')
-    };
+    mockRouter = jasmine.createSpyObj('RouterSpy', ['navigate']);
 
     TestBed.configureTestingModule({
       declarations: [ LoginPageComponent ],
       imports: [ FormsModule, RouterTestingModule ],
-      providers: [ { provide: AuthService, useValue: authService}, { provide: Router, useValue: mockRouter}]
+      providers: [
+        { provide: Router, useValue: mockRouter },
+        { provide: AuthService, useValue: authService }
+      ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
+    fixture = TestBed.createComponent(LoginPageComponent);
+    component = fixture.componentInstance;
     fixture.detectChanges();
   });
 

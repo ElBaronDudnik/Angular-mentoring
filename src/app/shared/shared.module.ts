@@ -12,7 +12,6 @@ import { FilterCoursesByNamePipe } from './pipes/filter-pipe/filter-courses-by-n
     DurationPipe,
     BorderStyleDirective,
     OrderCoursesByDatePipe,
-    FilterCoursesByNamePipe
   ],
   exports: [
     BreadcrumbsComponent,
