@@ -14,7 +14,7 @@ export class CourseItemComponent implements OnInit {
   @Input() id!: number;
   @Input() course!: CourseInterface | undefined;
   @Output() delete = new EventEmitter<number>();
-  @Output() edit = new EventEmitter<number>();
+  @Output() edit = new EventEmitter();
   public faCalendar = faCalendar;
   public faPencil = faPencilAlt;
   public faClockO = faClock;
@@ -34,7 +34,9 @@ export class CourseItemComponent implements OnInit {
   }
 
   onEdit(): void {
-    this.edit.emit(this.id);
+    if (this.course) {
+      this.edit.emit({id: this.id, name: this.course.title});
+    }
   }
 
   onDelete(): void {

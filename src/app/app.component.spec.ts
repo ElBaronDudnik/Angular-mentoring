@@ -3,7 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './core/components/header/header.component';
 import { FooterComponent } from './core/components/footer/footer.component';
-import { BreadcrumbsComponent } from './core/components/breadcrumbs/breadcrumbs.component';
+import { BreadcrumbsComponent } from './shared/components/breadcrumbs/breadcrumbs.component';
 import {NO_ERRORS_SCHEMA} from '@angular/core';
 
 describe('AppComponent', () => {

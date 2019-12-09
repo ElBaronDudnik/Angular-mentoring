@@ -6,13 +6,22 @@
     <div class="form-field">
       <label for="title">Title:</label>
       <span class="required">*required</span>
-      <input type="text" placeholder="Text input" id="title" name="title" formControlName="title">
+      <input
+        type="text"
+        placeholder="Text input"
+        id="title"
+        name="title"
+        formControlName="title">
     </div>
 
     <div class="form-field">
       <label for="description">Description:</label>
       <span class="required">*required</span>
-      <textarea placeholder="Add description" id="description" name="description" formControlName="description"></textarea>
+      <textarea
+        placeholder="Add description"
+        id="description"
+        name="description"
+        formControlName="description"></textarea>
     </div>
 
     <app-date-input-field [newUserForm]="newUserForm" ></app-date-input-field>
@@ -22,8 +31,20 @@
     <app-authors-input-field [newUserForm]="newUserForm"></app-authors-input-field>
 
     <div class="form-field buttons-container">
-      <button (click) = "onCancel()" class="cancel-button">Cancel</button>
-      <button (click) = "onSave()" class="save-button" [disabled]="newUserForm.invalid">Save</button>
+
+      <button
+        (click) = "onCancel()"
+        class="cancel-button">
+        Cancel
+      </button>
+
+      <button
+        (click) = "onSave()"
+        class="save-button"
+        [disabled]="newUserForm.invalid">
+        Save
+      </button>
+
     </div>
 
   </form>

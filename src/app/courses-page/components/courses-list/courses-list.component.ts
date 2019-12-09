@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, EventEmitter, Output } from '@angular/core';
 import { CourseInterface } from '../../course.interface';
 import { FilterCoursesByNamePipe } from '../../../shared/pipes/filter-pipe/filter-courses-by-name.pipe';
 import { CoursesService } from '../../services/courses.service';
@@ -14,6 +14,7 @@ import {Router} from '@angular/router';
 export class CoursesListComponent implements OnInit {
   public courses: CourseInterface[] = [];
   public filteredCourses: CourseInterface[] = [];
+  @Output() params = new EventEmitter();
   constructor(private filterPipe: FilterCoursesByNamePipe,
               private coursesService: CoursesService,
               private router: Router) { }
@@ -39,9 +40,8 @@ export class CoursesListComponent implements OnInit {
     console.log('Load More');
   }
 
-  onEdit(id: number): void {
-    console.log(id);
-    this.router.navigate([`courses/${id}`]);
+  onEdit(props: any): void {
+    this.router.navigate([`courses/${props.id}`, {id: props.id, name: props.name}]);
   }
 
   onSearch(searchQuery: string): void {
@@ -50,6 +50,6 @@ export class CoursesListComponent implements OnInit {
   }
 
   onAddCourse(): void {
-    this.router.navigate(['courses/new']);
+    this.router.navigate(['courses/new', {name: 'New Course'}]);
   }
 }
