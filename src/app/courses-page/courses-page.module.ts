@@ -6,19 +6,24 @@ import { InstrumentalSectionComponent } from './components/instrumental-section/
 import { CourseItemComponent } from './components/courses-list/course-item/course-item.component';
 import { CourseSearchComponent } from './components/instrumental-section/course-search/course-search.component';
 import { CourseAdditionComponent } from './components/instrumental-section/course-addition/course-addition.component';
-import { DurationPipePipe } from '../shared/pipes/duration-pipe/duration-pipe.pipe';
-import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule } from '@angular/forms';
 import { CoursesPageRoutingModule } from './courses-page-routing.module';
+import { SharedModule } from '../shared/shared.module';
+import { AddCourseComponent } from './components/add-course/add-course.component';
+import { AuthorsInputFieldComponent } from './components/add-course/authors-input-field/authors-input-field.component';
+import { DateInputFieldComponent } from './components/add-course/date-input-field/date-input-field.component';
+import { DurationInputFieldComponent } from './components/add-course/duration-input-field/duration-input-field.component';
 
 
 
 @NgModule({
   imports: [
     CommonModule,
-    AngularFontAwesomeModule,
+    FontAwesomeModule,
     FormsModule,
-    CoursesPageRoutingModule
+    CoursesPageRoutingModule,
+    SharedModule
   ],
   declarations: [
     CoursesListComponent,
@@ -26,7 +31,10 @@ import { CoursesPageRoutingModule } from './courses-page-routing.module';
     CourseItemComponent,
     CourseSearchComponent,
     CourseAdditionComponent,
-    DurationPipePipe
+    AddCourseComponent,
+    AuthorsInputFieldComponent,
+    DateInputFieldComponent,
+    DurationInputFieldComponent,
   ],
 })
 export class CoursesPageModule { }

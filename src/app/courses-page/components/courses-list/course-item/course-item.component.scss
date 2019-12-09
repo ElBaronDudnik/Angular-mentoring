@@ -1,12 +1,23 @@
 @import '../../../../../styles';
 
-.full-container {
+:host {
   background-color: $white;
   border-radius: 8px;
   box-shadow: 0 1px 24px 0 rgba(18, 21, 35, 0.08);
   margin: 0 85px 30px;
   padding: 24px;
   display: flex;
+}
+
+.fa-star {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+}
+
+.fa-star fa-icon{
+  color: goldenrod;
 }
 
 h1 {
@@ -55,3 +66,4 @@ fa {
 .instruments span {
   padding-right: 20px;
 }
+

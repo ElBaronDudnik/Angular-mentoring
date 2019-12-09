@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-course-addition',
@@ -7,14 +7,14 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CourseAdditionComponent implements OnInit {
-
+  @Output() addCourse = new EventEmitter();
   constructor() { }
 
   ngOnInit() {
   }
 
   onAdd(): void {
-    console.log('Add course');
+    this.addCourse.emit();
   }
 
 }

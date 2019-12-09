@@ -1,9 +1,23 @@
-<app-instrumental-section></app-instrumental-section>
-<ul>
-  <li *ngFor="let course of courses">
-    <app-course-item [course]="course" (delete)="onDelete($event)"></app-course-item>
-  </li>
-</ul>
-<div class="load-more-container">
-  <button class="load-more" (click) = "loadMore()">Load more</button>
+<app-instrumental-section (addCourse)="onAddCourse()" (search)="onSearch($event)"></app-instrumental-section>
+<div class="container" *ngIf="courses.length; else noContent">
+  <ul>
+    <li *ngFor="let course of filteredCourses | orderCoursesByDate">
+      <app-course-item
+        appBorderStyle
+        [course]="course"
+        (delete)="onDelete($event)"
+        (edit)="onEdit()"
+        [ngClass]="{'top-rate': course.topRated}">
+      </app-course-item>
+    </li>
+  </ul>
+  <div class="load-more-container">
+    <button class="load-more" (click) = "loadMore()">Load more</button>
+  </div>
 </div>
+<ng-template #noContent>
+  <div class="no-courses-container">
+    <div class="no-courses">No data. Feel free to add new course</div>
+  </div>
+</ng-template>
+

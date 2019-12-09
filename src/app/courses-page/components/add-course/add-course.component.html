@@ -1,0 +1,31 @@
+<div class="form-container">
+
+  <form action="#">
+    <h2>New course</h2>
+
+    <div class="form-field">
+      <label for="title">Title:</label>
+      <span class="required">*required</span>
+      <input type="text" placeholder="Text input" id="title" name="title">
+    </div>
+
+    <div class="form-field">
+      <label for="description">Description:</label>
+      <span class="required">*required</span>
+      <textarea placeholder="Add description" id="description" name="description"></textarea>
+    </div>
+
+    <app-date-input-field></app-date-input-field>
+
+    <app-duration-input-field></app-duration-input-field>
+
+    <app-authors-input-field></app-authors-input-field>
+
+    <div class="form-field buttons-container">
+      <button (click) = "onCancel()" class="cancel-button">Cancel</button>
+      <button (click) = "onSave()" class="save-button">Save</button>
+    </div>
+
+  </form>
+
+</div>

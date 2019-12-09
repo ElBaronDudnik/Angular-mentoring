@@ -1,0 +1,6 @@
+<div class="form-field not-full">
+  <label for="duration">Duration:</label>
+  <span class="required">*required</span>
+  <input type="number" placeholder="minutes" id="duration" name="duration" [(ngModel)]="duration">
+  <div class="duration">{{ duration | durationPipe }}</div>
+</div>

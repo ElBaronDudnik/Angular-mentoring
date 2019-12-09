@@ -1,0 +1,82 @@
+@import '../../../../styles';
+
+h2 {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: $dark;
+  margin: 0;
+}
+
+input::placeholder {
+  color: $slate-grey;
+}
+
+form {
+  top: 15vh;
+  margin: 40px auto;
+  width: 668px;
+  padding: 24px 23px;
+  border-radius: 6px;
+  box-shadow: 0 1px 24px 0 rgba(18, 21, 35, 0.08);
+  background-color: $white;
+}
+
+.form-field {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 20px;
+  align-items: center;
+}
+
+input,
+textarea {
+  width: 100%;
+  height: 36px;
+  margin-top: 10px;
+  text-indent: 12px;
+  border-radius: 3px;
+  border: solid 1px $pale-grey;
+  background-color: $white;
+}
+
+textarea {
+  height: 72px;
+}
+
+label {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.22px;
+  color: $slate-grey;
+}
+
+.required {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 12px;
+  font-weight: normal;
+  line-height: 1.5;
+  letter-spacing: 0.19px;
+  color: $battleship-grey;
+}
+
+.buttons-container {
+  justify-content: flex-end;
+}
+
+button {
+  width: 68px;
+  height: 36px;
+  margin-left: 20px;
+}
+
+button.save-button {
+  @include button($sick-green, 14px);
+}
+
+button.cancel-button {
+  @include button($silver, 14px);
+}

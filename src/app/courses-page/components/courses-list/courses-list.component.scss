@@ -1,20 +1,35 @@
 @import '../../../../styles';
 
-.load-more-container {
-    width: 100%;
-    padding: 0 85px 30px;
+.load-more-container,
+.no-courses-container {
+  width: 100%;
+  padding: 0 85px 30px;
 }
 
-.load-more { 
-    background-color: $white;
-    border-radius: 8px;
-    box-shadow: 0 1px 24px 0 rgba(18, 21, 35, 0.08);
-    padding: 24px;
-    width: 100%;
-    display: block; 
-    
-    border: none;
-    text-transform: uppercase;
-    text-decoration: underline;
-    color: $soft-blue;
+app-course-item {
+  border: 2px solid transparent;
+}
+
+.top-rate {
+  background: floralwhite;
+}
+
+.load-more,
+.no-courses {
+  background-color: $white;
+  border-radius: 8px;
+  box-shadow: 0 1px 24px 0 rgba(18, 21, 35, 0.08);
+  padding: 24px;
+  width: 100%;
+  display: block;
+  border: none;
+  text-transform: uppercase;
+  text-decoration: underline;
+  color: $soft-blue;
+}
+
+.no-courses {
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
 }

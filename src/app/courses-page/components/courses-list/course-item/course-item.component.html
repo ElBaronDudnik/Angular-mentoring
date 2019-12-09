@@ -1,16 +1,18 @@
-<div class="full-container">
-  <div class="main-container">
-    <div class="first-row">
-      <h1>{{ course.title }}</h1>
-      <div class="instruments">
-        <span><fa name="clock-o"></fa>{{ course.duration | durationPipe}}</span>
-        <span><fa name="calendar"></fa>{{ course.creationDate | date: 'd MMM, yyyy' }}</span>
-      </div>
+<div class="main-container">
+  <div class="first-row">
+    <h1>{{ course.title | uppercase }}</h1>
+    <span class="fa-star">
+      <fa-icon [icon]="faStar" *ngIf="course.topRated" ></fa-icon>
+    </span>
+    <div class="instruments">
+      <span><fa-icon [icon]="faClockO"></fa-icon>{{ course.duration | durationPipe}}</span>
+      <span><fa-icon [icon]="faCalendar"></fa-icon>{{ course.creationDate | date: 'd MMM, yyyy' }}</span>
     </div>
-    <p>{{ course.description }}</p>
   </div>
-  <div class="buttons-container">
-    <button (click) = 'onEdit()'><fa name="pencil"></fa>Edit</button>
-    <button (click) = 'onDelete()'><fa name="trash"></fa>Delete</button>
-  </div>
+  <p>{{ course.description }}</p>
 </div>
+<div class="buttons-container">
+  <button (click) = "onEdit()" class="edit-button"><fa-icon [icon]="faPencil"></fa-icon>Edit</button>
+  <button (click) = "onDelete()" class="delete-button"><fa-icon [icon]="faTrash"></fa-icon>Delete</button>
+</div>
+

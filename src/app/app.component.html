@@ -1,5 +1,5 @@
 <app-header></app-header>
-<app-breadcrumbs></app-breadcrumbs>
+<app-breadcrumbs *ngIf="authService.isAuthenticated()"></app-breadcrumbs>
 <main>
   <router-outlet></router-outlet>
 </main>
