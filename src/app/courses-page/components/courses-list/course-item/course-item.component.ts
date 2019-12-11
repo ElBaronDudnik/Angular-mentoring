@@ -11,9 +11,8 @@ import { CoursesService } from '../../../services/courses.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CourseItemComponent implements OnInit {
-  @Input() id!: number;
   @Input() course!: CourseInterface | undefined;
-  @Output() delete = new EventEmitter<number>();
+  @Output() delete = new EventEmitter<CourseInterface>();
   @Output() edit = new EventEmitter();
   public faCalendar = faCalendar;
   public faPencil = faPencilAlt;
@@ -27,19 +26,8 @@ export class CourseItemComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (!this.id) {
-      this.id = Number(this.route.snapshot.paramMap.get('id')) || 0;
+    if (!this.course) {
+      this.course = this.coursesService.getCourseById(+Number(this.route.snapshot.paramMap.get('id')) || 0);
     }
-    this.course = this.coursesService.getCourseById(+this.id);
-  }
-
-  onEdit(): void {
-    if (this.course) {
-      this.edit.emit({id: this.id, name: this.course.title});
-    }
-  }
-
-  onDelete(): void {
-    this.delete.emit(this.id);
   }
 }

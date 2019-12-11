@@ -28,20 +28,19 @@ export class CoursesListComponent implements OnInit {
     this.filteredCourses = this.courses;
   }
 
-  onDelete(id: number): void {
+  onDelete(course: CourseInterface): void {
     const answer = confirm('Do you really want to delete this course?');
     if (answer) {
-      this.coursesService.removeItem(id);
+      this.coursesService.removeItem(course.id);
     }
-    console.log(`Id of the item to delete: ${id}`);
   }
 
   loadMore(): void {
     console.log('Load More');
   }
 
-  onEdit(props: any): void {
-    this.router.navigate([`courses/${props.id}`, {id: props.id, name: props.name}]);
+  onEdit(course: CourseInterface): void {
+    this.router.navigate([`courses/${course.id}`, {id: course.id, name: course.title}]);
   }
 
   onSearch(searchQuery: string): void {
