@@ -6,8 +6,10 @@ import { LogoComponent } from './components/header/logo/logo.component';
 import { FormsModule } from '@angular/forms';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { CommonModule } from '@angular/common';
-import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
 import { RouterModule } from '@angular/router';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { TokenInterceptor } from './interceptors/token.interceptor';
+import {BreadcrumbsComponent} from "./components/breadcrumbs/breadcrumbs.component";
 
 const toExport = [
   HeaderComponent,
@@ -22,9 +24,17 @@ const toExport = [
     CommonModule,
     FormsModule,
     RouterModule,
+    HttpClientModule,
   ],
   declarations: [...toExport],
-  exports: [...toExport]
+  exports: [...toExport],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
+  ]
 })
 export class CoreModule {
   constructor(@Optional() @SkipSelf() parentModule: CoreModule) {

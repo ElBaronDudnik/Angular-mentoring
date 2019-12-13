@@ -13,7 +13,7 @@ import { BreadcrumbsService } from 'app/core/services/breadcrumbs.service';
 })
 export class CourseItemComponent implements OnInit {
   @Input() course!: CourseInterface | undefined;
-  @Output() delete = new EventEmitter<CourseInterface>();
+  @Output() delete = new EventEmitter<number>();
   @Output() edit = new EventEmitter();
   public faCalendar = faCalendar;
   public faPencil = faPencilAlt;
@@ -23,12 +23,12 @@ export class CourseItemComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private coursesService: CoursesService
   ) { }
 
   ngOnInit() {
     if (!this.course) {
-      this.course = this.coursesService.getCourseById(+Number(this.route.snapshot.paramMap.get('id')) || 0);
+      // @ts-ignore
+      this.course = this.route.snapshot.queryParams;
     }
   }
 }

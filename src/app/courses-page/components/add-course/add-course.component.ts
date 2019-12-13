@@ -1,8 +1,7 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import {Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CoursesService } from '../../../courses-page/services/courses.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { BreadcrumbsService } from 'app/core/services/breadcrumbs.service';
 
 @Component({
   selector: 'app-add-course-page',
@@ -10,12 +9,11 @@ import { BreadcrumbsService } from 'app/core/services/breadcrumbs.service';
   styleUrls: ['./add-course.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AddCourseComponent{
+export class AddCourseComponent implements OnInit {
   public newUserForm: FormGroup;
+  private id!: number;
   constructor(private router: Router,
-              private coursesService: CoursesService,
-              private route: ActivatedRoute,
-              private crumbsService: BreadcrumbsService) {
+              private coursesService: CoursesService,) {
     this.newUserForm = new FormGroup({
       title: new FormControl('', Validators.required),
       description: new FormControl('', Validators.required),
@@ -25,21 +23,27 @@ export class AddCourseComponent{
     });
   }
 
+  ngOnInit() {
+    this.generateId();
+  }
+
   onCancel() {
     this.router.navigate(['/courses']);
   }
 
-  generateId(): number {
-    return this.coursesService.getBiggestId() + 1;
+  generateId(): void {
+    this.coursesService.getCoursesList(0).subscribe((courses) => {
+      this.id = courses.reduce((max, { id }) => id > max ? id : max, 0) + 1;
+    });
   }
 
   onSave() {
     this.coursesService.createCourse({
-      id: this.generateId(),
-      title: this.newUserForm.value.title,
+      id: this.id,
+      name: this.newUserForm.value.name,
       description: this.newUserForm.value.description,
-      creationDate: this.newUserForm.value.date,
-      duration: this.newUserForm.value.duration
+      date: this.newUserForm.value.date,
+      length: this.newUserForm.value.duration
     });
     this.router.navigate(['/courses']);
   }

@@ -8,7 +8,7 @@
         [course]="course"
         (delete)="onDelete($event)"
         (edit)="onEdit($event)"
-        [ngClass]="{'top-rate': course.topRated}">
+        [ngClass]="{'top-rate': course.isTopRated}">
       </app-course-item>
     </li>
   </ul>

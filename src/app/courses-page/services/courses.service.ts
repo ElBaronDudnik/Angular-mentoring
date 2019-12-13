@@ -1,39 +1,28 @@
 import { Injectable } from '@angular/core';
-import { coursesMock } from '../../courses-page/courses.mock';
 import { CourseInterface } from '../../courses-page/course.interface';
 import { Course } from '../../courses-page/course.model';
 import { CoursesPageModule } from '../courses-page.module';
+import { ApiService } from '../../core/services/api.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: CoursesPageModule
 })
 export class CoursesService {
   private courses !: CourseInterface[];
-  constructor() {
-    this.coursesList = coursesMock;
+  constructor(private apiService: ApiService) {}
+
+  getCoursesList(start: number, count?: number): Observable<CourseInterface[]> {
+    return this.apiService.getCourses(start, count);
   }
 
-  get coursesList(): CourseInterface[] {
-    return this.courses;
-  }
-
-  set coursesList(courses: CourseInterface[]) {
-    this.courses = courses;
-  }
-
-  createCourse(props: CourseInterface): CourseInterface[] {
+  createCourse(props: CourseInterface) {
     const course = new Course(props);
-    this.courses.push(course);
-    return this.courses;
+    this.apiService.createCourse(course).subscribe(() => {});
   }
 
-  getBiggestId(): number {
-    return this.courses.reduce((max, { id }) => id > max ? id : max, 0);
-  }
-
-  getCourseById(id: number): CourseInterface | undefined {
-    const course = this.courses.find((item: CourseInterface) => item.id === id);
-    return course;
+  getCourseById(id: number): Observable<CourseInterface> {
+    return this.apiService.getCoursesById(id);
   }
 
   updateItem(oldCourse: CourseInterface, newCourse: CourseInterface): void {
@@ -41,10 +30,8 @@ export class CoursesService {
     this.courses[index] = newCourse;
   }
 
-  removeItem(id: number): CourseInterface[] {
-    const index = this.courses.findIndex((el: CourseInterface) => el.id === id);
-    this.courses.splice(index, 1);
-    return this.courses;
+  removeItem(id: number): Observable<CourseInterface[]> {
+    return this.apiService.deleteCourse(id);
   }
 }
 
