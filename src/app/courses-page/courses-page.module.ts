@@ -14,6 +14,7 @@ import { AddCourseComponent } from './components/add-course/add-course.component
 import { AuthorsInputFieldComponent } from './components/add-course/authors-input-field/authors-input-field.component';
 import { DateInputFieldComponent } from './components/add-course/date-input-field/date-input-field.component';
 import { DurationInputFieldComponent } from './components/add-course/duration-input-field/duration-input-field.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -24,7 +25,8 @@ import { DurationInputFieldComponent } from './components/add-course/duration-in
     FormsModule,
     CoursesPageRoutingModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule,
   ],
   declarations: [
     CoursesListComponent,

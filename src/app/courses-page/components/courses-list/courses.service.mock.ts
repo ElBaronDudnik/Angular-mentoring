@@ -15,9 +15,9 @@ export class CoursesServiceStub {
   createCourse(): CourseInterface[] {
     coursesMock.push({
       id: 10,
-      title: 'Angular Course',
-      creationDate: new Date(12, 11, 2019),
-      duration: 12,
+      name: 'Angular Course',
+      date: new Date(12, 11, 2019).toDateString(),
+      length: 12,
       description: 'Angular course description'
     });
     return coursesMock;
@@ -26,9 +26,9 @@ export class CoursesServiceStub {
   getCourseById(): CourseInterface | undefined {
     return {
       id: 10,
-      title: 'Video Course 3. Name Tag',
-      duration: 61,
-      creationDate: new Date(2012, 8, 14),
+      name: 'Video Course 3. Name Tag',
+      length: 61,
+      date: new Date(2012, 8, 14).toDateString(),
       description: `Learn about where you can find course descriptions,
     what information they include, how they work, and details about
     various components of a course description. Course descriptions
@@ -42,9 +42,9 @@ export class CoursesServiceStub {
   updateItem(): void {
     coursesMock[5] = {
       id: 10,
-      title: 'Angular Course',
-      creationDate: new Date(12, 11, 2019),
-      duration: 12,
+      name: 'Angular Course',
+      date: new Date(12, 11, 2019).toDateString(),
+      length: 12,
       description: 'Angular course description'
     };
   }

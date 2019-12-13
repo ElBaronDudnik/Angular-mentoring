@@ -1,18 +1,18 @@
 <div class="main-container"*ngIf="course">
   <div class="first-row">
-    <h1>{{ course.title | uppercase }}</h1>
+    <h1>{{ course.name | uppercase }}</h1>
     <span class="fa-star">
-      <fa-icon [icon]="faStar" *ngIf="course.topRated" ></fa-icon>
+      <fa-icon [icon]="faStar" *ngIf="course.isTopRated" ></fa-icon>
     </span>
     <div class="instruments">
-      <span><fa-icon [icon]="faClockO"></fa-icon>{{ course.duration | durationPipe}}</span>
-      <span><fa-icon [icon]="faCalendar"></fa-icon>{{ course.creationDate | date: 'd MMM, yyyy' }}</span>
+      <span><fa-icon [icon]="faClockO"></fa-icon>{{ course.length | durationPipe}}</span>
+      <span><fa-icon [icon]="faCalendar"></fa-icon>{{ course.date | date: 'd MMM, yyyy' }}</span>
     </div>
   </div>
   <p>{{ course.description }}</p>
 </div>
 <div class="buttons-container">
   <button (click) = "edit.emit(course)" class="edit-button"><fa-icon [icon]="faPencil"></fa-icon>Edit</button>
-  <button (click) = "delete.emit(course)" class="delete-button"><fa-icon [icon]="faTrash"></fa-icon>Delete</button>
+  <button (click) = "delete.emit(course?.id)" class="delete-button"><fa-icon [icon]="faTrash"></fa-icon>Delete</button>
 </div>
 

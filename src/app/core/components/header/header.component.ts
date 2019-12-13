@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import {ApiService} from "../../services/api.service";
 
 @Component({
   selector: 'app-header',
@@ -11,14 +12,13 @@ import { Router } from '@angular/router';
 export class HeaderComponent implements OnInit {
 
   constructor(private authService: AuthService,
-              private router: Router) { }
+              private router: Router,
+              private apiService: ApiService) { }
 
   ngOnInit() {
   }
 
-  logIn() {
-    console.log('login');
-  }
+  logIn() {}
 
   logOff() {
     this.authService.logout();

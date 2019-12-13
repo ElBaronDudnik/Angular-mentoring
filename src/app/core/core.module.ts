@@ -5,10 +5,13 @@ import { FooterComponent } from './components/footer/footer.component';
 import { LogoComponent } from './components/header/logo/logo.component';
 import { FormsModule } from '@angular/forms';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { TokenInterceptor } from './interceptors/token.interceptor';
 
 @NgModule({
   imports: [
     FormsModule,
+    HttpClientModule,
   ],
   declarations: [
     HeaderComponent,
@@ -21,7 +24,14 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     FooterComponent,
     LogoComponent,
     PageNotFoundComponent
-  ]
+  ],
+  providers: [
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptor,
+    multi: true
+  }
+]
 })
 export class CoreModule {
   constructor(@Optional() @SkipSelf() parentModule: CoreModule) {

@@ -11,6 +11,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class AddCourseComponent implements OnInit {
   public newUserForm: FormGroup;
+  private id!: number;
   constructor(private router: Router,
               private coursesService: CoursesService) {
     this.newUserForm = new FormGroup({
@@ -23,24 +24,26 @@ export class AddCourseComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.newUserForm.value);
+    this.generateId();
   }
 
   onCancel() {
     this.router.navigate(['/courses']);
   }
 
-  generateId(): number {
-    return this.coursesService.getBiggestId() + 1;
+  generateId(): void {
+    this.coursesService.getCoursesList(0).subscribe((courses) => {
+      this.id = courses.reduce((max, { id }) => id > max ? id : max, 0) + 1;
+    });
   }
 
   onSave() {
     this.coursesService.createCourse({
-      id: this.generateId(),
-      title: this.newUserForm.value.title,
+      id: this.id,
+      name: this.newUserForm.value.name,
       description: this.newUserForm.value.description,
-      creationDate: this.newUserForm.value.date,
-      duration: this.newUserForm.value.duration
+      date: this.newUserForm.value.date,
+      length: this.newUserForm.value.duration
     });
     this.router.navigate(['/courses']);
   }
