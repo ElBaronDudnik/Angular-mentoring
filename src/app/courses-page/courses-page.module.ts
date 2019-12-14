@@ -24,7 +24,7 @@ import { DurationInputFieldComponent } from './components/add-course/duration-in
     FormsModule,
     CoursesPageRoutingModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   declarations: [
     CoursesListComponent,

@@ -3,6 +3,7 @@ import { CourseInterface } from '../../../course.interface';
 import { faCalendar, faPencilAlt, faClock, faTrash, faStar } from '@fortawesome/free-solid-svg-icons';
 import { ActivatedRoute } from '@angular/router';
 import { CoursesService } from '../../../services/courses.service';
+import { BreadcrumbsService } from 'app/core/services/breadcrumbs.service';
 
 @Component({
   selector: 'app-course-item',

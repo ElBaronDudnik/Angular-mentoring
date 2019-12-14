@@ -2,3 +2,23 @@ p {
   margin: 20px 85px;
   font-weight: 700;
 }
+
+a:after {
+  content: '';
+  margin: 0 5px;
+  display: inline-block;
+  background: #2c2f3c;
+  width: 2px;
+  height: 15px;
+  transform: rotate(15deg);
+  vertical-align: middle;
+}
+
+a:last-child {
+  pointer-events: none;
+  text-decoration: none !important;
+
+  &:after {
+    width: 0;
+  }
+}

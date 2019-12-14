@@ -1,18 +1,24 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+
+interface ICrumbs {
+  title: string;
+  link: string;
+  level: 'main' | 'child';
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class BreadcrumbsService {
-  private $breadcrumbTitle = new Subject<string>();
+  private breadcrumbTitle$: Subject<ICrumbs> = new Subject<ICrumbs>();
   constructor() {}
 
-  setCrumb(name: string): void {
-    this.$breadcrumbTitle.next(name);
+  setCrumb(crumbs: ICrumbs) {
+    this.breadcrumbTitle$.next(crumbs);
   }
 
-  getCrumb(): Subject<string> {
-    return this.$breadcrumbTitle;
+  getCrumb(): Observable<ICrumbs> {
+    return this.breadcrumbTitle$.asObservable();
   }
 }
