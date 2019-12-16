@@ -13,9 +13,11 @@ export class HeaderComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
-    if (this.authService.isAuthenticated()) {
-      this.authService.getUserInfo().subscribe(userInfo => this.userName = `${userInfo.name.first} ${userInfo.name.last}`);
-    }
+    this.authService.isAuthenticated().subscribe((status: boolean) => {
+      if (status) {
+        this.authService.getUserInfo().subscribe(userInfo => this.userName = `${userInfo.name.first} ${userInfo.name.last}`);
+      }
+    });
   }
 
   logOff() {

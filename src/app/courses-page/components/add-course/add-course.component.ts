@@ -1,4 +1,4 @@
-import {Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CoursesService } from '../../../courses-page/services/courses.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -14,7 +14,7 @@ export class AddCourseComponent {
   public newUserForm: FormGroup;
   private id!: number;
   constructor(private router: Router,
-              private coursesService: CoursesService) {
+              private coursesService: CoursesService,) {
     this.newUserForm = new FormGroup({
       title: new FormControl('', Validators.required),
       description: new FormControl('', Validators.required),

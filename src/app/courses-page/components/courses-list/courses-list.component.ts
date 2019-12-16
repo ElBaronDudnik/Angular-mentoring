@@ -45,7 +45,7 @@ export class CoursesListComponent implements OnInit, OnDestroy {
         distinctUntilChanged(),
         map((e: Event) => (e.target as HTMLTextAreaElement).value),
         filter((searchTerm: string) => searchTerm.length > 2),
-        switchMap((result: string) => this.apiService.searchCourses(result)))
+        switchMap((result: string) => this.coursesService.searchItem(result)))
       .subscribe(courses => this.filteredCourses = courses);
   }
 
@@ -90,10 +90,8 @@ export class CoursesListComponent implements OnInit, OnDestroy {
     this.crumbsService.setCrumb(crumb);
   }
 
-  onSearch(searchQuery: string): void {
-    this.subscription.add(this.coursesService
-    .searchItem(searchQuery)
-      .subscribe(courses => this.filteredCourses = courses));
+  onSearch(event: Event): void {
+    this.searchSubject.next(event);
   }
 
   onAddCourse(): void {

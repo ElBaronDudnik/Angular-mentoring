@@ -63,6 +63,6 @@ export class AuthService {
   }
 
   isAuthenticated(): Observable<boolean> {
-    return this.isAuth;
+    return this.isAuth.asObservable();
   }
 }
