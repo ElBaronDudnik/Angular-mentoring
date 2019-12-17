@@ -1,10 +1,12 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, EventEmitter, Output } from '@angular/core';
 import { CourseInterface } from '../../course.interface';
 import { FilterCoursesByNamePipe } from '../../../shared/pipes/filter-pipe/filter-courses-by-name.pipe';
 import { CoursesService } from '../../services/courses.service';
 import { Router } from '@angular/router';
+
 import { ApiService } from '../../../core/services/api.service';
 import { BreadcrumbsService } from '../../../core/services/breadcrumbs.service';
+
 
 @Component({
   selector: 'app-courses-list',
@@ -57,6 +59,7 @@ export class CoursesListComponent implements OnInit {
           length: course.length,
           description: course.description
         }});
+
     this.crumbsService.setCrumb({title: course.name, link: `courses/${course.id}`, level: 'child'});
   }
 
