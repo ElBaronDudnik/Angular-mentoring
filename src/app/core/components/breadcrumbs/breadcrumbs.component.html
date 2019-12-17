@@ -1,1 +1,3 @@
-<p><a routerLink="courses">Courses</a> {{ breadcrumb ? ' / ' + breadcrumb : '' }}</p>
+<p>
+  <a [routerLink]="crumb.link" *ngFor="let crumb of breadcrumb">{{ crumb?.title }}</a>
+</p>

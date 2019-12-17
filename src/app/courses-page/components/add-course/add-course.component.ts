@@ -1,7 +1,8 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { CoursesService } from '../../../courses-page/services/courses.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { BreadcrumbsService } from 'app/core/services/breadcrumbs.service';
 
 @Component({
   selector: 'app-add-course-page',
@@ -9,11 +10,13 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./add-course.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AddCourseComponent implements OnInit {
+export class AddCourseComponent{
   public newUserForm: FormGroup;
   private id!: number;
   constructor(private router: Router,
-              private coursesService: CoursesService) {
+              private coursesService: CoursesService,
+              private route: ActivatedRoute,
+              private crumbsService: BreadcrumbsService) {
     this.newUserForm = new FormGroup({
       title: new FormControl('', Validators.required),
       description: new FormControl('', Validators.required),

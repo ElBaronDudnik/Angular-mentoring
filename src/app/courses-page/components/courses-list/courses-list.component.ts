@@ -3,7 +3,10 @@ import { CourseInterface } from '../../course.interface';
 import { FilterCoursesByNamePipe } from '../../../shared/pipes/filter-pipe/filter-courses-by-name.pipe';
 import { CoursesService } from '../../services/courses.service';
 import { Router } from '@angular/router';
+
 import { ApiService } from '../../../core/services/api.service';
+import { BreadcrumbsService } from '../../../core/services/breadcrumbs.service';
+
 
 @Component({
   selector: 'app-courses-list',
@@ -20,9 +23,11 @@ export class CoursesListComponent implements OnInit {
               private coursesService: CoursesService,
               private router: Router,
               private apiService: ApiService) { }
+              private crumbsService: BreadcrumbsService) { }
 
   ngOnInit() {
     this.getCourses();
+    this.crumbsService.setCrumb({title: 'Courses', link: 'courses', level: 'main'});
   }
 
   getCourses(): void {
@@ -47,13 +52,15 @@ export class CoursesListComponent implements OnInit {
   }
 
   onEdit(course: CourseInterface): void {
-    this.router.navigate([`courses/${course.id}`, {id: course.id, name: course.name}], {queryParams: {
+    this.router.navigate([`courses/${course.id}`], {queryParams: {
           id: course.id,
           name: course.name,
           date: course.date,
           length: course.length,
           description: course.description
         }});
+
+    this.crumbsService.setCrumb({title: course.title, link: `courses/${course.id}`, level: 'child'});
   }
 
   onSearch(searchQuery: string): void {
@@ -61,6 +68,7 @@ export class CoursesListComponent implements OnInit {
   }
 
   onAddCourse(): void {
-    this.router.navigate(['courses/new', {name: 'New Course'}]);
+    this.crumbsService.setCrumb({title: 'New Course', link: 'courses/new', level: 'child'});
+    this.router.navigate(['courses/new']);
   }
 }

@@ -4,24 +4,20 @@ import { CoursesListComponent } from './components/courses-list/courses-list.com
 import { AddCourseComponent } from './components/add-course/add-course.component';
 import { CourseItemComponent } from './components/courses-list/course-item/course-item.component';
 import { PageNotFoundComponent } from '../core/components/page-not-found/page-not-found.component';
-import { BreadcrumbsGuard } from '../core/guards/breadcrumbs.guard';
 
 
 const routes: Routes = [
   {
     path: '',
     component: CoursesListComponent,
-    canActivate: [BreadcrumbsGuard]
   },
   {
     path: 'new',
     component: AddCourseComponent,
-    canActivate: [BreadcrumbsGuard]
   },
   {
     path: ':id',
     component: CourseItemComponent,
-    canActivate: [BreadcrumbsGuard]
   },
   {
     path: 'not-found',
