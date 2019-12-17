@@ -22,7 +22,7 @@ export class CoursesListComponent implements OnInit {
   constructor(private filterPipe: FilterCoursesByNamePipe,
               private coursesService: CoursesService,
               private router: Router,
-              private apiService: ApiService) { }
+              private apiService: ApiService,
               private crumbsService: BreadcrumbsService) { }
 
   ngOnInit() {
@@ -60,7 +60,7 @@ export class CoursesListComponent implements OnInit {
           description: course.description
         }});
 
-    this.crumbsService.setCrumb({title: course.title, link: `courses/${course.id}`, level: 'child'});
+    this.crumbsService.setCrumb({title: course.name, link: `courses/${course.id}`, level: 'child'});
   }
 
   onSearch(searchQuery: string): void {
