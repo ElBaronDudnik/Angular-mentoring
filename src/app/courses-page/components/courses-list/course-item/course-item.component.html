@@ -1,4 +1,4 @@
-<div class="main-container">
+<div class="main-container"*ngIf="course">
   <div class="first-row">
     <h1>{{ course.title | uppercase }}</h1>
     <span class="fa-star">
@@ -12,7 +12,7 @@
   <p>{{ course.description }}</p>
 </div>
 <div class="buttons-container">
-  <button (click) = "onEdit()" class="edit-button"><fa-icon [icon]="faPencil"></fa-icon>Edit</button>
-  <button (click) = "onDelete()" class="delete-button"><fa-icon [icon]="faTrash"></fa-icon>Delete</button>
+  <button (click) = "edit.emit(course)" class="edit-button"><fa-icon [icon]="faPencil"></fa-icon>Edit</button>
+  <button (click) = "delete.emit(course)" class="delete-button"><fa-icon [icon]="faTrash"></fa-icon>Delete</button>
 </div>
 

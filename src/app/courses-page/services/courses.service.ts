@@ -27,6 +27,10 @@ export class CoursesService {
     return this.courses;
   }
 
+  getBiggestId(): number {
+    return this.courses.reduce((max, { id }) => id > max ? id : max, 0);
+  }
+
   getCourseById(id: number): CourseInterface | undefined {
     const course = this.courses.find((item: CourseInterface) => item.id === id);
     return course;

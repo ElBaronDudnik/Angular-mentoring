@@ -7,7 +7,7 @@ import { CourseItemComponent } from './components/courses-list/course-item/cours
 import { CourseSearchComponent } from './components/instrumental-section/course-search/course-search.component';
 import { CourseAdditionComponent } from './components/instrumental-section/course-addition/course-addition.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoursesPageRoutingModule } from './courses-page-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { AddCourseComponent } from './components/add-course/add-course.component';
@@ -23,7 +23,8 @@ import { DurationInputFieldComponent } from './components/add-course/duration-in
     FontAwesomeModule,
     FormsModule,
     CoursesPageRoutingModule,
-    SharedModule
+    SharedModule,
+    ReactiveFormsModule,
   ],
   declarations: [
     CoursesListComponent,

@@ -1,0 +1,25 @@
+@import '../../../../styles';
+
+.container {
+  width: 100%;
+  height: calc(100vh - 64px * 2); //64px - height of footer and header
+}
+
+.number,
+.text {
+  position: absolute;
+  color: $soft-blue;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.number {
+  font-size: 120px;
+  top: 45%;
+}
+
+.text {
+  font-size: 30px;
+  top: 60%;
+  text-transform: uppercase;
+}

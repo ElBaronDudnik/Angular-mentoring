@@ -1,5 +1,10 @@
-<div class="form-field">
+<div class="form-field" [formGroup]="newUserForm" >
   <label for="authors">Authors:</label>
   <span class="required">*required</span>
-  <input type="text" placeholder="Start typing" id="authors" name="duration">
+  <input
+    type="text"
+    placeholder="Start typing"
+    id="authors"
+    name="authors"
+    formControlName="authors">
 </div>

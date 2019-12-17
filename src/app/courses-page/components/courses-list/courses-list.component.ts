@@ -1,8 +1,9 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, EventEmitter, Output } from '@angular/core';
 import { CourseInterface } from '../../course.interface';
 import { FilterCoursesByNamePipe } from '../../../shared/pipes/filter-pipe/filter-courses-by-name.pipe';
 import { CoursesService } from '../../services/courses.service';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
+import { BreadcrumbsService } from '../../../core/services/breadcrumbs.service';
 
 @Component({
   selector: 'app-courses-list',
@@ -14,12 +15,15 @@ import {Router} from '@angular/router';
 export class CoursesListComponent implements OnInit {
   public courses: CourseInterface[] = [];
   public filteredCourses: CourseInterface[] = [];
+  @Output() params = new EventEmitter();
   constructor(private filterPipe: FilterCoursesByNamePipe,
               private coursesService: CoursesService,
-              private router: Router) { }
+              private router: Router,
+              private crumbsService: BreadcrumbsService) { }
 
   ngOnInit() {
     this.getCourses();
+    this.crumbsService.setCrumb({title: 'Courses', link: 'courses', level: 'main'});
   }
 
   getCourses(): void {
@@ -27,20 +31,20 @@ export class CoursesListComponent implements OnInit {
     this.filteredCourses = this.courses;
   }
 
-  onDelete(id: number): void {
+  onDelete(course: CourseInterface): void {
     const answer = confirm('Do you really want to delete this course?');
     if (answer) {
-      this.coursesService.removeItem(id);
+      this.coursesService.removeItem(course.id);
     }
-    console.log(`Id of the item to delete: ${id}`);
   }
 
   loadMore(): void {
     console.log('Load More');
   }
 
-  onEdit(): void {
-    console.log('Edit');
+  onEdit(course: CourseInterface): void {
+    this.crumbsService.setCrumb({title: course.title, link: `courses/${course.id}`, level: 'child'});
+    this.router.navigate([`courses/${course.id}`]);
   }
 
   onSearch(searchQuery: string): void {
@@ -49,6 +53,7 @@ export class CoursesListComponent implements OnInit {
   }
 
   onAddCourse(): void {
+    this.crumbsService.setCrumb({title: 'New Course', link: 'courses/new', level: 'child'});
     this.router.navigate(['courses/new']);
   }
 }

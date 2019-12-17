@@ -4,21 +4,27 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { LogoComponent } from './components/header/logo/logo.component';
 import { FormsModule } from '@angular/forms';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { CommonModule } from '@angular/common';
+import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
+import { RouterModule } from '@angular/router';
+
+const toExport = [
+  HeaderComponent,
+  FooterComponent,
+  LogoComponent,
+  PageNotFoundComponent,
+  BreadcrumbsComponent,
+]
 
 @NgModule({
   imports: [
+    CommonModule,
     FormsModule,
+    RouterModule,
   ],
-  declarations: [
-    HeaderComponent,
-    FooterComponent,
-    LogoComponent,
-  ],
-  exports: [
-    HeaderComponent,
-    FooterComponent,
-    LogoComponent,
-  ]
+  declarations: [...toExport],
+  exports: [...toExport]
 })
 export class CoreModule {
   constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
