@@ -32,9 +32,8 @@ export class AddCourseComponent implements OnInit {
   }
 
   generateId(): void {
-    this.coursesService.getCoursesList(0).subscribe((courses) => {
-      this.id = courses.reduce((max, { id }) => id > max ? id : max, 0) + 1;
-    });
+    const courses = this.coursesService.loadCourses();
+    this.id = courses.reduce((max, { id }) => id > max ? id : max, 0) + 1;
   }
 
   onSave() {

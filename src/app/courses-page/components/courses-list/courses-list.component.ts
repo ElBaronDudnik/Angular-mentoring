@@ -13,7 +13,6 @@ import { BreadcrumbsService } from '../../../core/services/breadcrumbs.service';
   templateUrl: './courses-list.component.html',
   styleUrls: ['./courses-list.component.scss'],
   providers: [FilterCoursesByNamePipe],
-  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CoursesListComponent implements OnInit {
   public courses: CourseInterface[] = [];
@@ -31,10 +30,11 @@ export class CoursesListComponent implements OnInit {
   }
 
   getCourses(): void {
-    this.coursesService.getCoursesList(0, 10).subscribe((courses: CourseInterface[]) => {
-      this.courses = courses;
-      this.filteredCourses = courses;
-    });
+    console.log(this.coursesService.loadCourses());
+    //   .subscribe((courses: CourseInterface[]) => {
+    //   this.courses = courses;
+    //   this.filteredCourses = courses;
+    // });
   }
 
   onDelete(id: number): void {
@@ -44,12 +44,12 @@ export class CoursesListComponent implements OnInit {
     }
   }
 
-  loadMore(): void {
-    const start = this.filteredCourses.length;
-    this.coursesService.getCoursesList(start, 10).subscribe((courses: CourseInterface[]) => {
-      this.filteredCourses = this.filteredCourses.concat(courses);
-    });
-  }
+  // loadMore(): void {
+  //   const start = this.filteredCourses.length;
+  //   this.coursesService.getCoursesList(start, 10).subscribe((courses: CourseInterface[]) => {
+  //     this.filteredCourses = this.filteredCourses.concat(courses);
+  //   });
+  // }
 
   onEdit(course: CourseInterface): void {
     this.router.navigate([`courses/${course.id}`], {queryParams: {

@@ -10,10 +10,16 @@ import { Observable } from 'rxjs';
 })
 export class CoursesService {
   private courses !: CourseInterface[];
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService) {
+    this.getCoursesList();
+  }
 
-  getCoursesList(start: number, count?: number): Observable<CourseInterface[]> {
-    return this.apiService.getCourses(start, count);
+  getCoursesList(start?: number, count?: number) {
+    this.apiService.getCourses(start, count).subscribe(courses => this.courses = courses);
+  }
+
+  loadCourses() {
+    return this.courses;
   }
 
   createCourse(props: CourseInterface) {
