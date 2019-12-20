@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { CoreModule } from '../core.module';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import { ApiService } from './api.service';
 
 interface IToken {
   token: string;
@@ -17,7 +18,7 @@ interface ILogin {
   providedIn: CoreModule
 })
 export class AuthService {
-  static AUTH_ENDPOINT = 'http://localhost:3004/auth';
+  private authUrl = 'auth';
   private isAuth !: boolean;
   private token!: string | undefined;
 
@@ -28,19 +29,19 @@ export class AuthService {
     })
   };
 
-  constructor(private http: HttpClient) {
+  constructor(private api: ApiService) {
     this.isAuth = !!localStorage.getItem('token');
   }
 
   getUserInfo(): Observable<ILogin> {
-    return this.http.post<ILogin>(`${AuthService.AUTH_ENDPOINT}/userinfo`, {token: this.token}, this.httpOptions);
+    return this.api.post(`${this.authUrl}/userinfo`, {token: this.token}, this.httpOptions);
   }
 
   login(login: string, password: string) {
-    this.http.post<IToken>(`${AuthService.AUTH_ENDPOINT}/login`, {login, password}, this.httpOptions)
+    this.api.post(`${this.authUrl}/login`, {login, password}, this.httpOptions)
       .subscribe(response => {
         this.token = response.token;
-        localStorage.setItem('token', this.token);
+        localStorage.setItem('token', this.token || '');
         this.isAuth = true;
       });
   }

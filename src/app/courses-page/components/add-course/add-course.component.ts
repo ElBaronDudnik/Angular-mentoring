@@ -9,7 +9,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./add-course.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AddCourseComponent implements OnInit {
+export class AddCourseComponent {
   public newUserForm: FormGroup;
   private id!: number;
   constructor(private router: Router,
@@ -23,28 +23,21 @@ export class AddCourseComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    this.generateId();
-  }
-
   onCancel() {
     this.router.navigate(['/courses']);
   }
 
-  generateId(): void {
-    this.coursesService.getCoursesList(0).subscribe((courses) => {
-      this.id = courses.reduce((max, { id }) => id > max ? id : max, 0) + 1;
-    });
-  }
-
   onSave() {
-    this.coursesService.createCourse({
-      id: this.id,
-      name: this.newUserForm.value.name,
-      description: this.newUserForm.value.description,
-      date: this.newUserForm.value.date,
-      length: this.newUserForm.value.duration
+    this.coursesService.getCoursesList().subscribe(courses => {
+      this.id = courses.reduce((max: number, { id }) => id > max ? id : max, 0) + 1;
+      this.coursesService.createCourse({
+        id: this.id,
+        name: this.newUserForm.value.name,
+        description: this.newUserForm.value.description,
+        date: this.newUserForm.value.date,
+        length: this.newUserForm.value.duration
+      });
+      this.router.navigate(['/courses']);
     });
-    this.router.navigate(['/courses']);
   }
 }

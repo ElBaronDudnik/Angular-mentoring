@@ -7,37 +7,36 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ApiService {
-  static COURSES_ENDPOINT = 'http://localhost:3004/courses';
-  static AUTHORS_ENDPOINT = 'http://localhost:3004/authors';
+  static ENDPOINT = 'http://localhost:3004';
 
   constructor(private http: HttpClient) { }
 
-  getCourses(start = 0, count?: number): Observable<CourseInterface[]> {
-    return this.http.get<CourseInterface[]>(`${ApiService.COURSES_ENDPOINT}/?start=${start}&count=${count}`);
+  get(url: string, params?: string): Observable<CourseInterface[] | IAuthors[]> {
+    return this.http.get<CourseInterface[] | IAuthors[]>(`${ApiService.ENDPOINT}/${url}/?${params}`);
   }
 
-  searchCourses(textFragment: string): Observable<CourseInterface[]> {
-    return this.http.get<CourseInterface[]>(`${ApiService.COURSES_ENDPOINT}/?textFragment=${textFragment}`);
+  post(url: string, params: object, options?: object): Observable<any> {
+    return this.http.post<any>(
+      `${ApiService.ENDPOINT}/${url}`,
+      params,
+      options
+      )
   }
 
-  getCoursesById(id: number): Observable<CourseInterface> {
-    return this.http.get<CourseInterface>(`${ApiService.COURSES_ENDPOINT}/${id}`);
+  getCoursesById(url: string, id: number): Observable<CourseInterface> {
+    return this.http.get<CourseInterface>(`${ApiService.ENDPOINT}/${url}/${id}`);
   }
 
-  changeCourseById(id: number, newCourse: CourseInterface): Observable<CourseInterface> {
-    return this.http.patch<CourseInterface>(`${ApiService.COURSES_ENDPOINT}/#${id}`, newCourse);
+  changeCourseById(url:string, id: number, newCourse: CourseInterface): Observable<CourseInterface> {
+    return this.http.patch<CourseInterface>(`${ApiService.ENDPOINT}/${url}/#${id}`, newCourse);
   }
 
-  createCourse(course: CourseInterface): Observable<CourseInterface[]> {
-    return this.http.post<CourseInterface[]>(ApiService.COURSES_ENDPOINT, course);
+  createCourse(url: string, course: CourseInterface): Observable<CourseInterface[]> {
+    return this.http.post<CourseInterface[]>(`${ApiService.ENDPOINT}/${url}`, course);
   }
 
-  deleteCourse(id: number): Observable<CourseInterface[]> {
-    return this.http.delete<CourseInterface[]>(`${ApiService.COURSES_ENDPOINT}/${id}`);
-  }
-
-  getAuthors(): Observable<IAuthors[]> {
-    return this.http.get<IAuthors[]>(ApiService.AUTHORS_ENDPOINT);
+  deleteCourse(url: string, id: number): Observable<CourseInterface[]> {
+    return this.http.delete<CourseInterface[]>(`${ApiService.ENDPOINT}/${url}/${id}`);
   }
 
 }

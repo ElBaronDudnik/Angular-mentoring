@@ -9,20 +9,24 @@ import { Observable } from 'rxjs';
   providedIn: CoursesPageModule
 })
 export class CoursesService {
-  private courses !: CourseInterface[];
-  constructor(private apiService: ApiService) {}
+  private courses!: CourseInterface[];
+  private coursesUrl = 'courses';
 
-  getCoursesList(start: number, count?: number): Observable<CourseInterface[]> {
-    return this.apiService.getCourses(start, count);
+  constructor(private apiService: ApiService) {
+   this.getCoursesList();
+  }
+
+  getCoursesList(start?: number, count?: number) {
+    return this.apiService.get('courses',`start=${start}&count=${count}`);
   }
 
   createCourse(props: CourseInterface) {
     const course = new Course(props);
-    this.apiService.createCourse(course).subscribe(() => {});
+    this.apiService.createCourse(this.coursesUrl, course).subscribe(() => {});
   }
 
   getCourseById(id: number): Observable<CourseInterface> {
-    return this.apiService.getCoursesById(id);
+    return this.apiService.getCoursesById(this.coursesUrl, id);
   }
 
   updateItem(oldCourse: CourseInterface, newCourse: CourseInterface): void {
@@ -30,8 +34,12 @@ export class CoursesService {
     this.courses[index] = newCourse;
   }
 
+  searchItem(searchQuery: string): Observable<CourseInterface[]> {
+    return this.apiService.get('courses', `textFragment=${searchQuery}`);
+  }
+
   removeItem(id: number): Observable<CourseInterface[]> {
-    return this.apiService.deleteCourse(id);
+    return this.apiService.deleteCourse(this.coursesUrl, id);
   }
 }
 

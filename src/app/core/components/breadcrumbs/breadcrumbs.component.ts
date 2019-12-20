@@ -1,12 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BreadcrumbsService } from '../../services/breadcrumbs.service';
 import { Subscription } from 'rxjs';
-
-interface ICrumbs {
-  title: string;
-  link: string;
-  level: 'main' | 'child';
-}
+import { ICrumbs } from './breadcrumbs.interface';
 
 @Component({
   selector: 'app-breadcrumbs',
