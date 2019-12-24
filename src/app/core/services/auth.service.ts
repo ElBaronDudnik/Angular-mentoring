@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CoreModule } from '../core.module';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import { HttpHeaders } from '@angular/common/http';
+import { Observable, Subject } from 'rxjs';
 import { ApiService } from './api.service';
 
 interface IToken {
@@ -12,6 +12,12 @@ interface IToken {
 interface ILogin {
   login: string;
   password: string;
+  name: IName;
+}
+
+interface IName {
+  first: string;
+  last: string;
 }
 
 @Injectable({
@@ -19,8 +25,8 @@ interface ILogin {
 })
 export class AuthService {
   private authUrl = 'auth';
-  private isAuth !: boolean;
-  private token!: string | undefined;
+  private isAuth: Subject<boolean> = new Subject();
+  private token!: string | null;
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -30,7 +36,8 @@ export class AuthService {
   };
 
   constructor(private api: ApiService) {
-    this.isAuth = !!localStorage.getItem('token');
+    this.isAuth.next(!!localStorage.getItem('token'));
+    this.token = localStorage.getItem('token');
   }
 
   getUserInfo(): Observable<ILogin> {
@@ -42,7 +49,7 @@ export class AuthService {
       .subscribe(response => {
         this.token = response.token;
         localStorage.setItem('token', this.token || '');
-        this.isAuth = true;
+        this.isAuth.next(true);
       });
   }
 
@@ -52,10 +59,10 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('token');
-    this.isAuth = false;
+    this.isAuth.next(false);
   }
 
-  isAuthenticated(): boolean {
+  isAuthenticated(): Observable<boolean> {
     return this.isAuth;
   }
 }

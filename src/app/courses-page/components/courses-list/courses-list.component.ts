@@ -1,4 +1,4 @@
-import {Component, OnInit, EventEmitter, Output, OnDestroy} from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { CourseInterface } from '../../course.interface';
 import { FilterCoursesByNamePipe } from '../../../shared/pipes/filter-pipe/filter-courses-by-name.pipe';
 import { CoursesService } from '../../services/courses.service';
@@ -6,7 +6,9 @@ import { Router } from '@angular/router';
 import { ICrumbs } from '../../../core/components/breadcrumbs/breadcrumbs.interface';
 
 import { BreadcrumbsService } from '../../../core/services/breadcrumbs.service';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, map, switchMap } from 'rxjs/operators';
+import { ApiService } from '../../../core/services/api.service';
 
 
 @Component({
@@ -18,6 +20,7 @@ import { Subscription } from 'rxjs';
 export class CoursesListComponent implements OnInit, OnDestroy {
   public courses: CourseInterface[] = [];
   public filteredCourses: CourseInterface[] = [];
+  private searchSubject = new Subject<Event>();
 
   private subscription: Subscription = new Subscription();
 
@@ -25,6 +28,7 @@ export class CoursesListComponent implements OnInit, OnDestroy {
 
   constructor(private coursesService: CoursesService,
               private router: Router,
+              private apiService: ApiService,
               private crumbsService: BreadcrumbsService) { }
 
   ngOnInit() {
@@ -35,6 +39,14 @@ export class CoursesListComponent implements OnInit, OnDestroy {
     };
     this.getCourses();
     this.crumbsService.setCrumb(crumb);
+    this.searchSubject
+      .pipe(
+        debounceTime(1000),
+        distinctUntilChanged(),
+        map((e: Event) => (e.target as HTMLTextAreaElement).value),
+        filter((searchTerm: string) => searchTerm.length > 2),
+        switchMap((result: string) => this.apiService.searchCourses(result)))
+      .subscribe(courses => this.filteredCourses = courses);
   }
 
   ngOnDestroy(): void {

@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 
@@ -6,16 +6,20 @@ import { Router } from '@angular/router';
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HeaderComponent {
-
+export class HeaderComponent implements OnInit {
+  public userName!: string;
   constructor(private authService: AuthService,
               private router: Router) { }
 
+  ngOnInit() {
+    if (this.authService.isAuthenticated()) {
+      this.authService.getUserInfo().subscribe(userInfo => this.userName = `${userInfo.name.first} ${userInfo.name.last}`);
+    }
+  }
+
   logOff() {
     this.authService.logout();
-    console.log('log off');
     this.router.navigate(['/login']);
   }
 }
