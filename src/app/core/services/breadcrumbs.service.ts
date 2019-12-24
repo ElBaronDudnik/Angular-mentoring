@@ -12,7 +12,6 @@ interface ICrumbs {
 })
 export class BreadcrumbsService {
   private breadcrumbTitle$: Subject<ICrumbs> = new Subject<ICrumbs>();
-  constructor() {}
 
   setCrumb(crumbs: ICrumbs) {
     this.breadcrumbTitle$.next(crumbs);

@@ -1,7 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import {ApiService} from "../../services/api.service";
 
 @Component({
   selector: 'app-header',
@@ -9,16 +8,10 @@ import {ApiService} from "../../services/api.service";
   styleUrls: ['./header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
 
   constructor(private authService: AuthService,
-              private router: Router,
-              private apiService: ApiService) { }
-
-  ngOnInit() {
-  }
-
-  logIn() {}
+              private router: Router) { }
 
   logOff() {
     this.authService.logout();

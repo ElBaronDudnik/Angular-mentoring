@@ -9,35 +9,35 @@ import { Observable } from 'rxjs';
   providedIn: CoursesPageModule
 })
 export class CoursesService {
-  private courses !: CourseInterface[];
+  private coursesUrl = 'courses';
+
   constructor(private apiService: ApiService) {
-    this.getCoursesList();
+   this.getCoursesList();
   }
 
-  getCoursesList(start?: number, count?: number) {
-    this.apiService.getCourses(start, count).subscribe(courses => this.courses = courses);
-  }
-
-  loadCourses() {
-    return this.courses;
+  getCoursesList(start?: number, count?: number): Observable<CourseInterface[]> {
+    return this.apiService.get('courses', `start=${start}&count=${count}`);
   }
 
   createCourse(props: CourseInterface) {
     const course = new Course(props);
-    this.apiService.createCourse(course).subscribe(() => {});
+    this.apiService.post(this.coursesUrl, course).subscribe(() => {});
   }
 
   getCourseById(id: number): Observable<CourseInterface> {
-    return this.apiService.getCoursesById(id);
+    return this.apiService.get(`${this.coursesUrl}/${id}`);
   }
 
-  updateItem(oldCourse: CourseInterface, newCourse: CourseInterface): void {
-    const index = this.courses.findIndex((el: CourseInterface) => el === oldCourse);
-    this.courses[index] = newCourse;
+  updateItem(oldCourse: CourseInterface, newCourse: CourseInterface): Observable<CourseInterface> {
+    return this.apiService.patch(this.coursesUrl, oldCourse.id, newCourse);
+  }
+
+  searchItem(searchQuery: string): Observable<CourseInterface[]> {
+    return this.apiService.get('courses', `textFragment=${searchQuery}`);
   }
 
   removeItem(id: number): Observable<CourseInterface[]> {
-    return this.apiService.deleteCourse(id);
+    return this.apiService.delete(this.coursesUrl, id);
   }
 }
 
