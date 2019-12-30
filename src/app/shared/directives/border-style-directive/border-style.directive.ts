@@ -11,7 +11,6 @@ export class BorderStyleDirective implements OnInit {
   public freshColor = 'lightseagreen';
   public upcomingColor = 'cornflowerblue';
   @Input() course !: CourseInterface;
-  constructor() { }
 
   @HostBinding('style.border-color') borderColor!: string;
 
@@ -20,7 +19,7 @@ export class BorderStyleDirective implements OnInit {
   }
 
   getDateDiff() {
-    return Math.floor((+Date.now() - +this.course.creationDate) / MILLISECONDS_PER_DAY);
+    return Math.floor((+Date.now() - +this.course.date) / MILLISECONDS_PER_DAY);
   }
 
   setBorder() {

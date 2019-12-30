@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -7,12 +7,7 @@ import { FormGroup } from '@angular/forms';
   styleUrls: ['./duration-input-field.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DurationInputFieldComponent implements OnInit {
+export class DurationInputFieldComponent {
   public duration!: number;
   @Input() newUserForm!: FormGroup;
-  constructor() { }
-
-  ngOnInit() {
-  }
-
 }

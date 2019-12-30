@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, EventEmitter, Output, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -7,12 +7,6 @@ import { FormGroup } from '@angular/forms';
   styleUrls: ['./date-input-field.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DateInputFieldComponent implements OnInit {
+export class DateInputFieldComponent {
   @Input() newUserForm!: FormGroup;
-  constructor() { }
-
-  ngOnInit() {
-  }
-
-
 }

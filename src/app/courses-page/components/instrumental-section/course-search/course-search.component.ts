@@ -6,13 +6,9 @@ import { Component, OnInit, ChangeDetectionStrategy, EventEmitter, Output } from
   styleUrls: ['./course-search.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CourseSearchComponent implements OnInit {
+export class CourseSearchComponent {
   public searchQuery !: string;
   @Output() search = new EventEmitter<string>();
-  constructor() { }
-
-  ngOnInit() {
-  }
 
   onSearch(): void {
     this.search.emit(this.searchQuery);

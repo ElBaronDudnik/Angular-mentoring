@@ -1,8 +1,8 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import {Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CoursesService } from '../../../courses-page/services/courses.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { BreadcrumbsService } from 'app/core/services/breadcrumbs.service';
+import { CourseInterface } from '../../course.interface';
 
 @Component({
   selector: 'app-add-course-page',
@@ -10,12 +10,11 @@ import { BreadcrumbsService } from 'app/core/services/breadcrumbs.service';
   styleUrls: ['./add-course.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AddCourseComponent{
+export class AddCourseComponent {
   public newUserForm: FormGroup;
+  private id!: number;
   constructor(private router: Router,
-              private coursesService: CoursesService,
-              private route: ActivatedRoute,
-              private crumbsService: BreadcrumbsService) {
+              private coursesService: CoursesService) {
     this.newUserForm = new FormGroup({
       title: new FormControl('', Validators.required),
       description: new FormControl('', Validators.required),
@@ -29,18 +28,17 @@ export class AddCourseComponent{
     this.router.navigate(['/courses']);
   }
 
-  generateId(): number {
-    return this.coursesService.getBiggestId() + 1;
-  }
-
   onSave() {
-    this.coursesService.createCourse({
-      id: this.generateId(),
-      title: this.newUserForm.value.title,
-      description: this.newUserForm.value.description,
-      creationDate: this.newUserForm.value.date,
-      duration: this.newUserForm.value.duration
+    this.coursesService.getCoursesList().subscribe((courses: CourseInterface[])  => {
+      this.id = courses.reduce((max: number, { id }) => id > max ? id : max, 0) + 1;
+      this.coursesService.createCourse({
+        id: this.id,
+        name: this.newUserForm.value.name,
+        description: this.newUserForm.value.description,
+        date: this.newUserForm.value.date,
+        length: this.newUserForm.value.duration
+      });
+      this.router.navigate(['/courses']);
     });
-    this.router.navigate(['/courses']);
   }
 }

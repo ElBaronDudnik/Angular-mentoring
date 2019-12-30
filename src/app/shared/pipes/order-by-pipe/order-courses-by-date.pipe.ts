@@ -9,7 +9,7 @@ export class OrderCoursesByDatePipe implements PipeTransform {
   transform(courses: CourseInterface[]): CourseInterface[] | null {
     if (courses.length) {
       return courses.sort((a: CourseInterface, b: CourseInterface) => {
-        return +b.creationDate - +a.creationDate;
+        return +b.date - +a.date;
       });
     }
     return null;

@@ -6,12 +6,8 @@ import { Component, OnInit, ChangeDetectionStrategy, EventEmitter, Output } from
   styleUrls: ['./course-addition.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CourseAdditionComponent implements OnInit {
+export class CourseAdditionComponent {
   @Output() addCourse = new EventEmitter();
-  constructor() { }
-
-  ngOnInit() {
-  }
 
   onAdd(): void {
     this.addCourse.emit();

@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -7,11 +7,6 @@ import { FormGroup } from '@angular/forms';
   styleUrls: ['./authors-input-field.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AuthorsInputFieldComponent implements OnInit {
+export class AuthorsInputFieldComponent {
   @Input() newUserForm!: FormGroup;
-  constructor() { }
-
-  ngOnInit() {
-  }
-
 }

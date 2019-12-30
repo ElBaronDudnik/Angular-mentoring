@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, EventEmitter, Output } from '@angular/core';
+import { Component, ChangeDetectionStrategy, EventEmitter, Output } from '@angular/core';
 
 @Component({
     selector: 'app-instrumental-section',
@@ -6,13 +6,9 @@ import { Component, OnInit, ChangeDetectionStrategy, EventEmitter, Output } from
     styleUrls: ['./instrumental-section.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
   })
-  export class InstrumentalSectionComponent implements OnInit {
+  export class InstrumentalSectionComponent {
   @Output() search = new EventEmitter();
   @Output() addCourse = new EventEmitter<void>();
-  constructor() { }
-
-  ngOnInit() {
-  }
 
   onSearch(event: Event): void {
     this.search.emit(event);
