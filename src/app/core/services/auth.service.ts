@@ -6,10 +6,9 @@ import { ApiService } from './api.service';
 
 interface IToken {
   token: string;
-
 }
 
-interface ILogin {
+export interface ILogin {
   login: string;
   password: string;
   name: IName;
@@ -36,8 +35,8 @@ export class AuthService {
   };
 
   constructor(private api: ApiService) {
-    this.isAuth.next(!!localStorage.getItem('token'));
     this.token = localStorage.getItem('token');
+    this.isAuth.next(!!this.token);
   }
 
   getUserInfo(): Observable<ILogin> {

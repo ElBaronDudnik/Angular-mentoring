@@ -1,4 +1,4 @@
-<div class="loading-container" *ngIf="show" >
+<div class="loading-container" *ngIf="loaderService.loaderState | async" >
   <div class='loader loader3'>
     <div>
       <div>

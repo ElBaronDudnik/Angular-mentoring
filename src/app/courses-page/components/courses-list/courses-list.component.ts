@@ -28,22 +28,22 @@ export class CoursesListComponent implements OnInit, OnDestroy {
 
   constructor(private coursesService: CoursesService,
               private router: Router,
-              private apiService: ApiService,
-              private crumbsService: BreadcrumbsService) { }
+              private crumbsService: BreadcrumbsService) {
+                const crumb: ICrumbs = {
+                  title: 'Courses',
+                  link: 'courses',
+                  level: 'main'
+                };
+                this.crumbsService.setCrumb(crumb);
+               }
 
   ngOnInit() {
-    const crumb: ICrumbs = {
-      title: 'Courses',
-      link: 'courses',
-      level: 'main'
-    };
     this.getCourses();
-    this.crumbsService.setCrumb(crumb);
     this.searchSubject
       .pipe(
         debounceTime(1000),
-        distinctUntilChanged(),
         map((e: Event) => (e.target as HTMLTextAreaElement).value),
+        distinctUntilChanged(),
         filter((searchTerm: string) => searchTerm.length > 2),
         switchMap((result: string) => this.coursesService.searchItem(result)))
       .subscribe(courses => this.filteredCourses = courses);

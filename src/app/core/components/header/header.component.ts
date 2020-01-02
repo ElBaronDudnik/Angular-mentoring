@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
+import { AuthService, ILogin } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { Observable, of } from 'rxjs';
+import { map, filter, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
@@ -8,16 +10,16 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  public userName!: string;
+  public userInfo!: Observable<string>;
   constructor(private authService: AuthService,
               private router: Router) { }
 
   ngOnInit() {
-    this.authService.isAuthenticated().subscribe((status: boolean) => {
-      if (status) {
-        this.authService.getUserInfo().subscribe(userInfo => this.userName = `${userInfo.name.first} ${userInfo.name.last}`);
-      }
-    });
+    this.userInfo = this.authService.isAuthenticated().pipe(
+      filter(status => status),
+      switchMap(() => this.authService.getUserInfo()),
+      map((userInfo: ILogin) => `${userInfo.name.last} ${userInfo.name.first}`)
+    );
   }
 
   logOff() {
