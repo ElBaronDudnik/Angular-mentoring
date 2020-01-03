@@ -15,10 +15,18 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscribtion = this.breadcrumbService.getCrumb().subscribe((result: ICrumbs) => {
-      if (result.level === 'main') {
-        this.breadcrumb.splice(0, this.breadcrumb.length);
+      console.log(result.level)
+      switch (result.level) {
+        case undefined:
+          this.breadcrumb = [];
+          break;
+        case 'main':
+          // this.breadcrumb.splice(0, this.breadcrumb.length);
+          break;
+        case 'child':
+          this.breadcrumb.push(result);
+          break;
       }
-      this.breadcrumb.push(result);
     });
   }
 

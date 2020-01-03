@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CoreModule } from '../core.module';
 import { HttpHeaders } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import { ApiService } from './api.service';
 
 interface IToken {
@@ -24,7 +24,7 @@ interface IName {
 })
 export class AuthService {
   private authUrl = 'auth';
-  private isAuth: Subject<boolean> = new Subject();
+  private isAuth: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private token!: string | null;
 
   httpOptions = {
@@ -57,6 +57,8 @@ export class AuthService {
   }
 
   logout(): void {
+    console.log('log out');
+    this.token = '';
     localStorage.removeItem('token');
     this.isAuth.next(false);
   }

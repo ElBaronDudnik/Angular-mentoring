@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
 interface ICrumbs {
-  title: string;
-  link: string;
-  level: 'main' | 'child';
+  title?: string;
+  link?: string;
+  level?: 'main' | 'child';
 }
 
 @Injectable({
@@ -19,5 +19,9 @@ export class BreadcrumbsService {
 
   getCrumb(): Observable<ICrumbs> {
     return this.breadcrumbTitle$.asObservable();
+  }
+
+  clearCrumb() {
+    this.breadcrumbTitle$.next({});
   }
 }

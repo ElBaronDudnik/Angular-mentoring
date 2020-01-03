@@ -8,13 +8,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   email !: string;
   password !: string;
   constructor(private authService: AuthService,
               private router: Router) { }
-
-  ngOnInit() {}
 
   onLogin() {
     if (this.email && this.password) {

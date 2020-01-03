@@ -8,7 +8,6 @@ import { ICrumbs } from '../../../core/components/breadcrumbs/breadcrumbs.interf
 import { BreadcrumbsService } from '../../../core/services/breadcrumbs.service';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map, switchMap } from 'rxjs/operators';
-import { ApiService } from '../../../core/services/api.service';
 
 
 @Component({
