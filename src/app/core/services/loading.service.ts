@@ -1,18 +1,22 @@
-import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LoadingService {
-  private isLoading = new Subject<boolean>();
-  loaderState: Observable<boolean> = this.isLoading.asObservable();
+export class LoadingService implements OnDestroy {
+  private isLoading$ = new BehaviorSubject<boolean>(false);
+  loaderState: Observable<boolean> = this.isLoading$.asObservable();
 
   show() {
-    this.isLoading.next(true);
+    this.isLoading$.next(true);
   }
 
   hide() {
-    this.isLoading.next(false);
+    this.isLoading$.next(false);
+  }
+
+  ngOnDestroy(): void {
+    this.isLoading$.complete();
   }
 }

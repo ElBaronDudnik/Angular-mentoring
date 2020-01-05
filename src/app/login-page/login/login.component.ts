@@ -1,6 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
@@ -11,13 +10,11 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   email !: string;
   password !: string;
-  constructor(private authService: AuthService,
-              private router: Router) { }
+  constructor(private authService: AuthService) { }
 
   onLogin() {
     if (this.email && this.password) {
-      this.authService.login(this.email, this.password)
-      this.router.navigate(['/courses']);
+      this.authService.login(this.email, this.password);
     }
   }
 }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, OnDestroy } from '@angular/core';
 import { CourseInterface } from '../../../course.interface';
 import { faCalendar, faPencilAlt, faClock, faTrash, faStar } from '@fortawesome/free-solid-svg-icons';
 import { ActivatedRoute } from '@angular/router';

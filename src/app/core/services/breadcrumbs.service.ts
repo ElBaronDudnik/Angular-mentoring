@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
 interface ICrumbs {
@@ -10,7 +10,7 @@ interface ICrumbs {
 @Injectable({
   providedIn: 'root'
 })
-export class BreadcrumbsService {
+export class BreadcrumbsService implements OnDestroy {
   private breadcrumbTitle$: Subject<ICrumbs> = new Subject<ICrumbs>();
 
   setCrumb(crumbs: ICrumbs) {
@@ -21,7 +21,7 @@ export class BreadcrumbsService {
     return this.breadcrumbTitle$.asObservable();
   }
 
-  clearCrumb() {
-    this.breadcrumbTitle$.next({});
+  ngOnDestroy(): void {
+    this.breadcrumbTitle$.complete();
   }
 }

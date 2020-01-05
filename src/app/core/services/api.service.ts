@@ -16,7 +16,6 @@ export class ApiService {
   }
 
   post(url: string, params: object, options?: object): Observable<any> {
-    console.log(params);
     return this.http.post<any>(
       `${ApiService.ENDPOINT}/${url}`,
       params,

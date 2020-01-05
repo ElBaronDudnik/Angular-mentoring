@@ -12,7 +12,7 @@
   <p>{{ course.description }}</p>
 </div>
 <div class="buttons-container">
-  <button (click) = "edit.emit(course)" class="edit-button"><fa-icon [icon]="faPencil"></fa-icon>Edit</button>
-  <button (click) = "delete.emit(course?.id)" class="delete-button"><fa-icon [icon]="faTrash"></fa-icon>Delete</button>
+  <button (click)="edit.emit(course)" class="edit-button"><fa-icon [icon]="faPencil"></fa-icon>Edit</button>
+  <button (click)="delete.emit(course?.id)" class="delete-button"><fa-icon [icon]="faTrash"></fa-icon>Delete</button>
 </div>
 

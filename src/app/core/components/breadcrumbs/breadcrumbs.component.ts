@@ -1,36 +1,29 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BreadcrumbsService } from '../../services/breadcrumbs.service';
-import { Subscription } from 'rxjs';
 import { ICrumbs } from './breadcrumbs.interface';
+import { tap } from 'rxjs/operators';
+import { AuthService } from 'app/core/services/auth.service';
 
 @Component({
   selector: 'app-breadcrumbs',
   templateUrl: './breadcrumbs.component.html',
   styleUrls: ['./breadcrumbs.component.scss'],
 })
-export class BreadcrumbsComponent implements OnInit, OnDestroy {
+export class BreadcrumbsComponent implements OnInit {
   public breadcrumb: ICrumbs[] = [];
-  public subscribtion!: Subscription;
-  constructor(private breadcrumbService: BreadcrumbsService) { }
+  constructor(private breadcrumbService: BreadcrumbsService,
+    public authService: AuthService) { }
 
   ngOnInit() {
-    this.subscribtion = this.breadcrumbService.getCrumb().subscribe((result: ICrumbs) => {
-      console.log(result.level)
-      switch (result.level) {
-        case undefined:
-          this.breadcrumb = [];
-          break;
-        case 'main':
-          // this.breadcrumb.splice(0, this.breadcrumb.length);
-          break;
-        case 'child':
-          this.breadcrumb.push(result);
-          break;
-      }
-    });
-  }
-
-  ngOnDestroy() {
-    this.subscribtion.unsubscribe();
+    this.breadcrumbService.getCrumb()
+    .pipe(
+      tap((crumb: any) => {
+          if (crumb.level === 'main') {
+            this.breadcrumb = [];
+          }
+          this.breadcrumb.push(crumb);
+      })
+    )
+    .subscribe();
   }
 }

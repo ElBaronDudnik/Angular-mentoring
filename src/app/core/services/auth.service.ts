@@ -1,12 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { CoreModule } from '../core.module';
 import { HttpHeaders } from '@angular/common/http';
-import {BehaviorSubject, Observable, Subject} from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ApiService } from './api.service';
-
-interface IToken {
-  token: string;
-}
+import { Router } from '@angular/router';
 
 export interface ILogin {
   login: string;
@@ -22,9 +19,9 @@ interface IName {
 @Injectable({
   providedIn: CoreModule
 })
-export class AuthService {
+export class AuthService implements OnDestroy {
   private authUrl = 'auth';
-  private isAuth: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private isAuth$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private token!: string | null;
 
   httpOptions = {
@@ -34,9 +31,14 @@ export class AuthService {
     })
   };
 
-  constructor(private api: ApiService) {
+  constructor(private api: ApiService,
+              private router: Router) {
     this.token = localStorage.getItem('token');
-    this.isAuth.next(!!this.token);
+    this.isAuth$.next(!!this.token);
+  }
+
+  ngOnDestroy(): void {
+    this.isAuth$.complete();
   }
 
   getUserInfo(): Observable<ILogin> {
@@ -48,7 +50,8 @@ export class AuthService {
       .subscribe(response => {
         this.token = response.token;
         localStorage.setItem('token', this.token || '');
-        this.isAuth.next(true);
+        this.isAuth$.next(true);
+        this.router.navigate(['/courses']);
       });
   }
 
@@ -57,13 +60,13 @@ export class AuthService {
   }
 
   logout(): void {
-    console.log('log out');
     this.token = '';
     localStorage.removeItem('token');
-    this.isAuth.next(false);
+    this.isAuth$.next(false);
+    this.router.navigate(['/login']);
   }
 
   isAuthenticated(): Observable<boolean> {
-    return this.isAuth.asObservable();
+    return this.isAuth$.asObservable();
   }
 }

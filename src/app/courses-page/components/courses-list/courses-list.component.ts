@@ -19,7 +19,7 @@ import { debounceTime, distinctUntilChanged, filter, map, switchMap } from 'rxjs
 export class CoursesListComponent implements OnInit, OnDestroy {
   public courses: CourseInterface[] = [];
   public filteredCourses: CourseInterface[] = [];
-  private searchSubject = new Subject<Event>();
+  private searchSubject$ = new Subject<Event>();
 
   private subscription: Subscription = new Subscription();
 
@@ -34,11 +34,11 @@ export class CoursesListComponent implements OnInit, OnDestroy {
                   level: 'main'
                 };
                 this.crumbsService.setCrumb(crumb);
-               }
+              }
 
   ngOnInit() {
     this.getCourses();
-    this.searchSubject
+    this.searchSubject$
       .pipe(
         debounceTime(1000),
         map((e: Event) => (e.target as HTMLTextAreaElement).value),
@@ -52,6 +52,7 @@ export class CoursesListComponent implements OnInit, OnDestroy {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+    this.searchSubject$.complete();
   }
 
   getCourses(): void {
@@ -90,7 +91,7 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   }
 
   onSearch(event: Event): void {
-    this.searchSubject.next(event);
+    this.searchSubject$.next(event);
   }
 
   onAddCourse(): void {
