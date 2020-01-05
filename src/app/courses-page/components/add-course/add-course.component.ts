@@ -1,8 +1,10 @@
-import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { CoursesService } from '../../../courses-page/services/courses.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CourseInterface } from '../../course.interface';
+import { ICrumbs } from 'app/core/components/breadcrumbs/breadcrumbs.interface';
+import { BreadcrumbsService } from 'app/core/services/breadcrumbs.service';
 
 @Component({
   selector: 'app-add-course-page',
@@ -14,7 +16,8 @@ export class AddCourseComponent {
   public newUserForm: FormGroup;
   private id!: number;
   constructor(private router: Router,
-              private coursesService: CoursesService,) {
+              private coursesService: CoursesService,
+              private crumbService: BreadcrumbsService) {
     this.newUserForm = new FormGroup({
       title: new FormControl('', Validators.required),
       description: new FormControl('', Validators.required),
@@ -22,6 +25,7 @@ export class AddCourseComponent {
       date: new FormControl('', Validators.required),
       authors: new FormControl('')
     });
+    this.setBreadcrumbs();
   }
 
   onCancel() {
@@ -40,5 +44,20 @@ export class AddCourseComponent {
       });
       this.router.navigate(['/courses']);
     });
+  }
+
+  setBreadcrumbs() {
+    const parentCrumb: ICrumbs = {
+      title: 'Courses',
+      link: '/courses',
+      level: 'main'
+    }
+    const currentCrumb: ICrumbs = {
+      title: 'New Course',
+      link: '',
+      level: 'child'
+    }
+    this.crumbService.setCrumb(parentCrumb);
+    this.crumbService.setCrumb(currentCrumb);
   }
 }
