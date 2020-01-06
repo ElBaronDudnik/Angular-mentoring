@@ -1,26 +1,28 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { CoreModule } from '../core.module';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import { HttpHeaders } from '@angular/common/http';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ApiService } from './api.service';
+import { Router } from '@angular/router';
 
-interface IToken {
-  token: string;
-
-}
-
-interface ILogin {
+export interface ILogin {
   login: string;
   password: string;
+  name: IName;
+}
+
+interface IName {
+  first: string;
+  last: string;
 }
 
 @Injectable({
   providedIn: CoreModule
 })
-export class AuthService {
+export class AuthService implements OnDestroy {
   private authUrl = 'auth';
-  private isAuth !: boolean;
-  private token!: string | undefined;
+  private isAuth$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private token!: string | null;
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -29,8 +31,14 @@ export class AuthService {
     })
   };
 
-  constructor(private api: ApiService) {
-    this.isAuth = !!localStorage.getItem('token');
+  constructor(private api: ApiService,
+              private router: Router) {
+    this.token = localStorage.getItem('token');
+    this.isAuth$.next(!!this.token);
+  }
+
+  ngOnDestroy(): void {
+    this.isAuth$.complete();
   }
 
   getUserInfo(): Observable<ILogin> {
@@ -42,7 +50,8 @@ export class AuthService {
       .subscribe(response => {
         this.token = response.token;
         localStorage.setItem('token', this.token || '');
-        this.isAuth = true;
+        this.isAuth$.next(true);
+        this.router.navigate(['/courses']);
       });
   }
 
@@ -51,11 +60,13 @@ export class AuthService {
   }
 
   logout(): void {
+    this.token = '';
     localStorage.removeItem('token');
-    this.isAuth = false;
+    this.isAuth$.next(false);
+    this.router.navigate(['/login']);
   }
 
-  isAuthenticated(): boolean {
-    return this.isAuth;
+  isAuthenticated(): Observable<boolean> {
+    return this.isAuth$.asObservable();
   }
 }

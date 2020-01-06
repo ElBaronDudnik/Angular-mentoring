@@ -3,9 +3,7 @@
   <input
     type="text"
     placeholder="Text to search"
-    [(ngModel)] = "searchQuery"
-    (keydown.enter)="onSearch()" >
+    (keyup)="onSearch($event)" >
 </label>
-<button (click) = "onSearch()" type="submit">Search</button>
 
 

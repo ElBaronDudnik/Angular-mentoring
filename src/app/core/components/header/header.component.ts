@@ -1,21 +1,27 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
+import { Component, AfterViewInit } from '@angular/core';
+import { AuthService, ILogin } from '../../services/auth.service';
+import { switchMap, map } from 'rxjs/operators';
+import { iif, of, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HeaderComponent {
+export class HeaderComponent implements AfterViewInit {
+  public userInfo!: Observable<string>;
+  constructor(private authService: AuthService) { }
 
-  constructor(private authService: AuthService,
-              private router: Router) { }
+  ngAfterViewInit() {
+    this.userInfo = this.authService.isAuthenticated().pipe(
+      switchMap(status => iif(() => status,
+        this.authService.getUserInfo().pipe(
+          map((userInfo: ILogin) => `${userInfo.name.last} ${userInfo.name.first}`)),
+        of('')))
+    );
+  }
 
   logOff() {
     this.authService.logout();
-    console.log('log off');
-    this.router.navigate(['/login']);
   }
 }

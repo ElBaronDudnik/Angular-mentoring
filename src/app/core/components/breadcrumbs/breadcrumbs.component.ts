@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BreadcrumbsService } from '../../services/breadcrumbs.service';
-import { Subscription } from 'rxjs';
 import { ICrumbs } from './breadcrumbs.interface';
+import { AuthService } from 'app/core/services/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-breadcrumbs',
@@ -10,19 +11,21 @@ import { ICrumbs } from './breadcrumbs.interface';
 })
 export class BreadcrumbsComponent implements OnInit, OnDestroy {
   public breadcrumb: ICrumbs[] = [];
-  public subscribtion!: Subscription;
-  constructor(private breadcrumbService: BreadcrumbsService) { }
+  private subscription!: Subscription;
+  constructor(private breadcrumbService: BreadcrumbsService,
+              public authService: AuthService) {}
 
   ngOnInit() {
-    this.subscribtion = this.breadcrumbService.getCrumb().subscribe((result: ICrumbs) => {
-      if (result.level === 'main') {
-        this.breadcrumb.splice(0, this.breadcrumb.length);
+    this.subscription = this.breadcrumbService.getCrumb()
+    .subscribe((crumb: any) => {
+      if (crumb.level === 'main') {
+        this.breadcrumb = [];
       }
-      this.breadcrumb.push(result);
+      this.breadcrumb.push(crumb);
     });
   }
 
   ngOnDestroy() {
-    this.subscribtion.unsubscribe();
+    this.subscription.unsubscribe();
   }
 }

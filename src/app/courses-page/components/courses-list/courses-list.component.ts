@@ -1,4 +1,4 @@
-import {Component, OnInit, EventEmitter, Output, OnDestroy} from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { CourseInterface } from '../../course.interface';
 import { FilterCoursesByNamePipe } from '../../../shared/pipes/filter-pipe/filter-courses-by-name.pipe';
 import { CoursesService } from '../../services/courses.service';
@@ -6,7 +6,8 @@ import { Router } from '@angular/router';
 import { ICrumbs } from '../../../core/components/breadcrumbs/breadcrumbs.interface';
 
 import { BreadcrumbsService } from '../../../core/services/breadcrumbs.service';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, map, switchMap } from 'rxjs/operators';
 
 
 @Component({
@@ -18,6 +19,7 @@ import { Subscription } from 'rxjs';
 export class CoursesListComponent implements OnInit, OnDestroy {
   public courses: CourseInterface[] = [];
   public filteredCourses: CourseInterface[] = [];
+  private search$ = new Subject<Event>();
 
   private subscription: Subscription = new Subscription();
 
@@ -25,22 +27,32 @@ export class CoursesListComponent implements OnInit, OnDestroy {
 
   constructor(private coursesService: CoursesService,
               private router: Router,
-              private crumbsService: BreadcrumbsService) { }
+              private crumbsService: BreadcrumbsService) {
+                const crumb: ICrumbs = {
+                  title: 'Courses',
+                  link: 'courses',
+                  level: 'main'
+                };
+                this.crumbsService.setCrumb(crumb);
+              }
 
   ngOnInit() {
-    const crumb: ICrumbs = {
-      title: 'Courses',
-      link: 'courses',
-      level: 'main'
-    };
     this.getCourses();
-    this.crumbsService.setCrumb(crumb);
+    this.search$
+      .pipe(
+        debounceTime(1000),
+        map((e: Event) => (e.target as HTMLTextAreaElement).value),
+        distinctUntilChanged(),
+        filter((searchTerm: string) => searchTerm.length > 2),
+        switchMap((result: string) => this.coursesService.searchItem(result)))
+      .subscribe(courses => this.filteredCourses = courses);
   }
 
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+    this.search$.complete();
   }
 
   getCourses(): void {
@@ -78,10 +90,8 @@ export class CoursesListComponent implements OnInit, OnDestroy {
     this.crumbsService.setCrumb(crumb);
   }
 
-  onSearch(searchQuery: string): void {
-    this.subscription.add(this.coursesService
-    .searchItem(searchQuery)
-      .subscribe(courses => this.filteredCourses = courses));
+  onSearch(event: Event): void {
+    this.search$.next(event);
   }
 
   onAddCourse(): void {

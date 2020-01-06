@@ -11,6 +11,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { LoadingBlockComponent } from './components/loading-block/loading-block.component';
 
 const toExport = [
   HeaderComponent,
@@ -18,7 +19,8 @@ const toExport = [
   LogoComponent,
   PageNotFoundComponent,
   BreadcrumbsComponent,
-]
+  LoadingBlockComponent,
+];
 
 @NgModule({
   imports: [

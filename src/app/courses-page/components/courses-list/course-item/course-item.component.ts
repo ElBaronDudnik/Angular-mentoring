@@ -1,9 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, OnDestroy } from '@angular/core';
 import { CourseInterface } from '../../../course.interface';
 import { faCalendar, faPencilAlt, faClock, faTrash, faStar } from '@fortawesome/free-solid-svg-icons';
 import { ActivatedRoute } from '@angular/router';
 import { CoursesService } from 'app/courses-page/services/courses.service';
 import { Subscription } from 'rxjs';
+import { BreadcrumbsService } from 'app/core/services/breadcrumbs.service';
+import { ICrumbs } from 'app/core/components/breadcrumbs/breadcrumbs.interface';
 
 @Component({
   selector: 'app-course-item',
@@ -23,7 +25,8 @@ export class CourseItemComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private courseService: CoursesService
+    private courseService: CoursesService,
+    private crumbService: BreadcrumbsService
   ) { }
 
   ngOnInit() {
@@ -31,8 +34,24 @@ export class CourseItemComponent implements OnInit, OnDestroy {
       this.subscription = this.courseService.getCourseById(this.route.snapshot.params.id)
       .subscribe(course => {
         this.course = course;
+        this.setBreadcrumbs();
       });
     }
+  }
+
+  setBreadcrumbs() {
+    const parentCrumb: ICrumbs = {
+      title: 'Courses',
+      link: '/courses',
+      level: 'main'
+    }
+    const currentCrumb: ICrumbs = {
+      title: this.course && this.course.name || '',
+      link: '',
+      level: 'child'
+    }
+    this.crumbService.setCrumb(parentCrumb);
+    this.crumbService.setCrumb(currentCrumb);
   }
 
   ngOnDestroy(): void {
