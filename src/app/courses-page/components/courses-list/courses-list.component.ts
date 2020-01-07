@@ -6,8 +6,10 @@ import { Router } from '@angular/router';
 import { ICrumbs } from '../../../core/components/breadcrumbs/breadcrumbs.interface';
 
 import { BreadcrumbsService } from '../../../core/services/breadcrumbs.service';
-import { Subject, Subscription } from 'rxjs';
+import { Subject, Subscription, Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map, switchMap } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import * as CoursesListActions from './courses-list.actions';
 
 
 @Component({
@@ -17,6 +19,7 @@ import { debounceTime, distinctUntilChanged, filter, map, switchMap } from 'rxjs
   providers: [FilterCoursesByNamePipe],
 })
 export class CoursesListComponent implements OnInit, OnDestroy {
+  public coursesStore!: Observable<{courses: CourseInterface[]}>;
   public courses: CourseInterface[] = [];
   public filteredCourses: CourseInterface[] = [];
   private search$ = new Subject<Event>();
@@ -27,7 +30,8 @@ export class CoursesListComponent implements OnInit, OnDestroy {
 
   constructor(private coursesService: CoursesService,
               private router: Router,
-              private crumbsService: BreadcrumbsService) {
+              private crumbsService: BreadcrumbsService,
+              private store: Store<{coursesList: {courses: CourseInterface[]}}>) {
                 const crumb: ICrumbs = {
                   title: 'Courses',
                   link: 'courses',
@@ -37,6 +41,8 @@ export class CoursesListComponent implements OnInit, OnDestroy {
               }
 
   ngOnInit() {
+    this.coursesStore = this.store.select('coursesList');
+    this.coursesStore.subscribe(res => console.log(res))
     this.getCourses();
     this.search$
       .pipe(
@@ -64,6 +70,7 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   }
 
   onDelete(id: number): void {
+    this.store.dispatch(new CoursesListActions.DeleteCourse(5))
     const answer = confirm('Do you really want to delete this course?');
     if (answer) {
       this.subscription.add(this.coursesService

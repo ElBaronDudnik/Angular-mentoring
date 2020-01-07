@@ -4,14 +4,18 @@ import { HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ApiService } from './api.service';
 import { Router } from '@angular/router';
+import * as fromApp from '../../shared/store/app.reducer';
+import {Store} from "@ngrx/store";
 
 export interface ILogin {
+  id: number;
+  fakeToken: string;
   login: string;
   password: string;
   name: IName;
 }
 
-interface IName {
+export interface IName {
   first: string;
   last: string;
 }
@@ -32,7 +36,8 @@ export class AuthService implements OnDestroy {
   };
 
   constructor(private api: ApiService,
-              private router: Router) {
+              private router: Router,
+              private store: Store<fromApp.AppState>) {
     this.token = localStorage.getItem('token');
     this.isAuth$.next(!!this.token);
   }
