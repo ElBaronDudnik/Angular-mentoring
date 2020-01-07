@@ -6,6 +6,8 @@ import { ApiService } from './api.service';
 import { Router } from '@angular/router';
 
 export interface ILogin {
+  id: number,
+  fakeToken: string,
   login: string;
   password: string;
   name: IName;
