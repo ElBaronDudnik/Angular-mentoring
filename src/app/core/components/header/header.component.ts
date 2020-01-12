@@ -1,27 +1,29 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { AuthService, ILogin } from '../../services/auth.service';
 import { switchMap, map } from 'rxjs/operators';
 import { iif, of, Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { AppState } from 'app/shared/store/app.reducer';
+import { Logout } from 'app/login-page/login/store/auth.actions';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements AfterViewInit {
-  public userInfo!: Observable<string>;
-  constructor(private authService: AuthService) { }
+export class HeaderComponent implements OnInit {
+  public userInfo!: string;
+  constructor(private store: Store<AppState>) { }
 
-  ngAfterViewInit() {
-    this.userInfo = this.authService.isAuthenticated().pipe(
-      switchMap(status => iif(() => status,
-        this.authService.getUserInfo().pipe(
-          map((userInfo: ILogin) => `${userInfo.name.last} ${userInfo.name.first}`)),
-        of('')))
-    );
+  ngOnInit() {
+    this.store.select('auth').subscribe((authState) => {
+      if (authState.user.name) {
+        this.userInfo = `${authState.user.name.last} ${authState.user.name.first}`
+      }
+    })
   }
 
   logOff() {
-    this.authService.logout();
+    this.store.dispatch(new Logout());
   }
 }

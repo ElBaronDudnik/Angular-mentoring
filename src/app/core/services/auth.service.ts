@@ -4,16 +4,20 @@ import { HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ApiService } from './api.service';
 import { Router } from '@angular/router';
+import * as fromApp from '../../shared/store/app.reducer';
+import * as authActions from '../../login-page/login/store/auth.actions';
+import {Store} from "@ngrx/store";
+import { LoginSuccess } from 'app/login-page/login/store/auth.actions';
 
 export interface ILogin {
-  id: number,
-  fakeToken: string,
+  id: number;
+  fakeToken: string;
   login: string;
   password: string;
   name: IName;
 }
 
-interface IName {
+export interface IName {
   first: string;
   last: string;
 }
@@ -24,7 +28,7 @@ interface IName {
 export class AuthService implements OnDestroy {
   private authUrl = 'auth';
   private isAuth$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  private token!: string | null;
+  private token!: string;
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -34,8 +38,10 @@ export class AuthService implements OnDestroy {
   };
 
   constructor(private api: ApiService,
-              private router: Router) {
-    this.token = localStorage.getItem('token');
+              private router: Router,
+              private store: Store<fromApp.AppState>) {
+    this.token = JSON.stringify(localStorage.getItem('token'));
+    // this.store.dispatch(new authActions.LoginSuccess(this.token));
     this.isAuth$.next(!!this.token);
   }
 
@@ -51,6 +57,7 @@ export class AuthService implements OnDestroy {
     this.api.post(`${this.authUrl}/login`, {login, password}, this.httpOptions)
       .subscribe(response => {
         this.token = response.token;
+        //this.store.dispatch(new authActions.LoginSuccess(this.token));
         localStorage.setItem('token', this.token || '');
         this.isAuth$.next(true);
         this.router.navigate(['/courses']);
@@ -65,6 +72,7 @@ export class AuthService implements OnDestroy {
     this.token = '';
     localStorage.removeItem('token');
     this.isAuth$.next(false);
+    this.store.dispatch(new authActions.Logout());
     this.router.navigate(['/login']);
   }
 

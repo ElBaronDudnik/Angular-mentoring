@@ -9,7 +9,7 @@ import { BreadcrumbsService } from '../../../core/services/breadcrumbs.service';
 import { Subject, Subscription, Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map, switchMap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
-import * as CoursesListActions from './courses-list.actions';
+import * as CoursesListActions from './store/courses-list.actions';
 
 
 @Component({
@@ -42,7 +42,6 @@ export class CoursesListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.coursesStore = this.store.select('coursesList');
-    this.coursesStore.subscribe(res => console.log(res))
     this.getCourses();
     this.search$
       .pipe(

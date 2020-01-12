@@ -14,14 +14,14 @@ export class AddCourse implements Action {
 
 export class DeleteCourse implements Action {
     readonly type = DELETE_COURSE;
-    
-    constructor(public payload: number){};
+
+    constructor(public payload: number) {}
 }
 
 export class UpdateCourse implements Action {
     readonly type = UPDATE_COURSE;
 
-    constructor(public payload: {index: number, course: CourseInterface}){};
+    constructor(public payload: {index: number, course: CourseInterface}) {}
 }
 
 export type CourseListActions = AddCourse | DeleteCourse | UpdateCourse;

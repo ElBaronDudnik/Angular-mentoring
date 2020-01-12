@@ -7,7 +7,7 @@ import { ICrumbs } from 'app/core/components/breadcrumbs/breadcrumbs.interface';
 import { BreadcrumbsService } from 'app/core/services/breadcrumbs.service';
 
 
-import * as CoursesListActions from '../courses-list/courses-list.actions';
+import * as CoursesListActions from '../courses-list/store/courses-list.actions';
 import { Store } from '@ngrx/store';
 
 @Component({

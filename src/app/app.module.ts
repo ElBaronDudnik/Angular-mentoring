@@ -13,6 +13,8 @@ import { LoginModule } from './login-page/login.module';
 import { CoursesListReducer } from './courses-page/components/courses-list/store/courses-list.reducers';
 import { environment } from 'environments/environment';
 import { appReducer } from './shared/store/app.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthEffects } from './login-page/login/store/auth.effect';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,7 @@ import { appReducer } from './shared/store/app.reducer';
     SharedModule,
     LoginModule,
     StoreModule.forRoot(appReducer),
+    EffectsModule.forRoot([AuthEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production, 

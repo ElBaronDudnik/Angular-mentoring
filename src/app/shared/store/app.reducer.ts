@@ -3,7 +3,7 @@ import * as fromAuth from 'app/login-page/login/store/auth.reducers';
 import { ActionReducerMap } from '@ngrx/store';
 
 export interface AppState {
-    courseList: fromCourseList.State,
+    courseList: fromCourseList.State;
     auth: fromAuth.State
 }
 
