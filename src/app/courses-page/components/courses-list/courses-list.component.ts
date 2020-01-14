@@ -1,13 +1,14 @@
 import { Component, OnInit, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { CourseInterface } from '../../course.interface';
 import { FilterCoursesByNamePipe } from '../../../shared/pipes/filter-pipe/filter-courses-by-name.pipe';
-import { CoursesService } from '../../services/courses.service';
 import { Router } from '@angular/router';
 import { ICrumbs } from '../../../core/components/breadcrumbs/breadcrumbs.interface';
 
 import { BreadcrumbsService } from '../../../core/services/breadcrumbs.service';
-import { Subject, Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged, filter, map, switchMap } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../store/app.reducer';
+import { deleteCourse, getCourses, searchCourses } from '../../../store/coursesList/courses-list.actions';
 
 
 @Component({
@@ -19,15 +20,14 @@ import { debounceTime, distinctUntilChanged, filter, map, switchMap } from 'rxjs
 export class CoursesListComponent implements OnInit, OnDestroy {
   public courses: CourseInterface[] = [];
   public filteredCourses: CourseInterface[] = [];
-  private search$ = new Subject<Event>();
 
   private subscription: Subscription = new Subscription();
 
   @Output() params = new EventEmitter();
 
-  constructor(private coursesService: CoursesService,
-              private router: Router,
-              private crumbsService: BreadcrumbsService) {
+  constructor(private router: Router,
+              private crumbsService: BreadcrumbsService,
+              private store: Store<AppState>) {
                 const crumb: ICrumbs = {
                   title: 'Courses',
                   link: 'courses',
@@ -38,46 +38,32 @@ export class CoursesListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getCourses();
-    this.search$
-      .pipe(
-        debounceTime(1000),
-        map((e: Event) => (e.target as HTMLTextAreaElement).value),
-        distinctUntilChanged(),
-        filter((searchTerm: string) => searchTerm.length > 2),
-        switchMap((result: string) => this.coursesService.searchItem(result)))
-      .subscribe(courses => this.filteredCourses = courses);
+    this.subscription.add(this.store.select('courseList').subscribe(courseListState => {
+      this.courses = courseListState.courses;
+      this.filteredCourses = courseListState.courses;
+    }));
   }
 
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
-    this.search$.complete();
   }
 
   getCourses(): void {
-    this.subscription.add(this.coursesService.getCoursesList(0, 10)
-      .subscribe((courses: CourseInterface[]) => {
-      this.courses = courses;
-      this.filteredCourses = courses;
-    }));
+    this.store.dispatch(getCourses({start: 0, count: 10}));
   }
 
   onDelete(id: number): void {
     const answer = confirm('Do you really want to delete this course?');
     if (answer) {
-      this.subscription.add(this.coursesService
-      .removeItem(id)
-      .subscribe(() => this.getCourses()));
+      this.store.dispatch(deleteCourse({id}));
     }
   }
 
   loadMore(): void {
     const start = this.filteredCourses.length;
-    this.subscription.add(this.coursesService.getCoursesList(start, 10)
-      .subscribe((courses: CourseInterface[]) => {
-        this.filteredCourses = this.filteredCourses.concat(courses);
-      }));
+    this.store.dispatch(getCourses({start, count: 10}));
   }
 
   onEdit(course: CourseInterface): void {
@@ -91,7 +77,7 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   }
 
   onSearch(event: Event): void {
-    this.search$.next(event);
+    this.store.dispatch(searchCourses({event}));
   }
 
   onAddCourse(): void {
