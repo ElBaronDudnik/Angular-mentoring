@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from './store/app.reducer';
 import { autoLogin } from './store/auth/auth.actions';
 import { Observable } from 'rxjs';
+import { AuthState } from './store/auth/auth.reducers';
 
 @Component({
   selector: 'app-root',
@@ -11,9 +12,13 @@ import { Observable } from 'rxjs';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  public userInfo: Observable<string>;
+  public userFullName: Observable<string>;
   constructor(private store: Store<AppState>) {
-    this.userInfo = this.store.select('auth').pipe(map(userInfo => `${userInfo.user.name.last} ${userInfo.user.name.first}`));
+    this.userFullName = this.store.select('auth')
+      .pipe(
+        map((userInfo: AuthState) =>
+          `${userInfo.userLogin.name.last} ${userInfo.userLogin.name.first}`)
+      );
     this.store.dispatch(autoLogin());
   }
 }

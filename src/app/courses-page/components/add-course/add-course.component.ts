@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ICrumbs } from 'app/core/components/breadcrumbs/breadcrumbs.interface';
@@ -7,6 +7,7 @@ import { AppState } from '../../../store/app.reducer';
 import { Store } from '@ngrx/store';
 import { CoursesState } from '../../../store/coursesList/courses-list.reducers';
 import { addCourse, getBiggestId } from '../../../store/coursesList/courses-list.actions';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-add-course-page',
@@ -14,9 +15,10 @@ import { addCourse, getBiggestId } from '../../../store/coursesList/courses-list
   styleUrls: ['./add-course.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AddCourseComponent implements OnInit {
+export class AddCourseComponent implements OnInit, OnDestroy {
   public newUserForm: FormGroup;
   private id!: number;
+  private subscription!: Subscription;
   constructor(private router: Router,
               private crumbService: BreadcrumbsService,
               private store: Store<AppState>) {
@@ -32,8 +34,9 @@ export class AddCourseComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch(getBiggestId());
-    this.store.select('courseList').subscribe((coursesListState: CoursesState)  => {
-      this.id = coursesListState.lastId;
+    this.subscription = this.store.select('courseList')
+      .subscribe((coursesListState: CoursesState)  => {
+        this.id = coursesListState.lastId;
     });
   }
 
@@ -49,7 +52,7 @@ export class AddCourseComponent implements OnInit {
       date: this.newUserForm.value.date,
       length: this.newUserForm.value.duration
     };
-    this.store.dispatch(addCourse({course}));
+    this.store.dispatch(addCourse(course));
     this.router.navigate(['/courses']);
   }
 
@@ -66,5 +69,9 @@ export class AddCourseComponent implements OnInit {
     };
     this.crumbService.setCrumb(parentCrumb);
     this.crumbService.setCrumb(currentCrumb);
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

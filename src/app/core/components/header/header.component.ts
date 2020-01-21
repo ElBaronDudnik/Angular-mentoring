@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-  @Input() userInfo!: Observable<string>;
+  @Input() userFullName!: Observable<string>;
   constructor(private store: Store<AppState>) { }
 
   logOff() {

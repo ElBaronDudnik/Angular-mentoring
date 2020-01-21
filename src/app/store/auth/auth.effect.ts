@@ -4,7 +4,7 @@ import { ApiService } from 'app/core/services/api.service';
 import { of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { getUserInfo, loginFail, loginSuccess, logout } from './auth.actions';
+import { getUserInfo, loginFail, loginSuccess, logout, UserLogin, UserToken } from './auth.actions';
 
 @Injectable()
 export class AuthEffects {
@@ -12,7 +12,7 @@ export class AuthEffects {
 
     authLogin$ = createEffect(() => this.actions$.pipe(
         ofType('[Login Page] Login'),
-        switchMap((action: any) => this.api.post(`${this.authUrl}/login`,
+        switchMap((action: UserLogin) => this.api.post(`${this.authUrl}/login`,
                 {login: action.email, password: action.password})
                 .pipe(
                     map(resData => loginSuccess(resData)),
@@ -32,7 +32,7 @@ export class AuthEffects {
     authSuccess$ = createEffect(() => this.actions$.pipe(
         ofType('[Login Page] Login Success'),
         tap(() => this.router.navigate(['/courses'])),
-        tap((action: any) => localStorage.setItem('token', action.token)),
+        tap((action: UserToken) => localStorage.setItem('token', action.token)),
         switchMap((action: any) => {
             return this.api.post(`${this.authUrl}/userinfo`,
             {token: action.token})

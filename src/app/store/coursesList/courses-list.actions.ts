@@ -1,19 +1,27 @@
 import { createAction, props } from '@ngrx/store';
 import { CourseInterface } from 'app/courses-page/course.interface';
 
+export interface ICoursesNumber {
+  start: number;
+  count: number;
+}
+
+export interface ICourseId { id: number; }
+export interface IEvent { event: Event; }
+
 export const getCourses = createAction(
   '[Course Page] Get Courses',
-  props<{ start: number, count: number }>()
+  props<ICoursesNumber>()
 );
 
 export const getCourseById = createAction(
   '[Course Page] Get Course By Id',
-  props<{ id: number }>()
+  props<ICourseId>()
 );
 
 export const searchCourses = createAction(
   '[Course Page] Search Courses',
-  props<{ event: Event }>()
+  props<IEvent>()
 );
 
 export const setCourses = createAction(
@@ -23,12 +31,12 @@ export const setCourses = createAction(
 
 export const addCourse = createAction(
   '[Course Page] Add Course',
-  props<{ course: CourseInterface }>()
+  props<CourseInterface>()
 );
 
 export const deleteCourse = createAction(
   '[Course Page] Delete Course',
-  props<{ id: number }>()
+  props<ICourseId>()
 );
 
 export const updateCourse = createAction(

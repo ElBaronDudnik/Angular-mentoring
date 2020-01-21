@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ApiService } from '../../core/services/api.service';
-import { debounceTime, distinctUntilChanged, filter, map, reduce, switchMap, tap } from 'rxjs/operators';
-import { loadMore, setBiggestId, setCourses } from './courses-list.actions';
+import { debounceTime, distinctUntilChanged, filter, map, switchMap } from 'rxjs/operators';
+import { ICourseId, ICoursesNumber, IEvent, loadMore, setBiggestId, setCourses } from './courses-list.actions';
 import { CourseInterface } from '../../courses-page/course.interface';
 
 @Injectable()
 export class CourseListEffect {
   private coursesUrl = 'courses';
+
   getCourses$ = createEffect(() => this.actions$.pipe(
     ofType('[Course Page] Get Courses'),
-    switchMap((param: any) =>
+    switchMap((param: ICoursesNumber) =>
       this.api.get('courses', `start=${param.start}&count=${param.count}`)
       .pipe(
         map((courses: CourseInterface[]) => loadMore({courses}))
@@ -20,7 +21,7 @@ export class CourseListEffect {
   searchCourses$ = createEffect(() => this.actions$.pipe(
     ofType('[Course Page] Search Courses'),
     debounceTime(1000),
-    map((params: any) => (params.event.target as HTMLTextAreaElement).value),
+    map((params: IEvent) => (params.event.target as HTMLTextAreaElement).value),
     distinctUntilChanged(),
     filter((searchTerm: string) => searchTerm.length > 2 || searchTerm === ''),
     switchMap((searchQuery: string) =>
@@ -33,7 +34,7 @@ export class CourseListEffect {
 
   getCourseById$ = createEffect(() => this.actions$.pipe(
     ofType('[Course Page] Get Course By Id'),
-    switchMap((param: any) =>
+    switchMap((param: ICourseId) =>
       this.api.get(`${this.coursesUrl}/${param.id}`)
         .pipe(
           map((courses: CourseInterface) => setCourses({courses: [courses]}))
@@ -43,15 +44,15 @@ export class CourseListEffect {
 
   deleteCourse$ = createEffect(() => this.actions$.pipe(
     ofType('[Course Page] Delete Course'),
-    switchMap((param: any) =>
+    switchMap((param: ICourseId) =>
       this.api.delete(this.coursesUrl, param.id)
     )
   ), { dispatch: false });
 
   addCourse$ = createEffect(() => this.actions$.pipe(
     ofType('[Course Page] Add Course'),
-    switchMap((param: any) =>
-      this.api.post(this.coursesUrl, param.course)
+    switchMap((course: CourseInterface) =>
+      this.api.post(this.coursesUrl, course)
     )
   ), { dispatch: false });
 
