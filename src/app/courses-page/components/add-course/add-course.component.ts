@@ -5,9 +5,9 @@ import { ICrumbs } from 'app/core/components/breadcrumbs/breadcrumbs.interface';
 import { BreadcrumbsService } from 'app/core/services/breadcrumbs.service';
 import { AppState } from '../../../store/app.reducer';
 import { Store } from '@ngrx/store';
-import { CoursesState } from '../../../store/coursesList/courses-list.reducers';
 import { addCourse, getBiggestId } from '../../../store/coursesList/courses-list.actions';
 import { Subscription } from 'rxjs';
+import { selectLastId } from '../../../store/coursesList/course-list.selector';
 
 @Component({
   selector: 'app-add-course-page',
@@ -17,7 +17,7 @@ import { Subscription } from 'rxjs';
 })
 export class AddCourseComponent implements OnInit, OnDestroy {
   public newUserForm: FormGroup;
-  private id!: number;
+  private lastCoursesId!: number;
   private subscription!: Subscription;
   constructor(private router: Router,
               private crumbService: BreadcrumbsService,
@@ -34,9 +34,9 @@ export class AddCourseComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.store.dispatch(getBiggestId());
-    this.subscription = this.store.select('courseList')
-      .subscribe((coursesListState: CoursesState)  => {
-        this.id = coursesListState.lastId;
+    this.subscription = this.store.select(selectLastId)
+      .subscribe((lastId: number)  => {
+        this.lastCoursesId = lastId;
     });
   }
 
@@ -46,7 +46,7 @@ export class AddCourseComponent implements OnInit, OnDestroy {
 
   onSave() {
     const course = {
-      id: this.id,
+      id: this.lastCoursesId + 1,
       name: this.newUserForm.value.title,
       description: this.newUserForm.value.description,
       date: this.newUserForm.value.date,

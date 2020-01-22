@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.reducer';
 import { deleteCourse, getCourses, searchCourses } from '../../../store/coursesList/courses-list.actions';
+import { selectCoursesList } from '../../../store/coursesList/course-list.selector';
 
 
 @Component({
@@ -38,9 +39,9 @@ export class CoursesListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getCourses();
-    this.subscription.add(this.store.select('courseList').subscribe(courseListState => {
-      this.courses = courseListState.courses;
-      this.filteredCourses = courseListState.courses;
+    this.subscription.add(this.store.select(selectCoursesList).subscribe((courses: CourseInterface[]) => {
+      this.courses = courses;
+      this.filteredCourses = courses;
     }));
   }
 

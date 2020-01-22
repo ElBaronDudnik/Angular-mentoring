@@ -8,6 +8,7 @@ import { ICrumbs } from 'app/core/components/breadcrumbs/breadcrumbs.interface';
 import { AppState } from '../../../../store/app.reducer';
 import { Store } from '@ngrx/store';
 import { getCourseById } from '../../../../store/coursesList/courses-list.actions';
+import { selectCoursesList } from '../../../../store/coursesList/course-list.selector';
 
 @Component({
   selector: 'app-course-item',
@@ -34,9 +35,9 @@ export class CourseItemComponent implements OnInit, OnDestroy {
   ngOnInit() {
     if (!this.course) {
       this.store.dispatch(getCourseById({id: this.route.snapshot.params.id}));
-      this.subscription = this.store.select('courseList')
-      .subscribe(coursesListState => {
-        this.course = coursesListState.courses[0];
+      this.subscription = this.store.select(selectCoursesList)
+      .subscribe((courses: CourseInterface[]) => {
+        this.course = courses[0];
         this.setBreadcrumbs();
       });
     }

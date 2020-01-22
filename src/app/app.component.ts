@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { AppState } from './store/app.reducer';
 import { autoLogin } from './store/auth/auth.actions';
 import { Observable } from 'rxjs';
-import { AuthState } from './store/auth/auth.reducers';
+import { selectFullName } from './store/auth/auth.selector';
 
 @Component({
   selector: 'app-root',
@@ -14,11 +13,7 @@ import { AuthState } from './store/auth/auth.reducers';
 export class AppComponent {
   public userFullName: Observable<string>;
   constructor(private store: Store<AppState>) {
-    this.userFullName = this.store.select('auth')
-      .pipe(
-        map((userInfo: AuthState) =>
-          `${userInfo.userLogin.name.last} ${userInfo.userLogin.name.first}`)
-      );
+    this.userFullName = this.store.select(selectFullName);
     this.store.dispatch(autoLogin());
   }
 }
