@@ -1,0 +1,5 @@
+<div class="errors" *ngIf="control.errors && (control.dirty || control.touched)">
+    <p *ngIf="control.errors.required">This field is required</p>
+    <p *ngIf="control.errors.maxlength">
+      Max length should be 50 symbols</p>
+</div>

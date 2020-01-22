@@ -6,7 +6,7 @@ export class Course implements CourseInterface {
   public date: string;
   public length: number;
   public description: string;
-  public authors?: IAuthors;
+  public authors?: IAuthors[];
   public isTopRated?: boolean;
 
   constructor(props: CourseInterface) {

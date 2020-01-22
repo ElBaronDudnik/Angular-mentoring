@@ -15,6 +15,7 @@ import { AuthorsInputFieldComponent } from './components/add-course/authors-inpu
 import { DateInputFieldComponent } from './components/add-course/date-input-field/date-input-field.component';
 import { DurationInputFieldComponent } from './components/add-course/duration-input-field/duration-input-field.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ErrorComponent } from './components/add-course/error/error.component';
 
 
 
@@ -38,6 +39,7 @@ import { HttpClientModule } from '@angular/common/http';
     AuthorsInputFieldComponent,
     DateInputFieldComponent,
     DurationInputFieldComponent,
+    ErrorComponent,
   ],
 })
 export class CoursesPageModule { }

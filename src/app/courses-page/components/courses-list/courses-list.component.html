@@ -4,6 +4,7 @@
     <li *ngFor="let course of filteredCourses | orderCoursesByDate">
       <app-course-item
         appBorderStyle
+        *ngIf="course.id"
         [id]="course.id"
         [course]="course"
         (delete)="onDelete($event)"

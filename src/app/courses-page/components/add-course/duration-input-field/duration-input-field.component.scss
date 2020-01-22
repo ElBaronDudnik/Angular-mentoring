@@ -1,5 +1,9 @@
 @import '../../../../../styles';
 
+:host.ng-invalid.ng-dirty input{
+  border: 2px solid red;
+}
+
 .form-field {
   display: flex;
   flex-wrap: wrap;

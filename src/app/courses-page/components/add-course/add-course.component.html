@@ -1,34 +1,62 @@
 <div class="form-container">
 
   <form action="#" [formGroup]="newUserForm">
-    <h2>New course</h2>
+    <h2>{{ formTitle }}</h2>
 
     <div class="form-field">
       <label for="title">Title:</label>
       <span class="required">*required</span>
+      <div class="errors" *ngIf="title.errors && (title.dirty || title.touched)">
+        <p *ngIf="title.errors.required">Title of course is required</p>
+        <p *ngIf="title.errors.maxlength">
+          Max length should be 50 symbols</p>
+      </div>
+      <app-error [control]="title"></app-error>
       <input
         type="text"
         placeholder="Text input"
         id="title"
         name="title"
+        [value]="course?.name"
         formControlName="title">
     </div>
 
     <div class="form-field">
       <label for="description">Description:</label>
       <span class="required">*required</span>
+      <div class="errors" *ngIf="description.errors && (description.dirty || description.touched)">
+        <p *ngIf="description.errors.required">Description is required</p>
+        <p *ngIf="description.errors.maxlength">
+          Max length should be 500 symbols</p>
+      </div>
       <textarea
         placeholder="Add description"
         id="description"
         name="description"
-        formControlName="description"></textarea>
+        formControlName="description"
+        [value]="course?.description">
+      </textarea>
     </div>
 
-    <app-date-input-field [newUserForm]="newUserForm" ></app-date-input-field>
+    <app-date-input-field
+      formControlName="date"
+      [control]="date"
+      [dateValue]="course?.date">
+    </app-date-input-field>
 
-    <app-duration-input-field [newUserForm]="newUserForm"></app-duration-input-field>
+    <app-duration-input-field
+      formControlName="duration"
+      [errors]="duration.errors"
+      [used]="duration.dirty || duration.touched"
+      [durationValue]="course?.length">
+    </app-duration-input-field>
 
-    <app-authors-input-field [newUserForm]="newUserForm"></app-authors-input-field>
+    <app-authors-input-field
+      formControlName="authors"
+      [errors]="authors.errors"
+      [used]="authors.dirty || authors.touched"
+      [availableAuthorNames]="availableAuthorNames | async">
+    </app-authors-input-field>
 
     <div class="form-field buttons-container">
 
