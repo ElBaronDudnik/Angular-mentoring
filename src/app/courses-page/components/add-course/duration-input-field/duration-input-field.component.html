@@ -1,12 +1,16 @@
-<div class="form-field not-full" [formGroup]="newUserForm">
+<div class="form-field not-full">
   <label for="duration">Duration:</label>
   <span class="required">*required</span>
+  <div class="errors" *ngIf="errors && used">
+    <p *ngIf="errors.required">Duration of course is required</p>
+    <p *ngIf="errors.validateDuration">
+      Only numbers allows</p>
+  </div>
   <input
-    type="number"
     placeholder="minutes"
     id="duration"
     name="duration"
-    [(ngModel)]="duration"
-    formControlName="duration">
+    [value]="durationValue && durationValue"
+    (input)="changeDuration($event.target.value)">
   <div class="duration">{{ duration | durationPipe }}</div>
 </div>

@@ -11,4 +11,5 @@ export interface CourseInterface {
 export interface IAuthors {
   id: number;
   name: string;
+  lastName: string;
 }

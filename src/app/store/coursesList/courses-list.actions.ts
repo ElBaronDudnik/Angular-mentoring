@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { CourseInterface } from 'app/courses-page/course.interface';
+import { CourseInterface, IAuthors } from 'app/courses-page/course.interface';
 
 export interface ICoursesNumber {
   start: number;
@@ -56,4 +56,13 @@ export const setBiggestId = createAction(
 export const loadMore = createAction(
   '[Course Page] Load More',
   props<{ courses: CourseInterface[] }>()
+);
+
+export const getAuthors = createAction(
+  '[Course Page] Get Authors'
+);
+
+export const setAuthors = createAction(
+  '[Course Page] Set Authors',
+  props<{ authors: IAuthors[] }>()
 );

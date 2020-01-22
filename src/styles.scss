@@ -16,6 +16,7 @@ $black: #000000;
 $seafoam-blue: #76cdd8;
 $pear: #e2f86a;
 $battleship-grey: #6c7283;
+$orange-red: #ff4e33;
 
 @mixin button($color: transparent, $size: 12px) {
   background-color: $color;
@@ -43,4 +44,14 @@ body {
 ul {
   padding-left: 0;
   list-style: none;
+}
+
+.errors {
+  color: $orange-red;
+  font-size: 12px;
+  width: 100%;
+}
+
+.errors p {
+  margin: 5px 0;
 }

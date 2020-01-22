@@ -17,7 +17,7 @@ const routes: Routes = [
   },
   {
     path: ':id',
-    component: CourseItemComponent,
+    component: AddCourseComponent,
   },
   {
     path: 'not-found',

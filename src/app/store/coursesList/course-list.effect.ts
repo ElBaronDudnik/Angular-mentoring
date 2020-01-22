@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ApiService } from '../../core/services/api.service';
 import { debounceTime, distinctUntilChanged, filter, map, switchMap } from 'rxjs/operators';
-import { ICourseId, ICoursesNumber, IEvent, loadMore, setBiggestId, setCourses } from './courses-list.actions';
-import { CourseInterface } from '../../courses-page/course.interface';
+import { ICourseId, ICoursesNumber, IEvent, loadMore, setAuthors, setBiggestId, setCourses } from './courses-list.actions';
+import { CourseInterface, IAuthors } from '../../courses-page/course.interface';
 
 @Injectable()
 export class CourseListEffect {
@@ -16,6 +16,16 @@ export class CourseListEffect {
       .pipe(
         map((courses: CourseInterface[]) => loadMore({courses}))
       ))
+  ));
+
+  getAuthors$ = createEffect(() => this.actions$.pipe(
+    ofType('[Course Page] Get Authors'),
+    switchMap((param: any) =>
+      this.api.get('authors')
+        .pipe(
+          map((authors: IAuthors[]) => setAuthors({authors}))
+        )
+    )
   ));
 
   searchCourses$ = createEffect(() => this.actions$.pipe(

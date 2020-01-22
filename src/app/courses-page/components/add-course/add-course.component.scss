@@ -81,6 +81,10 @@ button.cancel-button {
   @include button($silver, 14px);
 }
 
-button.green:disabled {
+button.save-button:disabled {
   background-color: $pale-grey;
+}
+
+input.ng-invalid.ng-dirty, textarea.ng-invalid.ng-dirty {
+  border: 2px solid $orange-red;
 }
