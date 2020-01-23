@@ -1,10 +1,13 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { CoursesService } from '../../../courses-page/services/courses.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { CourseInterface } from '../../course.interface';
 import { ICrumbs } from 'app/core/components/breadcrumbs/breadcrumbs.interface';
 import { BreadcrumbsService } from 'app/core/services/breadcrumbs.service';
+import { AppState } from '../../../store/app.reducer';
+import { Store } from '@ngrx/store';
+import { addCourse, getBiggestId } from '../../../store/coursesList/courses-list.actions';
+import { Subscription } from 'rxjs';
+import { selectLastId } from '../../../store/coursesList/course-list.selector';
 
 @Component({
   selector: 'app-add-course-page',
@@ -12,12 +15,13 @@ import { BreadcrumbsService } from 'app/core/services/breadcrumbs.service';
   styleUrls: ['./add-course.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AddCourseComponent {
+export class AddCourseComponent implements OnInit, OnDestroy {
   public newUserForm: FormGroup;
-  private id!: number;
+  private lastCoursesId!: number;
+  private subscription!: Subscription;
   constructor(private router: Router,
-              private coursesService: CoursesService,
-              private crumbService: BreadcrumbsService) {
+              private crumbService: BreadcrumbsService,
+              private store: Store<AppState>) {
     this.newUserForm = new FormGroup({
       title: new FormControl('', Validators.required),
       description: new FormControl('', Validators.required),
@@ -28,22 +32,28 @@ export class AddCourseComponent {
     this.setBreadcrumbs();
   }
 
+  ngOnInit() {
+    this.store.dispatch(getBiggestId());
+    this.subscription = this.store.select(selectLastId)
+      .subscribe((lastId: number)  => {
+        this.lastCoursesId = lastId;
+    });
+  }
+
   onCancel() {
     this.router.navigate(['/courses']);
   }
 
   onSave() {
-    this.coursesService.getCoursesList().subscribe((courses: CourseInterface[])  => {
-      this.id = courses.reduce((max: number, { id }) => id > max ? id : max, 0) + 1;
-      this.coursesService.createCourse({
-        id: this.id,
-        name: this.newUserForm.value.name,
-        description: this.newUserForm.value.description,
-        date: this.newUserForm.value.date,
-        length: this.newUserForm.value.duration
-      });
-      this.router.navigate(['/courses']);
-    });
+    const course = {
+      id: this.lastCoursesId + 1,
+      name: this.newUserForm.value.title,
+      description: this.newUserForm.value.description,
+      date: this.newUserForm.value.date,
+      length: this.newUserForm.value.duration
+    };
+    this.store.dispatch(addCourse(course));
+    this.router.navigate(['/courses']);
   }
 
   setBreadcrumbs() {
@@ -51,13 +61,17 @@ export class AddCourseComponent {
       title: 'Courses',
       link: '/courses',
       level: 'main'
-    }
+    };
     const currentCrumb: ICrumbs = {
       title: 'New Course',
       link: '',
       level: 'child'
-    }
+    };
     this.crumbService.setCrumb(parentCrumb);
     this.crumbService.setCrumb(currentCrumb);
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

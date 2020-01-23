@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HeaderComponent } from './header.component';
 import { Component } from '@angular/core';
-import {AuthService} from '../../services/auth.service';
 import {Router} from '@angular/router';
 
 @Component({

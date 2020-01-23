@@ -2,10 +2,13 @@ import { Component, EventEmitter, Input, OnInit, Output, OnDestroy } from '@angu
 import { CourseInterface } from '../../../course.interface';
 import { faCalendar, faPencilAlt, faClock, faTrash, faStar } from '@fortawesome/free-solid-svg-icons';
 import { ActivatedRoute } from '@angular/router';
-import { CoursesService } from 'app/courses-page/services/courses.service';
 import { Subscription } from 'rxjs';
 import { BreadcrumbsService } from 'app/core/services/breadcrumbs.service';
 import { ICrumbs } from 'app/core/components/breadcrumbs/breadcrumbs.interface';
+import { AppState } from '../../../../store/app.reducer';
+import { Store } from '@ngrx/store';
+import { getCourseById } from '../../../../store/coursesList/courses-list.actions';
+import { selectCoursesList } from '../../../../store/coursesList/course-list.selector';
 
 @Component({
   selector: 'app-course-item',
@@ -25,15 +28,16 @@ export class CourseItemComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private courseService: CoursesService,
-    private crumbService: BreadcrumbsService
+    private crumbService: BreadcrumbsService,
+    private store: Store<AppState>
   ) { }
 
   ngOnInit() {
     if (!this.course) {
-      this.subscription = this.courseService.getCourseById(this.route.snapshot.params.id)
-      .subscribe(course => {
-        this.course = course;
+      this.store.dispatch(getCourseById({id: this.route.snapshot.params.id}));
+      this.subscription = this.store.select(selectCoursesList)
+      .subscribe((courses: CourseInterface[]) => {
+        this.course = courses[0];
         this.setBreadcrumbs();
       });
     }
@@ -44,12 +48,12 @@ export class CourseItemComponent implements OnInit, OnDestroy {
       title: 'Courses',
       link: '/courses',
       level: 'main'
-    }
+    };
     const currentCrumb: ICrumbs = {
       title: this.course && this.course.name || '',
       link: '',
       level: 'child'
-    }
+    };
     this.crumbService.setCrumb(parentCrumb);
     this.crumbService.setCrumb(currentCrumb);
   }
