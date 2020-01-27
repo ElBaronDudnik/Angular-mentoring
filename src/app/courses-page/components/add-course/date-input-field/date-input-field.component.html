@@ -1,10 +1,7 @@
 <div class="form-field not-full">
   <label for="date">Date:</label>
   <span class="required">*required</span>
-  <div class="errors" *ngIf="errors && used">
-    <p *ngIf="errors.required">Date is required</p>
-    <p *ngIf="errors.validateDate">Date should be in appropriate format: 'dd/mm/yyyy'</p>
-  </div>
+  <app-error [control]="control"></app-error>
   <input
     type="text"
     placeholder="dd/mm/yyyy"

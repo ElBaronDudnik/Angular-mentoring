@@ -13,20 +13,20 @@ import { selectToken } from '../../../store/auth/auth.selector';
 })
 export class BreadcrumbsComponent implements OnInit, OnDestroy {
   public breadcrumb: ICrumbs[] = [];
-  private subscription!: Subscription;
+  private subscription: Subscription = new Subscription();
   public isAuth!: boolean;
   constructor(private breadcrumbService: BreadcrumbsService,
               private store: Store<AppState>) {}
 
   ngOnInit() {
-    this.store.select(selectToken).subscribe(token => this.isAuth = !!token);
-    this.subscription = this.breadcrumbService.getCrumb()
+    this.subscription.add(this.store.select(selectToken).subscribe(token => this.isAuth = !!token));
+    this.subscription.add(this.breadcrumbService.getCrumb()
     .subscribe((crumb: any) => {
       if (crumb.level === 'main') {
         this.breadcrumb = [];
       }
       this.breadcrumb.push(crumb);
-    });
+    }));
   }
 
   ngOnDestroy() {

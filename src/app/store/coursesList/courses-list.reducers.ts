@@ -11,12 +11,12 @@ import {
 import { coursesMock } from '../../courses-page/courses.mock';
 
 export interface CoursesState {
-    courses: CourseInterface[] | [];
+    courses: CourseInterface[];
     lastId: number;
     authors: IAuthors[];
 }
 
-const initialState = {
+const initialState: CoursesState = {
     courses: coursesMock,
     lastId: 0,
     authors: [{
@@ -36,10 +36,6 @@ const reducer = createReducer(
     (state, course) => ({...state, courses: [...state.courses, course]})),
   on(deleteCourse,
     (state, {id}) => ({...state,  courses: state.courses.filter((item: CourseInterface) => item.id !== id)})),
-  on(updateCourse,
-    (state, {id, course}) => ({...state,
-      courses: state.courses.map((item: CourseInterface) =>
-        state.courses[id] = item.id === id ? course : state.courses[id])})),
 );
 
 export function CoursesListReducer(state: CoursesState | undefined, action: Action) {

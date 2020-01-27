@@ -4,7 +4,7 @@ export interface CourseInterface {
   date: string;
   length: number;
   description: string;
-  authors?: IAuthors;
+  authors?: IAuthors[];
   isTopRated?: boolean;
 }
 

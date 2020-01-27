@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ApiService } from '../../core/services/api.service';
 import { debounceTime, distinctUntilChanged, filter, map, switchMap } from 'rxjs/operators';
-import { ICourseId, ICoursesNumber, IEvent, loadMore, setAuthors, setBiggestId, setCourses } from './courses-list.actions';
+import { ICourseId, ICoursesNumber, loadMore, setAuthors, setBiggestId, setCourses } from './courses-list.actions';
 import { CourseInterface, IAuthors } from '../../courses-page/course.interface';
+import { FormControl } from '@angular/forms';
 
 @Injectable()
 export class CourseListEffect {
@@ -31,7 +32,7 @@ export class CourseListEffect {
   searchCourses$ = createEffect(() => this.actions$.pipe(
     ofType('[Course Page] Search Courses'),
     debounceTime(1000),
-    map((params: IEvent) => (params.event.target as HTMLTextAreaElement).value),
+    map((searchControl: FormControl) => searchControl.value),
     distinctUntilChanged(),
     filter((searchTerm: string) => searchTerm.length > 2 || searchTerm === ''),
     switchMap((searchQuery: string) =>
@@ -76,6 +77,12 @@ export class CourseListEffect {
         )
     )
   )));
+
+  updateCourse$ = createEffect(() => this.actions$.pipe(
+    ofType('[Course Page] Update Course'),
+    switchMap((payload: any) =>
+      this.api.patch(this.coursesUrl, payload.id, payload.course))
+  ), { dispatch: false });
 
   constructor(private actions$: Actions,
               private api: ApiService) {}

@@ -25,7 +25,7 @@ export class ApiService {
 
   patch(url: string, id: number, newCourse: CourseInterface): Observable<CourseInterface> {
     return this.http.patch<CourseInterface>(
-      `${ApiService.ENDPOINT}/${url}/#${id}`,
+      `${ApiService.ENDPOINT}/${url}/${id}`,
       newCourse
     );
   }

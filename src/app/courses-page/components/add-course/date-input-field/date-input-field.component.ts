@@ -1,10 +1,5 @@
 import { Component, ChangeDetectionStrategy, forwardRef, Input } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-
-interface IErrors {
-  required: boolean;
-  validateDate: boolean;
-}
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-date-input-field',
@@ -20,14 +15,15 @@ interface IErrors {
   ]
 })
 export class DateInputFieldComponent implements ControlValueAccessor {
-  public date!: any;
-  @Input() errors!: IErrors;
-  @Input() used!: boolean;
+  public date!: string;
+
+  @Input() control!: FormControl;
   @Input() dateValue!: string;
+
   onChanged: any = () => {};
   onTouched: any = () => {};
 
-  writeValue(val: any) {
+  writeValue(val: string) {
     this.date = val;
   }
 

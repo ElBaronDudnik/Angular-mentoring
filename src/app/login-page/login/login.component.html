@@ -1,33 +1,35 @@
 <div class="form-container">
 
-  <form action="#">
+  <form action="#" [formGroup]="loginForm">
     <h2>Login</h2>
 
     <div class="form-field">
       <label for="email">Email:</label>
       <span class="required">*required</span>
+      <app-error [control]="email"></app-error>
       <input
         type="text"
         placeholder="Enter e-mail"
         id="email"
-        [(ngModel)]="email"
+        formControlName="email"
         name="email">
     </div>
 
     <div class="form-field">
       <label for="password">Password:</label>
       <span class="required">*required</span>
+      <app-error [control]="password"></app-error>
       <input
         type="password"
         placeholder="Enter password"
         id="password"
-        [(ngModel)]="password"
+        formControlName="password"
         name="password">
     </div>
 
     <div class="form-field">
       <a href="#">Forgot password?</a>
-      <button (click) = "onLogin()">Login</button>
+      <button (click) = "onLogin()" [disabled]="this.loginForm.invalid">Login</button>
     </div>
 
   </form>

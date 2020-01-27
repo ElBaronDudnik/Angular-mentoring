@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 import { CoursesListComponent } from './components/courses-list/courses-list.component';
 import { InstrumentalSectionComponent } from './components/instrumental-section/instrumental-section.component';
@@ -15,7 +15,6 @@ import { AuthorsInputFieldComponent } from './components/add-course/authors-inpu
 import { DateInputFieldComponent } from './components/add-course/date-input-field/date-input-field.component';
 import { DurationInputFieldComponent } from './components/add-course/duration-input-field/duration-input-field.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ErrorComponent } from './components/add-course/error/error.component';
 
 
 
@@ -39,7 +38,7 @@ import { ErrorComponent } from './components/add-course/error/error.component';
     AuthorsInputFieldComponent,
     DateInputFieldComponent,
     DurationInputFieldComponent,
-    ErrorComponent,
   ],
+  providers: [DatePipe]
 })
 export class CoursesPageModule { }

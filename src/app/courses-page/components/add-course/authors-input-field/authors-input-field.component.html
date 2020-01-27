@@ -1,36 +1,33 @@
 <div class="form-field">
+
   <label for="authors">Authors:</label>
   <span class="required">*required</span>
-  <div class="errors" *ngIf="errors && used">
-    <p *ngIf="errors.required">Authors is required</p>
-  </div>
 
-  <label class="authors-input">
+  <app-error [control]="control"></app-error>
+
+  <div class="authors-tag-editor">
+
+    <span
+      class="tag-item"
+      *ngFor="let selectedAuthor of selectedAuthors"
+      (click)="removeAuthor(selectedAuthor)">
+      {{selectedAuthor}}
+      <fa-icon [icon]="faTimes" class="remove-tag"></fa-icon>
+    </span>
+
     <input
-      placeholder=""
+      placeholder="Select authors"
       id="authors"
       name="authors"
       (input)="onSearch($event.target.value)"
-      (click)="onClick($event)"
-      autocomplete="off"
-      [style.textIndent]="textIndent"
-    >
-    <div class="author-tags">
-      <span
-        *ngFor="let selectedAuthor of selectedAuthors"
-        (click)="removeAuthor(selectedAuthor)">
-        {{selectedAuthor}}
-        <fa-icon [icon]="faTimes"></fa-icon>
-      </span>
-    </div>
-  </label>
+      (click)="onClick()"
+      autocomplete="off">
 
-  <div class="authors-list" *ngIf="listOpened">
-    <ul>
+    <ul class="authors-list" *ngIf="listOpened">
       <li *ngFor="let author of authorNamesCopy" (click)="addAuthor(author)">
         {{ author }}
       </li>
     </ul>
-  </div>
 
+  </div>
 </div>

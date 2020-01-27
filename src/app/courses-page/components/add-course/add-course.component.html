@@ -1,16 +1,12 @@
 <div class="form-container">
 
   <form action="#" [formGroup]="newUserForm">
-    <h2>New course</h2>
+    <h2>{{ formTitle }}</h2>
 
     <div class="form-field">
       <label for="title">Title:</label>
       <span class="required">*required</span>
-      <div class="errors" *ngIf="title.errors && (title.dirty || title.touched)">
-        <p *ngIf="title.errors.required">Title of course is required</p>
-        <p *ngIf="title.errors.maxlength">
-          Max length should be 50 symbols</p>
-      </div>
+      <app-error [control]="title"></app-error>
       <input
         type="text"
         placeholder="Text input"
@@ -23,11 +19,7 @@
     <div class="form-field">
       <label for="description">Description:</label>
       <span class="required">*required</span>
-      <div class="errors" *ngIf="description.errors && (description.dirty || description.touched)">
-        <p *ngIf="description.errors.required">Description is required</p>
-        <p *ngIf="description.errors.maxlength">
-          Max length should be 500 symbols</p>
-      </div>
+      <app-error [control]="description"></app-error>
       <textarea
         placeholder="Add description"
         id="description"
@@ -39,24 +31,20 @@
 
     <app-date-input-field
       formControlName="date"
-      [errors]="date.errors"
-      [used]="date.dirty || date.touched"
+      [control]="date"
       [dateValue]="course?.date">
     </app-date-input-field>
 
     <app-duration-input-field
       formControlName="duration"
-      [errors]="duration.errors"
-      [used]="duration.dirty || duration.touched"
+      [control]="duration"
       [durationValue]="course?.length">
     </app-duration-input-field>
 
     <app-authors-input-field
       formControlName="authors"
-      [errors]="authors.errors"
-      [used]="authors.dirty || authors.touched"
-      [authorNames]="authorNames | async"
-      [authorsValue]="course?.authors">
+      [control]="authors"
+      [availableAuthorNames]="availableAuthorNames | async">
     </app-authors-input-field>
 
     <div class="form-field buttons-container">

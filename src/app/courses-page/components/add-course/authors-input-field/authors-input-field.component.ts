@@ -1,11 +1,10 @@
-import { Component, ChangeDetectionStrategy, forwardRef, Input, OnInit } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { IAuthors } from '../../../course.interface';
+import { Component, ChangeDetectionStrategy, forwardRef, Input, OnInit, OnDestroy } from '@angular/core';
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-
-interface IErrors {
-  required: boolean;
-}
+import { AppState } from 'app/store/app.reducer';
+import { Store } from '@ngrx/store';
+import { selectCoursesList } from 'app/store/coursesList/course-list.selector';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-authors-input-field',
@@ -20,26 +19,32 @@ interface IErrors {
     }
   ]
 })
-export class AuthorsInputFieldComponent implements ControlValueAccessor, OnInit {
+export class AuthorsInputFieldComponent implements ControlValueAccessor, OnInit, OnDestroy {
   public authors!: any;
   public listOpened = false;
   public selectedAuthors: string[] = [];
   public authorNamesCopy!: string[];
-  public textIndent = '7px';
   public faTimes = faTimes;
+  private subscription!: Subscription;
 
-  @Input() errors!: IErrors;
-  @Input() used!: boolean;
-  @Input() authorNames!: string[];
-  @Input() authorsValue!: IAuthors[];
+  @Input() control!: FormControl;
+  @Input() availableAuthorNames!: string[];
 
   onChanged: any = () => {};
   onTouched: any = () => {};
 
-  ngOnInit() {
-    if (this.authorsValue) {
-      this.authorsValue.forEach(author => this.addAuthor(`${author.lastName} ${author.name}`));
-    }
+  constructor(private store: Store<AppState>) {}
+
+  ngOnInit(): void {
+    this.subscription = this.store.select(selectCoursesList).subscribe(courses => {
+      if (courses[0].authors && courses.length === 1) {
+        courses[0].authors
+          .forEach(author => this.addAuthor(`${author.lastName} ${author.name}`));
+      }});
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   writeValue(val: any) {
@@ -54,31 +59,32 @@ export class AuthorsInputFieldComponent implements ControlValueAccessor, OnInit 
     this.onTouched = fn;
   }
 
-  addAuthor(author: string) {
-    this.selectedAuthors.push(author);
+  addAuthor(authorName: string) {
+    this.selectedAuthors.push(authorName);
+    this.availableAuthorNames = this.availableAuthorNames
+      .filter(item => item !== authorName);
+    this.listOpened = false;
+
     this.writeValue(this.selectedAuthors);
     this.onChanged(this.selectedAuthors);
-    this.authorNames = this.authorNames.filter(item => item !== author);
-    this.listOpened = false;
-    this.textIndent = `${parseInt(this.textIndent, 10) + author.length * 8 + 7}px`;
   }
 
-  onClick(e: Event) {
-    this.authorNamesCopy = this.authorNames.slice();
+  onClick() {
+    this.authorNamesCopy = this.availableAuthorNames.slice();
     this.listOpened = !this.listOpened;
   }
 
   removeAuthor(author: string) {
-    console.log(author);
-    this.listOpened = !this.listOpened;
+    this.listOpened = false;
     this.selectedAuthors = this.selectedAuthors.filter(item => item !== author);
+
     this.writeValue(this.selectedAuthors);
     this.onChanged(this.selectedAuthors);
-    this.textIndent = `${parseInt(this.textIndent, 10) - author.length * 8 - 7}px`;
   }
 
-  onSearch(value: string) {
+  onSearch(searchQuery: string) {
     this.listOpened = true;
-    this.authorNamesCopy = this.authorNames.filter(item => item.toLowerCase().includes(value.toLowerCase()));
+    this.authorNamesCopy = this.availableAuthorNames
+    .filter(item => item.toLowerCase().includes(searchQuery.toLowerCase()));
   }
 }

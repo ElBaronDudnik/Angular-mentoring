@@ -8,7 +8,7 @@ import { BreadcrumbsService } from '../../../core/services/breadcrumbs.service';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.reducer';
-import { deleteCourse, getCourses, searchCourses } from '../../../store/coursesList/courses-list.actions';
+import { deleteCourse, getCourses } from '../../../store/coursesList/courses-list.actions';
 import { selectCoursesList } from '../../../store/coursesList/course-list.selector';
 
 
@@ -75,10 +75,6 @@ export class CoursesListComponent implements OnInit, OnDestroy {
     };
     this.router.navigate([`courses/${course.id}`]);
     this.crumbsService.setCrumb(crumb);
-  }
-
-  onSearch(event: Event): void {
-    this.store.dispatch(searchCourses({event}));
   }
 
   onAddCourse(): void {

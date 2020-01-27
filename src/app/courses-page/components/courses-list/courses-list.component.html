@@ -1,9 +1,10 @@
-<app-instrumental-section (addCourse)="onAddCourse()" (search)="onSearch($event)"></app-instrumental-section>
+<app-instrumental-section (addCourse)="onAddCourse()"></app-instrumental-section>
 <div class="container" *ngIf="courses.length; else noContent">
   <ul>
     <li *ngFor="let course of filteredCourses | orderCoursesByDate">
       <app-course-item
         appBorderStyle
+        *ngIf="course.id"
         [id]="course.id"
         [course]="course"
         (delete)="onDelete($event)"

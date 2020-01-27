@@ -1,10 +1,5 @@
 import { Component, ChangeDetectionStrategy, forwardRef, Input } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-
-interface IErrors {
-  required: boolean;
-  validateDuration: boolean;
-}
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'app-duration-input-field',
@@ -20,15 +15,15 @@ interface IErrors {
   ]
 })
 export class DurationInputFieldComponent implements ControlValueAccessor {
-  @Input() errors!: IErrors;
-  @Input() used!: boolean;
-  @Input() durationValue!: number;
   public duration!: number;
+
+  @Input() control!: FormControl;
+  @Input() durationValue!: number;
 
   onChanged: any = () => {};
   onTouched: any = () => {};
 
-  writeValue(val: any) {
+  writeValue(val: number) {
     this.duration = val;
   }
 
@@ -40,7 +35,7 @@ export class DurationInputFieldComponent implements ControlValueAccessor {
   }
 
   changeDuration(val: string): void {
-    this.writeValue(val);
+    this.writeValue(+val);
     this.onChanged(val);
   }
 }
