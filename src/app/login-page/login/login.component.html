@@ -6,7 +6,10 @@
     <div class="form-field">
       <label for="email">Email:</label>
       <span class="required">*required</span>
-      <app-error [control]="email"></app-error>
+      <app-error
+        *ngIf="email.errors && (email.dirty || email.touched)"
+        [required]="email.errors.required">
+      </app-error>
       <input
         type="text"
         placeholder="Enter e-mail"
@@ -18,7 +21,10 @@
     <div class="form-field">
       <label for="password">Password:</label>
       <span class="required">*required</span>
-      <app-error [control]="password"></app-error>
+      <app-error
+        *ngIf="password.errors && (password.dirty || password.touched)"
+        [required]="password.errors.required">
+      </app-error>
       <input
         type="password"
         placeholder="Enter password"

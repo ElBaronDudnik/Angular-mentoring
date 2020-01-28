@@ -2,7 +2,11 @@
   <label for="duration">Duration:</label>
   <span class="required">*required</span>
 
-  <app-error [control]="control"></app-error>
+  <app-error
+    *ngIf="control.errors && (control.dirty || control.touched)"
+    [required]="control.errors.required"
+    [customError]="control.errors.validateDuration || false">
+  </app-error>
 
   <input
     placeholder="minutes"

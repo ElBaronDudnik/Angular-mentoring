@@ -33,7 +33,7 @@ const reducer = createReducer(
   on(setAuthors, (state, {authors}) => ({...state, authors })),
   on(loadMore, (state, {courses}) => ({...state, courses: state.courses.concat(courses)})),
   on(addCourse,
-    (state, course) => ({...state, courses: [...state.courses, course]})),
+    (state, {course}) => ({...state, courses: [...state.courses, course]})),
   on(deleteCourse,
     (state, {id}) => ({...state,  courses: state.courses.filter((item: CourseInterface) => item.id !== id)})),
 );

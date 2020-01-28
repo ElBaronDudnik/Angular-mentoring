@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ApiService } from '../../core/services/api.service';
-import { debounceTime, distinctUntilChanged, filter, map, switchMap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs/operators';
 import { ICourseId, ICoursesNumber, loadMore, setAuthors, setBiggestId, setCourses } from './courses-list.actions';
 import { CourseInterface, IAuthors } from '../../courses-page/course.interface';
 import { FormControl } from '@angular/forms';
@@ -10,12 +10,13 @@ import { FormControl } from '@angular/forms';
 export class CourseListEffect {
   private coursesUrl = 'courses';
 
-  getCourses$ = createEffect(() => this.actions$.pipe(
+  getInitialCourses$ = createEffect(() => this.actions$.pipe(
     ofType('[Course Page] Get Courses'),
     switchMap((param: ICoursesNumber) =>
       this.api.get('courses', `start=${param.start}&count=${param.count}`)
       .pipe(
-        map((courses: CourseInterface[]) => loadMore({courses}))
+        map((courses: CourseInterface[]) =>
+          param.start === 0 ? setCourses({courses}) : loadMore({courses}))
       ))
   ));
 

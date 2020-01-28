@@ -1,10 +1,6 @@
-<div class="errors" *ngIf="control.errors && (control.dirty || control.touched)">
-    <div *ngFor="let item of control.errors | keyvalue">
-      <div [ngSwitch]="item.key">
-        <p *ngSwitchCase="'required'">This field is required</p>
-        <p *ngSwitchCase="'validateDate'">{{ item.value }}</p>
-        <p *ngSwitchCase="'validateDuration'">{{ item.value }}</p>
-        <p *ngSwitchCase="'maxlength'">Maxlength should be {{ item.value['requiredLength'] }}</p>
-      </div>
+<div class="errors">
+    <div>
+      <p *ngIf="required">This field is required</p>
+      <p *ngIf="customError">{{ customError }}</p>
     </div>
 </div>

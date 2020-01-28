@@ -39,10 +39,11 @@ export class CoursesListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getCourses();
-    this.subscription.add(this.store.select(selectCoursesList).subscribe((courses: CourseInterface[]) => {
-      this.courses = courses;
-      this.filteredCourses = courses;
-    }));
+    this.subscription.add(this.store.select(selectCoursesList)
+      .subscribe((courses: CourseInterface[]) => {
+        this.courses = courses;
+        this.filteredCourses = courses;
+      }));
   }
 
   ngOnDestroy(): void {

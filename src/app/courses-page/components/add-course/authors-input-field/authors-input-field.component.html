@@ -3,7 +3,10 @@
   <label for="authors">Authors:</label>
   <span class="required">*required</span>
 
-  <app-error [control]="control"></app-error>
+  <app-error
+    *ngIf="control.errors && (control.dirty || control.touched)"
+    [required]="control.errors.required">
+  </app-error>
 
   <div class="authors-tag-editor">
 

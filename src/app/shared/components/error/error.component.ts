@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-error',
@@ -7,5 +6,6 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./error.component.scss'],
 })
 export class ErrorComponent {
-  @Input() control!: FormControl;
+  @Input() required!: boolean;
+  @Input() customError!: string | boolean;
 }

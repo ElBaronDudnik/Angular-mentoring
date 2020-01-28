@@ -142,7 +142,7 @@ export class AddCourseComponent implements OnInit, OnDestroy {
       this.store.dispatch(updateCourse({id: this.course.id, course}));
     } else {
       course.id = this.lastCoursesId + 1;
-      this.store.dispatch(addCourse(course));
+      this.store.dispatch(addCourse({course}));
     }
 
     this.router.navigate(['/courses']);

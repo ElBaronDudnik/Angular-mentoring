@@ -9,6 +9,10 @@ export interface ICoursesNumber {
 
 export interface ICourseId { id: number; }
 
+export interface IFromControl {
+  formControl: FormControl;
+}
+
 export const getCourses = createAction(
   '[Course Page] Get Courses',
   props<ICoursesNumber>()
@@ -21,7 +25,7 @@ export const getCourseById = createAction(
 
 export const searchCourses = createAction(
   '[Course Page] Search Courses',
-  props<FormControl>()
+  props<IFromControl>()
 );
 
 export const setCourses = createAction(
@@ -31,7 +35,7 @@ export const setCourses = createAction(
 
 export const addCourse = createAction(
   '[Course Page] Add Course',
-  props<CourseInterface>()
+  props<{ course: CourseInterface}>()
 );
 
 export const deleteCourse = createAction(
