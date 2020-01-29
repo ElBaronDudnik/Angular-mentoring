@@ -14,7 +14,12 @@ export const selectLastId = createSelector(
   (state: CoursesState) => state.lastId
 );
 
+export const selectCoursesNumber = createSelector(
+  selectCourseListState,
+  (state: CoursesState) => state.coursesNumber
+);
+
 export const selectAuthors = createSelector(
   selectCourseListState,
-  (state: CoursesState) => state.authors.map(({name, lastName}) => `${name} ${lastName}`)
+  (state: CoursesState) => state.authors
 );

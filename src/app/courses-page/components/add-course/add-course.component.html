@@ -52,7 +52,8 @@
     <app-authors-input-field
       formControlName="authors"
       [control]="authors"
-      [availableAuthorNames]="availableAuthorNames | async">
+      [availableAuthorNames]="availableAuthorNames | async"
+      [isUpdating]="!!course">
     </app-authors-input-field>
 
     <div class="form-field buttons-container">

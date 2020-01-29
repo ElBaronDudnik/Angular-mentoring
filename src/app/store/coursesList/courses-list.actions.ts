@@ -48,13 +48,13 @@ export const updateCourse = createAction(
   props<{ id: number, course: CourseInterface }>()
 );
 
-export const getBiggestId = createAction(
-  '[Course Page] Get Biggest Id'
+export const getUtilities = createAction(
+  '[Course Page] Get Utilities'
 );
 
-export const setBiggestId = createAction(
+export const setUtilities = createAction(
   '[Course Page] Set Biggest Id',
-  props<{ id: number }>()
+  props<{ id: number, coursesNumber: number }>()
 );
 
 export const loadMore = createAction(

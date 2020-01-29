@@ -1,14 +1,14 @@
-import { Component, ChangeDetectionStrategy, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ICrumbs } from 'app/core/components/breadcrumbs/breadcrumbs.interface';
 import { BreadcrumbsService } from 'app/core/services/breadcrumbs.service';
 import { AppState } from '../../../store/app.reducer';
 import { Store } from '@ngrx/store';
-import { addCourse, getAuthors, getBiggestId, getCourseById, updateCourse } from '../../../store/coursesList/courses-list.actions';
+import { addCourse, getAuthors, getCourseById, updateCourse } from '../../../store/coursesList/courses-list.actions';
 import { Observable, Subscription } from 'rxjs';
 import { selectAuthors, selectCoursesList, selectLastId } from '../../../store/coursesList/course-list.selector';
-import { CourseInterface } from '../../course.interface';
+import { CourseInterface, IAuthors } from '../../course.interface';
 import { Course } from 'app/courses-page/course.model';
 import { DatePipe } from '@angular/common';
 
@@ -30,7 +30,6 @@ function validateDate(dateFormControl: FormControl) {
   selector: 'app-add-course-page',
   templateUrl: './add-course.component.html',
   styleUrls: ['./add-course.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddCourseComponent implements OnInit, OnDestroy {
   public newUserForm!: FormGroup;
@@ -38,7 +37,7 @@ export class AddCourseComponent implements OnInit, OnDestroy {
   private subscription!: Subscription;
   public course!: CourseInterface;
 
-  public availableAuthorNames!: Observable<string[]>;
+  public availableAuthorNames!: Observable<IAuthors[]>;
   public formTitle!: string;
 
   public title!: FormControl;
@@ -55,7 +54,6 @@ export class AddCourseComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.store.dispatch(getBiggestId());
     this.store.dispatch(getAuthors());
 
     this.availableAuthorNames = this.store.select(selectAuthors);
@@ -144,8 +142,6 @@ export class AddCourseComponent implements OnInit, OnDestroy {
       course.id = this.lastCoursesId + 1;
       this.store.dispatch(addCourse({course}));
     }
-
-    this.router.navigate(['/courses']);
   }
 
   dateParser(dateString: string): string {

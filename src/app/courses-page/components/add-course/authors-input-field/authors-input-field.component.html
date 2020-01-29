@@ -14,7 +14,7 @@
       class="tag-item"
       *ngFor="let selectedAuthor of selectedAuthors"
       (click)="removeAuthor(selectedAuthor)">
-      {{selectedAuthor}}
+      {{selectedAuthor?.lastName}} {{selectedAuthor?.name}}
       <fa-icon [icon]="faTimes" class="remove-tag"></fa-icon>
     </span>
 
@@ -28,7 +28,7 @@
 
     <ul class="authors-list" *ngIf="listOpened">
       <li *ngFor="let author of authorNamesCopy" (click)="addAuthor(author)">
-        {{ author }}
+        {{ author.lastName }} {{ author.name }}
       </li>
     </ul>
 

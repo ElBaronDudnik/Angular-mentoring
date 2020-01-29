@@ -13,7 +13,7 @@
     </li>
   </ul>
   <div class="load-more-container">
-    <button class="load-more" (click) = "loadMore()">Load more</button>
+    <button class="load-more" (click) = "loadMore()" [disabled]="(totalCoursesNumber | async) <= courses?.length">Load more</button>
   </div>
 </div>
 <ng-template #noContent>

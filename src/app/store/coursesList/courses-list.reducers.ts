@@ -4,9 +4,8 @@ import {
   addCourse,
   deleteCourse,
   loadMore, setAuthors,
-  setBiggestId,
+  setUtilities,
   setCourses,
-  updateCourse
 } from './courses-list.actions';
 import { coursesMock } from '../../courses-page/courses.mock';
 
@@ -14,6 +13,7 @@ export interface CoursesState {
     courses: CourseInterface[];
     lastId: number;
     authors: IAuthors[];
+    coursesNumber: number;
 }
 
 const initialState: CoursesState = {
@@ -23,12 +23,13 @@ const initialState: CoursesState = {
       name: '',
       lastName: '',
       id: 0
-    }]
+    }],
+    coursesNumber: 0
 };
 
 const reducer = createReducer(
   initialState,
-  on(setBiggestId, (state, {id}) => ({...state, lastId: id})),
+  on(setUtilities, (state, {id, coursesNumber}) => ({...state, lastId: id, coursesNumber})),
   on(setCourses, (state, {courses}) => ({...state, courses })),
   on(setAuthors, (state, {authors}) => ({...state, authors })),
   on(loadMore, (state, {courses}) => ({...state, courses: state.courses.concat(courses)})),
