@@ -8,7 +8,7 @@ import { Store } from '@ngrx/store';
 import { addCourse, getAuthors, getCourseById, updateCourse } from '../../../store/coursesList/courses-list.actions';
 import { Observable, Subscription } from 'rxjs';
 import { selectAuthors, selectCoursesList, selectLastId } from '../../../store/coursesList/course-list.selector';
-import { CourseInterface, IAuthors } from '../../course.interface';
+import { CourseInterface, IAuthor } from '../../course.interface';
 import { Course } from 'app/courses-page/course.model';
 import { DatePipe } from '@angular/common';
 
@@ -37,7 +37,7 @@ export class AddCourseComponent implements OnInit, OnDestroy {
   private subscription!: Subscription;
   public course!: CourseInterface;
 
-  public availableAuthorNames!: Observable<IAuthors[]>;
+  public availableAuthorNames!: Observable<IAuthor[]>;
   public formTitle!: string;
 
   public title!: FormControl;

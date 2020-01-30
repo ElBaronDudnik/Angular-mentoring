@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ApiService } from '../../core/services/api.service';
 import { debounceTime, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs/operators';
-import { ICourseId, ICoursesNumber, loadMore, setAuthors, setUtilities, setCourses, IFromControl } from './courses-list.actions';
-import { CourseInterface, IAuthors } from '../../courses-page/course.interface';
+import { ICourseId, ICoursesNumber, loadMore, setAuthors, setUtilities, setCourses, ISearch } from './courses-list.actions';
+import { CourseInterface, IAuthor } from '../../courses-page/course.interface';
 import { Router } from '@angular/router';
 
 @Injectable()
@@ -25,7 +25,7 @@ export class CourseListEffect {
     switchMap((param: any) =>
       this.api.get('authors')
         .pipe(
-          map((authors: IAuthors[]) => setAuthors({authors}))
+          map((authors: IAuthor[]) => setAuthors({authors}))
         )
     )
   ));
@@ -33,7 +33,7 @@ export class CourseListEffect {
   searchCourses$ = createEffect(() => this.actions$.pipe(
     ofType('[Course Page] Search Courses'),
     debounceTime(1000),
-    map((param: IFromControl) => param.formControl.value),
+    map((param: ISearch) => param.searchQuery),
     distinctUntilChanged(),
     filter((searchTerm: string) => searchTerm && searchTerm.length > 2 || searchTerm === ''),
     switchMap((searchQuery: string) =>

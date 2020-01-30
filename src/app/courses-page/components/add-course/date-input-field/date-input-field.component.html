@@ -4,7 +4,7 @@
   <app-error
     *ngIf="control.errors && (control.dirty || control.touched)"
     [required]="control.errors.required"
-    [customError]="control.errors.validateDate || false">
+    [customError]="control.errors.validateDate || ''">
   </app-error>
   <input
     type="text"

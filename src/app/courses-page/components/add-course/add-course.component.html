@@ -9,7 +9,7 @@
       <app-error
         *ngIf="title.errors && (title.dirty || title.touched)"
         [required]="title.errors.required"
-        [customError]="title.errors.maxlength ? 'Maxlength should be 50': false">
+        [customError]="title.errors.maxlength ? 'Maxlength should be 50': ''">
       </app-error>
       <input
         type="text"
@@ -26,7 +26,7 @@
       <app-error
         *ngIf="description.errors && (description.dirty || description.touched)"
         [required]="description.errors.required"
-        [customError]="description.errors.maxlength ? 'Maxlength should be 500': false">
+        [customError]="description.errors.maxlength ? 'Maxlength should be 500': ''">
       </app-error>
       <textarea
         placeholder="Add description"

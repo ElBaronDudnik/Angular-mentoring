@@ -5,7 +5,7 @@ import { AppState } from 'app/store/app.reducer';
 import { Store } from '@ngrx/store';
 import { selectCoursesList } from 'app/store/coursesList/course-list.selector';
 import { Subscription } from 'rxjs';
-import { IAuthors } from '../../../course.interface';
+import { IAuthor } from '../../../course.interface';
 import { filter, map } from 'rxjs/operators';
 
 @Component({
@@ -21,16 +21,16 @@ import { filter, map } from 'rxjs/operators';
   ]
 })
 export class AuthorsInputFieldComponent implements ControlValueAccessor, OnInit, OnDestroy {
-  public authors!: IAuthors[];
+  public authors!: IAuthor[];
   public listOpened = false;
-  public selectedAuthors: IAuthors[] = [];
-  public authorNamesCopy!: IAuthors[];
+  public selectedAuthors: IAuthor[] = [];
+  public authorNamesCopy!: IAuthor[];
   public faTimes = faTimes;
   private subscription!: Subscription;
 
   @Input() isUpdating!: boolean;
   @Input() control!: FormControl;
-  @Input() availableAuthorNames!: IAuthors[];
+  @Input() availableAuthorNames!: IAuthor[];
 
   onChanged: any = () => {};
   onTouched: any = () => {};
@@ -42,8 +42,7 @@ export class AuthorsInputFieldComponent implements ControlValueAccessor, OnInit,
         this.subscription = this.store.select(selectCoursesList)
           .pipe(
             filter(courses => courses.length === 1),
-            map(courses => courses[0].authors && courses[0].authors.forEach(author => this.addAuthor(author)))
-          ).subscribe();
+          ).subscribe(courses => courses[0].authors && courses[0].authors.forEach(author => this.addAuthor(author)));
     }
   }
 
@@ -65,7 +64,7 @@ export class AuthorsInputFieldComponent implements ControlValueAccessor, OnInit,
     this.onTouched = fn;
   }
 
-  addAuthor(author: IAuthors) {
+  addAuthor(author: IAuthor) {
     this.selectedAuthors.push(author);
     this.availableAuthorNames = this.availableAuthorNames
       .filter(availableAuthor => availableAuthor.name !== author.name);
@@ -80,10 +79,11 @@ export class AuthorsInputFieldComponent implements ControlValueAccessor, OnInit,
     this.listOpened = !this.listOpened;
   }
 
-  removeAuthor(author: IAuthors) {
+  removeAuthor(author: IAuthor) {
     this.listOpened = false;
     this.selectedAuthors = this.selectedAuthors
       .filter(item => item.name !== author.name);
+    this.availableAuthorNames.push(author);
 
     this.writeValue(this.selectedAuthors);
     this.onChanged(this.selectedAuthors);
@@ -92,6 +92,6 @@ export class AuthorsInputFieldComponent implements ControlValueAccessor, OnInit,
   onSearch(searchQuery: string) {
     this.listOpened = true;
     this.authorNamesCopy = this.availableAuthorNames
-    .filter((item: IAuthors) => item.name.toLowerCase().includes(searchQuery.toLowerCase()));
+    .filter((item: IAuthor) => item.name.toLowerCase().includes(searchQuery.toLowerCase()));
   }
 }

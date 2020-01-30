@@ -7,5 +7,5 @@ import { Component, Input } from '@angular/core';
 })
 export class ErrorComponent {
   @Input() required!: boolean;
-  @Input() customError!: string | boolean;
+  @Input() customError!: string;
 }

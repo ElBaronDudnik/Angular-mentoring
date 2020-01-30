@@ -1,4 +1,4 @@
-import { CourseInterface, IAuthors } from 'app/courses-page/course.interface';
+import { CourseInterface, IAuthor } from 'app/courses-page/course.interface';
 import { Action, createReducer, on } from '@ngrx/store';
 import {
   addCourse,
@@ -12,7 +12,7 @@ import { coursesMock } from '../../courses-page/courses.mock';
 export interface CoursesState {
     courses: CourseInterface[];
     lastId: number;
-    authors: IAuthors[];
+    authors: IAuthor[];
     coursesNumber: number;
 }
 
@@ -33,8 +33,6 @@ const reducer = createReducer(
   on(setCourses, (state, {courses}) => ({...state, courses })),
   on(setAuthors, (state, {authors}) => ({...state, authors })),
   on(loadMore, (state, {courses}) => ({...state, courses: state.courses.concat(courses)})),
-  on(addCourse,
-    (state, {course}) => ({...state, courses: [...state.courses, course]})),
   on(deleteCourse,
     (state, {id}) => ({...state,  courses: state.courses.filter((item: CourseInterface) => item.id !== id)})),
 );

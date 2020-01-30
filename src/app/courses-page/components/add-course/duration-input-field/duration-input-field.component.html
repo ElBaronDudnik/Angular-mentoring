@@ -5,7 +5,7 @@
   <app-error
     *ngIf="control.errors && (control.dirty || control.touched)"
     [required]="control.errors.required"
-    [customError]="control.errors.validateDuration || false">
+    [customError]="control.errors.validateDuration || ''">
   </app-error>
 
   <input

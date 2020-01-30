@@ -1,6 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { CourseInterface, IAuthors } from 'app/courses-page/course.interface';
-import { FormControl } from '@angular/forms';
+import { CourseInterface, IAuthor } from 'app/courses-page/course.interface';
 
 export interface ICoursesNumber {
   start: number;
@@ -9,8 +8,8 @@ export interface ICoursesNumber {
 
 export interface ICourseId { id: number; }
 
-export interface IFromControl {
-  formControl: FormControl;
+export interface ISearch {
+  searchQuery: string;
 }
 
 export const getCourses = createAction(
@@ -25,7 +24,7 @@ export const getCourseById = createAction(
 
 export const searchCourses = createAction(
   '[Course Page] Search Courses',
-  props<IFromControl>()
+  props<ISearch>()
 );
 
 export const setCourses = createAction(
@@ -68,5 +67,5 @@ export const getAuthors = createAction(
 
 export const setAuthors = createAction(
   '[Course Page] Set Authors',
-  props<{ authors: IAuthors[] }>()
+  props<{ authors: IAuthor[] }>()
 );

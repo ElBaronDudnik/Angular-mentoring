@@ -1,4 +1,4 @@
-import {CourseInterface, IAuthors} from './course.interface';
+import {CourseInterface, IAuthor} from './course.interface';
 
 export class Course implements CourseInterface {
   public id: number;
@@ -6,7 +6,7 @@ export class Course implements CourseInterface {
   public date: string;
   public length: number;
   public description: string;
-  public authors?: IAuthors[];
+  public authors?: IAuthor[];
   public isTopRated?: boolean;
 
   constructor(props: CourseInterface) {

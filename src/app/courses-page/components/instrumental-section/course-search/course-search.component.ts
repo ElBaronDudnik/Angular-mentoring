@@ -17,6 +17,6 @@ export class CourseSearchComponent {
   }
 
   onSearch(): void {
-    this.store.dispatch(searchCourses({ formControl: this.search }));
+    this.store.dispatch(searchCourses({ searchQuery: this.search.value }));
   }
 }
