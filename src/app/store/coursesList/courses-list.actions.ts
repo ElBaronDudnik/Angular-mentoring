@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { CourseInterface } from 'app/courses-page/course.interface';
+import { CourseInterface, IAuthor } from 'app/courses-page/course.interface';
 
 export interface ICoursesNumber {
   start: number;
@@ -7,7 +7,10 @@ export interface ICoursesNumber {
 }
 
 export interface ICourseId { id: number; }
-export interface IEvent { event: Event; }
+
+export interface ISearch {
+  searchQuery: string;
+}
 
 export const getCourses = createAction(
   '[Course Page] Get Courses',
@@ -21,7 +24,7 @@ export const getCourseById = createAction(
 
 export const searchCourses = createAction(
   '[Course Page] Search Courses',
-  props<IEvent>()
+  props<ISearch>()
 );
 
 export const setCourses = createAction(
@@ -31,7 +34,7 @@ export const setCourses = createAction(
 
 export const addCourse = createAction(
   '[Course Page] Add Course',
-  props<CourseInterface>()
+  props<{ course: CourseInterface}>()
 );
 
 export const deleteCourse = createAction(
@@ -44,16 +47,25 @@ export const updateCourse = createAction(
   props<{ id: number, course: CourseInterface }>()
 );
 
-export const getBiggestId = createAction(
-  '[Course Page] Get Biggest Id'
+export const getUtilities = createAction(
+  '[Course Page] Get Utilities'
 );
 
-export const setBiggestId = createAction(
+export const setUtilities = createAction(
   '[Course Page] Set Biggest Id',
-  props<{ id: number }>()
+  props<{ id: number, coursesNumber: number }>()
 );
 
 export const loadMore = createAction(
   '[Course Page] Load More',
   props<{ courses: CourseInterface[] }>()
+);
+
+export const getAuthors = createAction(
+  '[Course Page] Get Authors'
+);
+
+export const setAuthors = createAction(
+  '[Course Page] Set Authors',
+  props<{ authors: IAuthor[] }>()
 );

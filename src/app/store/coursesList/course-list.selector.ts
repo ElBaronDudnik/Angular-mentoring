@@ -13,3 +13,13 @@ export const selectLastId = createSelector(
   selectCourseListState,
   (state: CoursesState) => state.lastId
 );
+
+export const selectCoursesNumber = createSelector(
+  selectCourseListState,
+  (state: CoursesState) => state.coursesNumber
+);
+
+export const selectAuthors = createSelector(
+  selectCourseListState,
+  (state: CoursesState) => state.authors
+);

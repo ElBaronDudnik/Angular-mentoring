@@ -5,11 +5,11 @@ import { Router } from '@angular/router';
 import { ICrumbs } from '../../../core/components/breadcrumbs/breadcrumbs.interface';
 
 import { BreadcrumbsService } from '../../../core/services/breadcrumbs.service';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.reducer';
-import { deleteCourse, getCourses, searchCourses } from '../../../store/coursesList/courses-list.actions';
-import { selectCoursesList } from '../../../store/coursesList/course-list.selector';
+import { deleteCourse, getCourses, getUtilities } from '../../../store/coursesList/courses-list.actions';
+import { selectCoursesList, selectCoursesNumber } from '../../../store/coursesList/course-list.selector';
 
 
 @Component({
@@ -21,6 +21,7 @@ import { selectCoursesList } from '../../../store/coursesList/course-list.select
 export class CoursesListComponent implements OnInit, OnDestroy {
   public courses: CourseInterface[] = [];
   public filteredCourses: CourseInterface[] = [];
+  public totalCoursesNumber!: Observable<number>;
 
   private subscription: Subscription = new Subscription();
 
@@ -39,10 +40,13 @@ export class CoursesListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getCourses();
-    this.subscription.add(this.store.select(selectCoursesList).subscribe((courses: CourseInterface[]) => {
-      this.courses = courses;
-      this.filteredCourses = courses;
-    }));
+    this.subscription.add(this.store.select(selectCoursesList)
+      .subscribe((courses: CourseInterface[]) => {
+        this.courses = courses;
+        this.filteredCourses = courses;
+      }));
+    this.store.dispatch(getUtilities());
+    this.totalCoursesNumber = this.store.select(selectCoursesNumber);
   }
 
   ngOnDestroy(): void {
@@ -75,10 +79,6 @@ export class CoursesListComponent implements OnInit, OnDestroy {
     };
     this.router.navigate([`courses/${course.id}`]);
     this.crumbsService.setCrumb(crumb);
-  }
-
-  onSearch(event: Event): void {
-    this.store.dispatch(searchCourses({event}));
   }
 
   onAddCourse(): void {

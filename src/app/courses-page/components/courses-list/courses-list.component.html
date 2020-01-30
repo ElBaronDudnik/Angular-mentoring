@@ -1,4 +1,4 @@
-<app-instrumental-section (addCourse)="onAddCourse()" (search)="onSearch($event)"></app-instrumental-section>
+<app-instrumental-section (addCourse)="onAddCourse()"></app-instrumental-section>
 <div class="container" *ngIf="courses.length; else noContent">
   <ul>
     <li *ngFor="let course of filteredCourses | orderCoursesByDate">
@@ -13,7 +13,10 @@
     </li>
   </ul>
   <div class="load-more-container">
-    <button class="load-more" (click) = "loadMore()">Load more</button>
+    <button
+      class="load-more"
+      (click) = "loadMore()"
+      [disabled]="(totalCoursesNumber | async) === courses?.length">Load more</button>
   </div>
 </div>
 <ng-template #noContent>

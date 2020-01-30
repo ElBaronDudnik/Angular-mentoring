@@ -68,4 +68,8 @@ button {
 
   width: 68px;
   height: 36px;
+
+  &:disabled {
+    background: $pale-grey;
+  }
 }

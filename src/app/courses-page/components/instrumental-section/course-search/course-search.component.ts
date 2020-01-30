@@ -1,4 +1,8 @@
-import { Component, ChangeDetectionStrategy, EventEmitter, Output } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { AppState } from '../../../../store/app.reducer';
+import { Store } from '@ngrx/store';
+import { searchCourses } from '../../../../store/coursesList/courses-list.actions';
 
 @Component({
   selector: 'app-course-search',
@@ -7,9 +11,12 @@ import { Component, ChangeDetectionStrategy, EventEmitter, Output } from '@angul
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CourseSearchComponent {
-  @Output() search = new EventEmitter<Event>();
+  public search!: FormControl;
+  constructor(private store: Store<AppState>) {
+    this.search = new FormControl('');
+  }
 
-  onSearch(event: Event): void {
-    this.search.emit(event);
+  onSearch(): void {
+    this.store.dispatch(searchCourses({ searchQuery: this.search.value }));
   }
 }

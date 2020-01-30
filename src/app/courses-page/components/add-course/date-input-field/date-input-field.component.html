@@ -1,9 +1,15 @@
-<div class="form-field not-full" [formGroup]="newUserForm">
+<div class="form-field not-full">
   <label for="date">Date:</label>
   <span class="required">*required</span>
+  <app-error
+    *ngIf="control.errors && (control.dirty || control.touched)"
+    [required]="control.errors.required"
+    [customError]="control.errors.validateDate || ''">
+  </app-error>
   <input
-    type="date"
-    placeholder="mm-dd-yyyy"
+    type="text"
+    placeholder="dd/mm/yyyy"
     id="date" name="date"
-    formControlName="date">
+    [value]="dateValue && dateValue | date:'dd/MM/yyyy'"
+    (input)="changeDate($event.target.value)">
 </div>

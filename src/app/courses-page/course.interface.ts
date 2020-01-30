@@ -4,11 +4,12 @@ export interface CourseInterface {
   date: string;
   length: number;
   description: string;
-  authors?: IAuthors;
+  authors?: IAuthor[];
   isTopRated?: boolean;
 }
 
-export interface IAuthors {
+export interface IAuthor {
   id: number;
   name: string;
+  lastName: string;
 }

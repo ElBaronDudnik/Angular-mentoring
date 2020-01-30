@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 import { CoursesListComponent } from './components/courses-list/courses-list.component';
 import { InstrumentalSectionComponent } from './components/instrumental-section/instrumental-section.component';
@@ -39,5 +39,6 @@ import { HttpClientModule } from '@angular/common/http';
     DateInputFieldComponent,
     DurationInputFieldComponent,
   ],
+  providers: [DatePipe]
 })
 export class CoursesPageModule { }

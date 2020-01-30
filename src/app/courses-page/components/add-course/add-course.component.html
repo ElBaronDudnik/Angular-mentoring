@@ -1,34 +1,60 @@
 <div class="form-container">
 
   <form action="#" [formGroup]="newUserForm">
-    <h2>New course</h2>
+    <h2>{{ formTitle }}</h2>
 
     <div class="form-field">
       <label for="title">Title:</label>
       <span class="required">*required</span>
+      <app-error
+        *ngIf="title.errors && (title.dirty || title.touched)"
+        [required]="title.errors.required"
+        [customError]="title.errors.maxlength ? 'Maxlength should be 50': ''">
+      </app-error>
       <input
         type="text"
         placeholder="Text input"
         id="title"
         name="title"
+        [value]="course?.name"
         formControlName="title">
     </div>
 
     <div class="form-field">
       <label for="description">Description:</label>
       <span class="required">*required</span>
+      <app-error
+        *ngIf="description.errors && (description.dirty || description.touched)"
+        [required]="description.errors.required"
+        [customError]="description.errors.maxlength ? 'Maxlength should be 500': ''">
+      </app-error>
       <textarea
         placeholder="Add description"
         id="description"
         name="description"
-        formControlName="description"></textarea>
+        formControlName="description"
+        [value]="course?.description">
+      </textarea>
     </div>
 
-    <app-date-input-field [newUserForm]="newUserForm" ></app-date-input-field>
+    <app-date-input-field
+      formControlName="date"
+      [control]="date"
+      [dateValue]="course?.date">
+    </app-date-input-field>
 
-    <app-duration-input-field [newUserForm]="newUserForm"></app-duration-input-field>
+    <app-duration-input-field
+      formControlName="duration"
+      [control]="duration"
+      [durationValue]="course?.length">
+    </app-duration-input-field>
 
-    <app-authors-input-field [newUserForm]="newUserForm"></app-authors-input-field>
+    <app-authors-input-field
+      formControlName="authors"
+      [control]="authors"
+      [availableAuthorNames]="availableAuthorNames | async"
+      [isUpdating]="!!course">
+    </app-authors-input-field>
 
     <div class="form-field buttons-container">
 
@@ -41,7 +67,8 @@
       <button
         (click) = "onSave()"
         class="save-button"
-        [disabled]="newUserForm.invalid">
+        [disabled]="newUserForm.invalid"
+        type="submit">
         Save
       </button>
 

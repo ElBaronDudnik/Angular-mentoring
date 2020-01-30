@@ -7,12 +7,7 @@ import { Component, ChangeDetectionStrategy, EventEmitter, Output } from '@angul
     changeDetection: ChangeDetectionStrategy.OnPush
   })
   export class InstrumentalSectionComponent {
-  @Output() search = new EventEmitter();
   @Output() addCourse = new EventEmitter<void>();
-
-  onSearch(event: Event): void {
-    this.search.emit(event);
-  }
 
   onAddCourse() {
     this.addCourse.emit();

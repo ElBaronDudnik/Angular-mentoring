@@ -1,10 +1,36 @@
-<div class="form-field" [formGroup]="newUserForm" >
+<div class="form-field">
+
   <label for="authors">Authors:</label>
   <span class="required">*required</span>
-  <input
-    type="text"
-    placeholder="Start typing"
-    id="authors"
-    name="authors"
-    formControlName="authors">
+
+  <app-error
+    *ngIf="control.errors && (control.dirty || control.touched)"
+    [required]="control.errors.required">
+  </app-error>
+
+  <div class="authors-tag-editor">
+
+    <span
+      class="tag-item"
+      *ngFor="let selectedAuthor of selectedAuthors"
+      (click)="removeAuthor(selectedAuthor)">
+      {{selectedAuthor?.lastName}} {{selectedAuthor?.name}}
+      <fa-icon [icon]="faTimes" class="remove-tag"></fa-icon>
+    </span>
+
+    <input
+      placeholder="Select authors"
+      id="authors"
+      name="authors"
+      (input)="onSearch($event.target.value)"
+      (click)="onClick()"
+      autocomplete="off">
+
+    <ul class="authors-list" *ngIf="listOpened">
+      <li *ngFor="let author of authorNamesCopy" (click)="addAuthor(author)">
+        {{ author.lastName }} {{ author.name }}
+      </li>
+    </ul>
+
+  </div>
 </div>
